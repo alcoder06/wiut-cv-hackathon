@@ -61,8 +61,28 @@ def in_signal_queue(ctx: Context, run: dict) -> bool:
     return False
 
 
+def in_queue(ctx: Context, run: dict) -> bool:
+    """Queued = its neighbours were mostly stopped too while it waited.
+
+    A broken-down car sits still while traffic flows around it; a car at a red light sits
+    still together with the cars around it. This needs no signal or stop-line config, which
+    matters because on the sample video nearly every 10 s+ stop was a signal queue.
+    """
+    c, k = ctx.cfg.rules.stopped_vehicle, ctx.cfg.kinematics
+    x1, y1, x2, y2 = run["box"]
+    cx, cy, size = (x1 + x2) / 2, y2, np.sqrt((x2 - x1) * (y2 - y1))
+    v = ctx.vehicles()
+    near = v[(v["tid"] != run["tid"]) & v["t"].between(run["start"], run["end"])
+             & (np.hypot(v["gx"] - cx, v["gy"] - cy) < c.neighbour_radius * size)]
+    if near.empty:
+        return False                     # isolated stop: nothing to compare with
+    per_second = near.groupby((near["t"] // 1).astype(int))["speed"].median()
+    return float((per_second < k.moving_speed).mean()) >= c.queue_share
+
+
 def detect(ctx: Context) -> list[list]:
     c = ctx.cfg.rules.stopped_vehicle
     stitched = stitch(stationary_runs(ctx), c.stitch_gap_sec, c.stitch_iou)
     return [[r["start"], r["end"], "stopped_vehicle"] for r in stitched
-            if r["end"] - r["start"] >= c.min_stop_sec and not in_signal_queue(ctx, r)]
+            if r["end"] - r["start"] >= c.min_stop_sec
+            and not in_queue(ctx, r) and not in_signal_queue(ctx, r)]

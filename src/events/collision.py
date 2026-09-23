@@ -1,9 +1,11 @@
 """accident and near_miss, from trajectories only (no trained model).
 
-accident: two road users' boxes touch AND at least one of them brakes abruptly at that
-moment AND they stay (nearly) stopped afterwards. Box overlap alone is useless from a
-CCTV angle (vehicles overlap in perspective all the time); the abrupt stop is what
-separates a crash from a car passing behind another.
+accident: a vehicle's box touches another road user's box WHILE the vehicle is still
+moving at speed, its speed collapses right after, and both stay (nearly) stopped.
+Box overlap alone is useless from a CCTV angle. On the sample video every false
+"accident" was one of: two pedestrians walking together, a car rolling gently into a
+queue (it is already crawling when the boxes start to overlap), or cars passing in
+adjacent lanes (no stop). Speed *at the moment of contact* separates all three from a crash.
   start = first frame of contact; end = every involved user has stopped or left.
 
 near_miss: time-to-collision drops below `ttc_sec`, one of the pair brakes hard or
@@ -18,9 +20,13 @@ from collections import defaultdict
 import numpy as np
 import pandas as pd
 
-from ..kinematics import ttc_matrix
+from ..kinematics import VEHICLES, ttc_matrix
 from . import Context
 from .pedestrian import walkers
+
+
+def _is_vehicle(track: pd.DataFrame) -> bool:
+    return track["cls"].iat[0] in VEHICLES
 
 
 def _road_users(ctx: Context) -> pd.DataFrame:
@@ -79,6 +85,16 @@ def _abrupt_drop(track: pd.DataFrame, t: float, window: float, drop: float, movi
     return t_peak
 
 
+def _impact(track: pd.DataFrame, t: float, cfg) -> bool:
+    """Moving fast at contact time t and losing most of that speed within the window."""
+    c = cfg.rules.collision
+    at = _speed_between(track, t - 0.3, t + 0.3, "max")
+    if np.isnan(at) or at < c.impact_speed:
+        return False
+    after = _speed_between(track, t, t + c.decel_window_sec, "min")
+    return not np.isnan(after) and after <= (1 - c.decel_drop) * at
+
+
 def _stop_or_leave_time(track: pd.DataFrame, t: float, stopped: float) -> float:
     rest = track[track["t"] >= t]
     idx = np.flatnonzero(rest["speed"].to_numpy() < stopped)
@@ -98,7 +114,9 @@ def detect(ctx: Context) -> list[list]:
     for (a, b), times in contact.items():
         t0 = times[0]
         ta, tb = by_tid[a], by_tid[b]
-        if not any(_abrupt_drop(tr, t0, c.decel_window_sec, c.decel_drop, k.moving_speed) for tr in (ta, tb)):
+        if not (_is_vehicle(ta) or _is_vehicle(tb)):
+            continue                      # two pedestrians walking together
+        if not any(_is_vehicle(tr) and _impact(tr, t0, cfg) for tr in (ta, tb)):
             continue
         after = [_speed_between(tr, t0 + 0.5, t0 + 0.5 + c.after_stop_sec, "mean") for tr in (ta, tb)]
         if any(s > k.moving_speed for s in after if not np.isnan(s)):
@@ -114,8 +132,12 @@ def detect(ctx: Context) -> list[list]:
             continue
         if any(p == (a, b) and abs(t0 - t.min()) < 5 for p, t0 in crash_pairs):
             continue
+        if not (_is_vehicle(by_tid[a]) or _is_vehicle(by_tid[b])):
+            continue
         t_crit = float(t[ttc.argmin()])
-        onsets = [_abrupt_drop(tr, t_crit, 1.5, n.decel_drop, k.moving_speed) for tr in (by_tid[a], by_tid[b])]
+        # the evasive action must be a vehicle braking from real speed, not a pedestrian pausing
+        onsets = [_abrupt_drop(tr, t_crit, 1.5, n.decel_drop, c.impact_speed)
+                  for tr in (by_tid[a], by_tid[b]) if _is_vehicle(tr)]
         onsets = [o for o in onsets if o is not None]
         if not onsets:
             continue

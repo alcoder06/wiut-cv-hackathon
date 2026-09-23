@@ -39,8 +39,8 @@ kinematics:
 scene:
   manual: configs/scene.yaml
   learned: configs/scene_flow.npz
-  grid: 32                # flow-field cell size in pixels
-  min_cell_obs: 20        # observations for a cell to count as carriageway
+  cells_across: 60        # flow-field grid: frame width / 60 (64 px cells at 4K, 32 at 1080p)
+  min_cell_obs: 5         # moving-vehicle observations for a cell to count as carriageway
   min_coherence: 0.75     # direction agreement in a cell before wrong-way is trusted
 
 segments:
@@ -68,6 +68,8 @@ rules:
     min_stop_sec: 10.0
     stitch_gap_sec: 3.0   # re-join a stationary vehicle whose track broke (occlusion)
     stitch_iou: 0.5
+    neighbour_radius: 4.0 # neighbours = vehicles within this many box sizes
+    queue_share: 0.5      # stopped while neighbours were stopped this share of the time = queue
   congestion:
     bin_sec: 1.0
     min_vehicles: 4
@@ -87,6 +89,7 @@ rules:
   collision:
     radius_factor: 0.25   # road-user disc radius = this * box size, for TTC
     contact_iou: 0.05
+    impact_speed: 1.0     # sizes/s the striking vehicle must still have AT first contact (0.8 let a queue bunch-up through)
     decel_drop: 0.6       # speed must drop by this fraction ...
     decel_window_sec: 1.0 # ... within this window
     after_stop_sec: 2.0   # involved vehicles stay (nearly) stopped this long after contact

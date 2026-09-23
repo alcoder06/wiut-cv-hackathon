@@ -19,7 +19,7 @@ os.environ.setdefault("TRAFFIC_CACHE", str(Path(__file__).resolve().parent.paren
 from src.config import load_config, resolve, seed_everything  # noqa: E402
 from src.events.signal import signal_colours  # noqa: E402
 from src.kinematics import add_kinematics  # noqa: E402
-from src.scene import FlowField, load_approaches, load_manual  # noqa: E402
+from src.scene import FlowField, grid_for, load_approaches, load_manual  # noqa: E402
 from src.tracking import track_video  # noqa: E402
 from src.video import probe  # noqa: E402
 
@@ -38,7 +38,8 @@ def main(folder: str) -> None:
         print(f"{p.name}: {tracks['tid'].nunique()} tracks, {len(tracks)} rows, "
               f"{took:.0f}s for {info.duration:.0f}s of video ({took / info.duration:.2f}x real time)")
         k = add_kinematics(tracks, cfg.kinematics.smooth_window_sec)
-        f = FlowField.learn(k, info.width, info.height, cfg.scene.grid, cfg.kinematics.moving_speed)
+        f = FlowField.learn(k, info.width, info.height, grid_for(info.width, cfg.scene.cells_across),
+                              cfg.kinematics.moving_speed)
         flow = f if flow is None else flow.merged(f)
     if flow is None or flow.count.sum() == 0:
         print("no moving vehicles seen: flow field NOT saved (the old one, if any, is kept)")

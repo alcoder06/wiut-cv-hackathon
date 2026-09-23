@@ -9,7 +9,7 @@ from .config import load_config, resolve
 from .events import Context, all_detectors
 from .events.signal import signal_colours
 from .kinematics import add_kinematics
-from .scene import FlowField, Scene, load_approaches, load_manual
+from .scene import FlowField, Scene, grid_for, load_approaches, load_manual
 from .segments import finalize
 from .tracking import track_video
 from .video import VideoInfo, probe
@@ -18,7 +18,8 @@ from .video import VideoInfo, probe
 def build_scene(tracks, info: VideoInfo, cfg) -> Scene:
     """Flow learned from this video, plus the one prebuilt from the sample videos
     (same camera) when it exists at the same resolution: more data, steadier lanes."""
-    flow = FlowField.learn(tracks, info.width, info.height, cfg.scene.grid, cfg.kinematics.moving_speed)
+    flow = FlowField.learn(tracks, info.width, info.height,
+                           grid_for(info.width, cfg.scene.cells_across), cfg.kinematics.moving_speed)
     prebuilt = resolve(cfg.scene.learned)
     if prebuilt.exists():
         base = FlowField.load(prebuilt)

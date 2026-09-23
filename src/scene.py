@@ -64,9 +64,12 @@ class FlowField:
         return unit, coherence
 
     def road_mask(self, min_obs: int) -> np.ndarray:
-        """Full-resolution uint8 mask of the learned carriageway."""
+        """Full-resolution uint8 mask of the learned carriageway.
+
+        Built from MOVING vehicles only: queue lanes still qualify (cars roll through them
+        on every green) while parked cars, which never move, stay off the road."""
         cells = (self.count >= min_obs).astype(np.uint8)
-        cells = cv2.morphologyEx(cells, cv2.MORPH_CLOSE, np.ones((3, 3), np.uint8))
+        cells = cv2.morphologyEx(cells, cv2.MORPH_CLOSE, np.ones((5, 5), np.uint8))
         full = cv2.resize(cells, (cells.shape[1] * self.grid, cells.shape[0] * self.grid),
                           interpolation=cv2.INTER_NEAREST)
         return full[: self.height, : self.width]
@@ -78,6 +81,11 @@ class FlowField:
         ang = np.arctan2(unit[..., 1], unit[..., 0])
         a = 0.5 * np.arctan2((w * np.sin(2 * ang)).sum(), (w * np.cos(2 * ang)).sum())
         return np.array([np.cos(a), np.sin(a)])
+
+
+def grid_for(width: int, cells_across: int) -> int:
+    """Cell size in pixels, proportional to resolution so density per cell stays similar."""
+    return max(8, round(width / cells_across))
 
 
 def _denorm(points, w: int, h: int) -> np.ndarray:
