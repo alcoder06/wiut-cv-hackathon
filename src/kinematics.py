@@ -78,10 +78,12 @@ def box_iou(a: np.ndarray, b: np.ndarray) -> float:
     return inter / union if union > 0 else 0.0
 
 
-def ttc_matrix(pos: np.ndarray, vel: np.ndarray, size: np.ndarray, radius_factor: float) -> np.ndarray:
+def ttc_matrix(pos: np.ndarray, vel: np.ndarray, size: np.ndarray,
+               radius_factor: float | np.ndarray) -> np.ndarray:
     """Pairwise time-to-collision (s) for n road users; inf on the diagonal and for misses.
 
-    Each user is a disc of radius radius_factor * size at its ground point. For every pair
+    Each user is a disc of radius radius_factor * size at its ground point (radius_factor
+    may be an (n, n) array to set it per pair). For every pair
     we solve |p + v t| = r for the smallest t >= 0, with p, v the relative position and
     velocity and r the sum of radii. Already touching -> 0. Separating or parallel -> inf.
     """

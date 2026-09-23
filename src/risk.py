@@ -17,7 +17,7 @@ from concurrent.futures import ThreadPoolExecutor
 import numpy as np
 
 from .config import load_config, resolve
-from .kinematics import ttc_matrix
+from .kinematics import VEHICLES, ttc_matrix
 from .scene import FlowField
 from .tracking import make_tracker, to_sv
 from .video import downscale, stride_for
@@ -26,10 +26,10 @@ MOVERS = {"car", "truck", "bus", "motorcycle", "bicycle", "person"}
 
 
 class _Track:
-    __slots__ = ("pos", "vel", "size", "last_t", "speeds")
+    __slots__ = ("pos", "vel", "size", "last_t", "speeds", "name")
 
-    def __init__(self, pos, size, t):
-        self.pos, self.vel, self.size, self.last_t = pos, np.zeros(2), size, t
+    def __init__(self, pos, size, t, name):
+        self.pos, self.vel, self.size, self.last_t, self.name = pos, np.zeros(2), size, t, name
         self.speeds: deque = deque()
 
 
@@ -50,6 +50,7 @@ class CausalRisk:
         self.wall_start = time.perf_counter()
         self.pool = ThreadPoolExecutor(max_workers=1)   # one worker keeps frame order
         self.pending = None
+        self.streak: dict = {}
 
     def _behind_schedule(self, t: float) -> bool:
         """True when this part has used more than part_b_max_x times the video time so far."""
@@ -83,23 +84,30 @@ class CausalRisk:
         return self.tracker.update_with_detections(to_sv(det)), t
 
     def _fold_in(self, tracked, t: float) -> None:
-        self._update_tracks(tracked, t)
+        names = [self.names.get(int(k)) for k in tracked.class_id]
+        self.observe(tracked.xyxy, names, tracked.tracker_id, t)
+
+    def observe(self, xyxy, names, tids, t: float) -> float:
+        """Scoring half of Part B, detector-free: tracked boxes at time t -> updated score.
+        scripts/replay_risk.py feeds cached tracks through this to tune in seconds."""
+        self._update_tracks(xyxy, names, tids, t)
         raw = self._instant_risk(t)
         dt = t - self.last_t if self.last_t is not None else 0.0
         alpha = 1 - np.exp(-dt / self.cfg.risk.ema_sec) if dt > 0 else 1.0
         self.score = float(np.clip(self.score + alpha * (raw - self.score), 0, 1))
         self.last_t = t
+        return self.score
 
     # -- internals -------------------------------------------------------------------
-    def _update_tracks(self, tracked, t: float) -> None:
-        for (x1, y1, x2, y2), k, tid in zip(tracked.xyxy, tracked.class_id, tracked.tracker_id):
-            if self.names.get(int(k)) not in MOVERS:
+    def _update_tracks(self, xyxy, names, tids, t: float) -> None:
+        for (x1, y1, x2, y2), name, tid in zip(xyxy, names, tids):
+            if name not in MOVERS:
                 continue
             pos = np.array([(x1 + x2) / 2, y2])
             size = float(np.sqrt(max(x2 - x1, 1) * max(y2 - y1, 1)))
             tr = self.tracks.get(tid)
             if tr is None:
-                self.tracks[tid] = _Track(pos, size, t)
+                self.tracks[tid] = _Track(pos, size, t, name)
                 continue
             dt = t - tr.last_t
             if dt <= 0:
@@ -113,21 +121,61 @@ class CausalRisk:
             del self.tracks[tid]
 
     def _instant_risk(self, t: float) -> float:
-        live = [tr for tr in self.tracks.values() if tr.last_t == t and self._on_road(tr.pos)]
+        cfg, r = self.cfg, self.cfg.risk
+        live = [(tid, tr) for tid, tr in self.tracks.items()
+                if tr.last_t == t and len(tr.speeds) >= r.min_track_samples and self._on_road(tr.pos)]
         if len(live) < 2:
+            self.streak.clear()
             return 0.0
-        cfg = self.cfg
-        pos = np.array([tr.pos for tr in live])
-        vel = np.array([tr.vel for tr in live])
-        size = np.array([tr.size for tr in live])
-        ttc = ttc_matrix(pos, vel, size, cfg.rules.collision.radius_factor)
-        # ignore pairs already touching while both crawl: that's a queue, not a threat
+        tids = [tid for tid, _ in live]
+        trs = [tr for _, tr in live]
+        pos = np.array([tr.pos for tr in trs])
+        vel = np.array([tr.vel for tr in trs])
+        size = np.array([tr.size for tr in trs])
+        vehicle = np.array([tr.name in VEHICLES for tr in trs])
         speed = np.linalg.norm(vel, axis=1) / size
-        both_slow = (speed[:, None] < cfg.kinematics.moving_speed) & (speed[None, :] < cfg.kinematics.moving_speed)
-        ttc = np.where(both_slow, np.inf, ttc)
-        min_ttc = float(ttc.min())
-        r_ttc = 1 / (1 + np.exp((min_ttc - cfg.risk.ttc_mid_sec) / cfg.risk.ttc_scale_sec))
-        r_brake = max((self._brake(tr) for tr in live), default=0.0)
+        moving = speed > cfg.kinematics.moving_speed
+        unit = vel / (np.linalg.norm(vel, axis=1, keepdims=True) + 1e-9)
+        cos = unit @ unit.T
+        p = pos[None, :, :] - pos[:, None, :]
+        v = vel[None, :, :] - vel[:, None, :]
+        mean_size = 0.5 * (size[:, None] + size[None, :])
+
+        # Time until two discs at the ground points touch (kinematics.ttc_matrix). Tried and
+        # rejected on the sample video: moving boxes / footprints (22-26% of the time in
+        # alarm; crossing streams overlap constantly in the image). Radius per pair type:
+        #   two movers    -> rules.collision.radius_factor (side impacts, tests/test_risk.py)
+        #   one is stopped -> risk.radius_factor, tighter: crossing traffic brushing past cars
+        #                     waiting at a stop line was the main false alarm; a rear-end
+        #                     into the stopped car still closes to zero distance
+        both_moving = moving[:, None] & moving[None, :]
+        rf = np.where(both_moving, cfg.rules.collision.radius_factor, r.radius_factor)
+        ttc = ttc_matrix(pos, vel, size, rf)
+
+        # parallel movers (same or opposite direction) only conflict in the same lane:
+        # overtaking / passing in the next lane has a sideways offset of ~a lane width
+        parallel = both_moving & (np.abs(cos) > r.parallel_cos)
+        axis = unit[:, None, :] + np.sign(cos)[..., None] * unit[None, :, :]
+        axis /= np.linalg.norm(axis, axis=-1, keepdims=True) + 1e-9
+        lateral = np.abs(p[..., 0] * axis[..., 1] - p[..., 1] * axis[..., 0]) / mean_size
+        ttc = np.where(parallel & (lateral > r.max_lane_offset), np.inf, ttc)
+
+        # closing speed in box sizes per second: how fast the gap shrinks
+        dist = np.linalg.norm(p, axis=-1) + 1e-9
+        closing = -(p * v).sum(-1) / dist / mean_size
+        valid = (closing >= r.min_closing) & (vehicle[:, None] | vehicle[None, :])
+        threat = np.triu(valid & (ttc < r.ttc_mid_sec + 2 * r.ttc_scale_sec), 1)
+
+        # persistence: a pair must stay threatening for consecutive samples
+        streak = {}
+        for i, j in zip(*np.nonzero(threat)):
+            key = (tids[i], tids[j])
+            streak[key] = self.streak.get(key, 0) + 1
+        self.streak = streak
+        best = min((ttc[tids.index(a), tids.index(b)] for (a, b), n in streak.items()
+                    if n >= r.persist_samples), default=np.inf)
+        r_ttc = 1 / (1 + np.exp((best - r.ttc_mid_sec) / r.ttc_scale_sec))
+        r_brake = max((self._brake(tr) for tr in trs), default=0.0)
         return float(1 - (1 - r_ttc) * (1 - 0.5 * r_brake * r_ttc ** 0.5))
 
     def _brake(self, tr: _Track) -> float:
