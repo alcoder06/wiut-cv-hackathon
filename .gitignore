@@ -1,0 +1,15 @@
+# local inputs (never commit the videos or organizer PDFs)
+samples/
+*.mp4
+*.pdf
+*.zip
+wiut_cv_scripts/
+task_description.txt
+
+# generated
+cache/
+out/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/

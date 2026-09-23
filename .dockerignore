@@ -1,0 +1,11 @@
+.venv/
+.git/
+samples/
+cache/
+out/
+dev/labels/
+wiut_cv_scripts/
+*.mp4
+*.pdf
+*.zip
+__pycache__/

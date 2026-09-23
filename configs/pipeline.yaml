@@ -1,0 +1,100 @@
+# All tunable numbers live here so rules can be tuned against dev labels without code edits.
+# Units: seconds, pixels, and "sizes/s" (speed divided by the box's sqrt(w*h)), which
+# keeps speed thresholds comparable near and far from the camera without a homography.
+
+seed: 0
+
+detector:
+  weights: weights/yolo11s.pt
+  imgsz: 960
+  conf: 0.25
+  iou: 0.5
+  batch: 16
+  half: true              # FP16 on CUDA (T4 has no bf16)
+  # COCO ids -> our names. Animals are kept for road_obstacle.
+  classes: {0: person, 1: bicycle, 2: car, 3: motorcycle, 5: bus, 7: truck,
+            16: animal, 17: animal, 18: animal, 19: animal}
+
+sampling:
+  part_a_fps: 8           # frames per second analysed in Part A (video is 25 fps)
+  part_b_fps: 5           # frames per second analysed in Part B
+
+tracker:
+  track_activation_threshold: 0.25
+  lost_track_buffer_sec: 2.0
+  minimum_matching_threshold: 0.8
+  min_track_len_sec: 0.8  # shorter tracks are detector noise
+
+kinematics:
+  smooth_window_sec: 1.0  # centred (offline) smoothing for Part A
+  moving_speed: 0.35      # sizes/s above which a vehicle is "moving"
+  stopped_speed: 0.12     # sizes/s below which a vehicle is "stopped"
+
+scene:
+  manual: configs/scene.yaml
+  learned: configs/scene_flow.npz
+  grid: 32                # flow-field cell size in pixels
+  min_cell_obs: 20        # observations for a cell to count as carriageway
+  min_coherence: 0.75     # direction agreement in a cell before wrong-way is trusted
+
+segments:
+  max_gap_sec: 1.0        # merge same-class fragments closer than this
+  min_len_sec: 0.5        # drop blips shorter than this
+
+# Only classes listed here are ever emitted. A class we emit that is not in the test set
+# adds a zero to the macro-F1, so rare classes stay off until the samples prove the rule.
+enabled_classes:
+  - stopped_vehicle
+  - congestion
+  - wrong_way
+  - jaywalking
+  - failure_to_yield
+  - red_light
+  - stop_line
+  - solid_line_crossing
+  - illegal_turn
+  - illegal_u_turn
+  - accident
+  - near_miss
+
+rules:
+  stopped_vehicle:
+    min_stop_sec: 10.0
+    stitch_gap_sec: 3.0   # re-join a stationary vehicle whose track broke (occlusion)
+    stitch_iou: 0.5
+  congestion:
+    bin_sec: 1.0
+    min_vehicles: 4
+    crawl_speed: 0.25
+    min_len_sec: 20.0
+  wrong_way:
+    against_cos: -0.5     # cos(angle) with the lane direction below this = against traffic
+    min_len_sec: 1.5
+  jaywalking:
+    min_len_sec: 1.0
+    road_erode_px: 12     # ignore people standing on the kerb edge
+  failure_to_yield:
+    ped_margin_px: 20
+  red_light:
+    vote_sec: 1.0         # majority vote window for the signal colour
+    red_min_frac: 0.02    # share of ROI pixels that must be red
+  collision:
+    radius_factor: 0.25   # road-user disc radius = this * box size, for TTC
+    contact_iou: 0.05
+    decel_drop: 0.6       # speed must drop by this fraction ...
+    decel_window_sec: 1.0 # ... within this window
+    after_stop_sec: 2.0   # involved vehicles stay (nearly) stopped this long after contact
+  near_miss:
+    ttc_sec: 1.5
+    decel_drop: 0.5
+    clear_ttc_sec: 3.0
+  turns:
+    u_turn_deg: 150
+    turn_deg: 60
+    rate_deg_s: 25        # heading change rate that marks the start/end of a turn
+
+risk:
+  horizon_sec: 5.0
+  ttc_scale_sec: 0.5      # logistic width: risk goes 0.88 -> 0.12 between mid-1 s and mid+1 s
+  ttc_mid_sec: 2.5        # TTC giving risk 0.5
+  ema_sec: 0.6
