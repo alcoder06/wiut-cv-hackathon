@@ -40,9 +40,11 @@ def main(folder: str) -> None:
         k = add_kinematics(tracks, cfg.kinematics.smooth_window_sec)
         f = FlowField.learn(k, info.width, info.height, cfg.scene.grid, cfg.kinematics.moving_speed)
         flow = f if flow is None else flow.merged(f)
-    if flow is not None:
-        flow.save(resolve(cfg.scene.learned))
-        print(f"flow field saved to {cfg.scene.learned}")
+    if flow is None or flow.count.sum() == 0:
+        print("no moving vehicles seen: flow field NOT saved (the old one, if any, is kept)")
+        return
+    flow.save(resolve(cfg.scene.learned))
+    print(f"flow field saved to {cfg.scene.learned} ({int(flow.count.sum())} observations)")
 
 
 if __name__ == "__main__":

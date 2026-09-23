@@ -37,9 +37,6 @@ def analyse(path: str) -> tuple[Context, list[list]]:
     hook = (lambda frame: signal_colours(frame, approaches)) if approaches else None
     tracks, frames = track_video(info, hook)
     t_track = time.perf_counter() - t0
-    if tracks.empty:
-        print(f"[part A] {info.path}: nothing detected", file=sys.stderr)
-        return None, []
 
     tracks = add_kinematics(tracks, cfg.kinematics.smooth_window_sec, centered=True)
     scene = build_scene(tracks, info, cfg)
@@ -48,7 +45,7 @@ def analyse(path: str) -> tuple[Context, list[list]]:
 
     raw = []
     enabled = set(cfg.enabled_classes)
-    for detector in all_detectors():
+    for detector in all_detectors() if len(tracks) else []:
         try:
             raw += [e for e in detector(ctx) if e[2] in enabled]
         except Exception:  # one broken rule must not empty the whole video
