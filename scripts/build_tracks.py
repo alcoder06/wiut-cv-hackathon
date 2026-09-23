@@ -28,7 +28,7 @@ def main(folder: str) -> None:
     cfg = load_config()
     seed_everything(cfg.seed)
     flow = None
-    for p in sorted(Path(folder).glob("*.mp4")):
+    for p in sorted(p for p in Path(folder).iterdir() if p.suffix.lower() == ".mp4"):
         info = probe(str(p))
         approaches = load_approaches(load_manual(resolve(cfg.scene.manual)), info.width, info.height)
         hook = (lambda f, a=approaches: signal_colours(f, a)) if approaches else None

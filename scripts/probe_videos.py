@@ -28,7 +28,7 @@ def decode_fps(path: str, seconds: float = 20.0) -> float:
 
 def main(folder: str) -> None:
     rows = []
-    for p in sorted(Path(folder).glob("*.mp4")):
+    for p in sorted(p for p in Path(folder).iterdir() if p.suffix.lower() == ".mp4"):
         info = probe(str(p))
         fourcc = int(cv2.VideoCapture(str(p)).get(cv2.CAP_PROP_FOURCC))
         rows.append({

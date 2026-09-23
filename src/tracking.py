@@ -10,6 +10,8 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import sys
+import time
 from pathlib import Path
 from typing import Callable
 
@@ -67,20 +69,29 @@ def track_video(info: VideoInfo, frame_hook: FrameHook | None = None) -> tuple[p
     tracker = make_tracker(info.fps / stride, cfg.tracker)
     batch_size = int(cfg.detector.batch)
 
+    max_w = int(cfg.detector.max_input_width)
+    to_full = info.width / min(info.width, max_w)   # detector boxes -> full-resolution pixels
+
     rows, frame_rows = [], []
     buf: list[tuple[int, float, np.ndarray]] = []
 
     def flush():
         for (idx, t, _), det in zip(buf, detector.predict([f for _, _, f in buf])):
+            det.xyxy *= to_full
             tracked = tracker.update_with_detections(to_sv(det))
             for (x1, y1, x2, y2), c, k, tid in zip(tracked.xyxy, tracked.confidence,
                                                    tracked.class_id, tracked.tracker_id):
                 rows.append((idx, t, int(tid), names[int(k)], float(c), x1, y1, x2, y2))
         buf.clear()
 
-    for idx, t, frame in iter_frames(info.path, stride):
+    deadline = time.perf_counter() + cfg.sampling.part_a_max_x * info.duration
+    for idx, t, frame, extra in iter_frames(info.path, stride, max_w, frame_hook):
+        if time.perf_counter() > deadline:
+            print(f"[part A] time cap hit at t={t:.1f}s of {info.duration:.1f}s; "
+                  "returning events found so far", file=sys.stderr)
+            break
         if frame_hook is not None:
-            frame_rows.append({"frame": idx, "t": t, **frame_hook(frame)})
+            frame_rows.append({"frame": idx, "t": t, **extra})
         buf.append((idx, t, frame))
         if len(buf) == batch_size:
             flush()

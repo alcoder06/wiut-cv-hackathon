@@ -10,7 +10,9 @@ frame, so calm-traffic bumps hurt), rising 2-5 s before a predicted contact.
 """
 from __future__ import annotations
 
+import time
 from collections import deque
+from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np
 
@@ -18,7 +20,7 @@ from .config import load_config, resolve
 from .kinematics import ttc_matrix
 from .scene import FlowField
 from .tracking import make_tracker, to_sv
-from .video import stride_for
+from .video import downscale, stride_for
 
 MOVERS = {"car", "truck", "bus", "motorcycle", "bicycle", "person"}
 
@@ -45,6 +47,13 @@ class CausalRisk:
         self.tracks: dict[int, _Track] = {}
         self.score, self.last_t = 0.0, None
         self.road = self._load_road(int(meta["width"]), int(meta["height"]))
+        self.wall_start = time.perf_counter()
+        self.pool = ThreadPoolExecutor(max_workers=1)   # one worker keeps frame order
+        self.pending = None
+
+    def _behind_schedule(self, t: float) -> bool:
+        """True when this part has used more than part_b_max_x times the video time so far."""
+        return time.perf_counter() - self.wall_start > self.cfg.sampling.part_b_max_x * t + 5.0
 
     def _load_road(self, w: int, h: int):
         path = resolve(self.cfg.scene.learned)
@@ -54,19 +63,32 @@ class CausalRisk:
         return flow.road_mask(self.cfg.scene.min_cell_obs) if (flow.width, flow.height) == (w, h) else None
 
     def step(self, frame: np.ndarray, t: float) -> float:
-        if int(round(t * self.fps)) % self.stride:
-            return self.score           # skipped frame: O(1)
+        """Detection runs in a worker thread so it overlaps the harness decoding the next
+        frames. Fixed one-sample lag: the result for sampled frame k is folded in at sampled
+        frame k+1 (0.2 s later), always, so the curve is identical run to run."""
+        if int(round(t * self.fps)) % self.stride or self._behind_schedule(t):
+            return self.score           # skipped frame (or catching up): O(1)
+        if self.pending is not None:
+            tracked, t_prev = self.pending.result()
+            self._fold_in(tracked, t_prev)
+        self.pending = self.pool.submit(self._detect, frame, t)
+        return self.score
+
+    def _detect(self, frame: np.ndarray, t: float):
         from .detector import get_detector
 
-        det = get_detector().predict([frame])[0]
-        tracked = self.tracker.update_with_detections(to_sv(det))
+        small, s = downscale(frame, int(self.cfg.detector.max_input_width))
+        det = get_detector().predict([small])[0]
+        det.xyxy /= s
+        return self.tracker.update_with_detections(to_sv(det)), t
+
+    def _fold_in(self, tracked, t: float) -> None:
         self._update_tracks(tracked, t)
         raw = self._instant_risk(t)
         dt = t - self.last_t if self.last_t is not None else 0.0
         alpha = 1 - np.exp(-dt / self.cfg.risk.ema_sec) if dt > 0 else 1.0
         self.score = float(np.clip(self.score + alpha * (raw - self.score), 0, 1))
         self.last_t = t
-        return self.score
 
     # -- internals -------------------------------------------------------------------
     def _update_tracks(self, tracked, t: float) -> None:

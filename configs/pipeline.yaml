@@ -11,13 +11,19 @@ detector:
   iou: 0.5
   batch: 16
   half: true              # FP16 on CUDA (T4 has no bf16)
+  max_input_width: 1920   # 4K frames are downscaled in the decode thread; boxes are mapped back
   # COCO ids -> our names. Animals are kept for road_obstacle.
   classes: {0: person, 1: bicycle, 2: car, 3: motorcycle, 5: bus, 7: truck,
             16: animal, 17: animal, 18: animal, 19: animal}
 
 sampling:
-  part_a_fps: 8           # frames per second analysed in Part A (video is 25 fps)
+  part_a_fps: 8           # frames per second analysed in Part A (video is 25-30 fps)
   part_b_fps: 5           # frames per second analysed in Part B
+  # Safety valves. Over 3x the video duration the harness scores the WHOLE video as empty,
+  # so each part caps its own wall-clock time and degrades instead (A: stops early and
+  # returns what it found; B: repeats its last score). 1.3 + 1.4 < 3 with margin.
+  part_a_max_x: 1.3
+  part_b_max_x: 1.4
 
 tracker:
   track_activation_threshold: 0.25

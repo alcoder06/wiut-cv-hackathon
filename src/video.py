@@ -1,8 +1,10 @@
 """Video metadata and strided frame reading."""
 from __future__ import annotations
 
+import queue
+import threading
 from dataclasses import dataclass
-from typing import Iterator
+from typing import Callable, Iterator
 
 import cv2
 import numpy as np
@@ -41,24 +43,64 @@ def stride_for(fps: float, target_fps: float) -> int:
     return max(1, round(fps / target_fps))
 
 
-def iter_frames(path: str, stride: int) -> Iterator[tuple[int, float, np.ndarray]]:
-    """Yield (frame_idx, t_sec, BGR frame) for every `stride`-th frame.
+def downscale(frame: np.ndarray, max_width: int) -> tuple[np.ndarray, float]:
+    """Shrink to at most max_width wide. Returns (frame, scale) with scale = new / original."""
+    h, w = frame.shape[:2]
+    if w <= max_width:
+        return frame, 1.0
+    s = max_width / w
+    return cv2.resize(frame, (max_width, round(h * s)), interpolation=cv2.INTER_AREA), s
 
-    Skipped frames use grab(), which still decodes (H.264 needs it) but skips the
-    colour conversion and copy that retrieve() does. That's the cheap part we can save.
+
+_END = object()
+
+
+def iter_frames(path: str, stride: int, max_width: int | None = None,
+                hook: Callable[[np.ndarray], dict] | None = None,
+                prefetch: int = 32) -> Iterator[tuple[int, float, np.ndarray, dict]]:
+    """Yield (frame_idx, t_sec, frame, hook_result) for every `stride`-th frame.
+
+    Decoding runs in a background thread so it overlaps with detection and tracking on
+    the main thread (OpenCV releases the GIL while decoding and resizing). The queue keeps
+    frame order, so results are identical to a sequential read.
+    Skipped frames use grab(): it still decodes (H.264 needs that) but skips the costly
+    colour conversion and copy of retrieve(), which nearly doubles speed at 4K.
+    `hook` runs on the full-resolution frame (e.g. reading a small signal-lamp ROI) before
+    it is downscaled to `max_width`.
     """
-    cap = cv2.VideoCapture(path)
-    fps = cap.get(cv2.CAP_PROP_FPS) or 25.0
-    idx = 0
-    try:
-        while True:
-            if idx % stride == 0:
-                ok, frame = cap.read()
-                if not ok:
+    q: queue.Queue = queue.Queue(maxsize=prefetch)
+    stop = threading.Event()
+
+    def reader():
+        cap = cv2.VideoCapture(path)
+        fps = cap.get(cv2.CAP_PROP_FPS) or 25.0
+        idx = 0
+        try:
+            while not stop.is_set():
+                if idx % stride == 0:
+                    ok, frame = cap.read()
+                    if not ok:
+                        break
+                    extra = hook(frame) if hook else {}
+                    if max_width:
+                        frame, _ = downscale(frame, max_width)
+                    q.put((idx, idx / fps, frame, extra))
+                elif not cap.grab():
                     break
-                yield idx, idx / fps, frame
-            elif not cap.grab():
-                break
-            idx += 1
+                idx += 1
+        finally:
+            cap.release()
+            q.put(_END)
+
+    thread = threading.Thread(target=reader, daemon=True)
+    thread.start()
+    try:
+        while (item := q.get()) is not _END:
+            yield item
     finally:
-        cap.release()
+        stop.set()
+        while thread.is_alive():        # drain so the reader can see `stop` and exit
+            try:
+                q.get_nowait()
+            except queue.Empty:
+                thread.join(timeout=0.05)
