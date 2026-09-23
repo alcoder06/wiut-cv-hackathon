@@ -11,7 +11,7 @@ detector:
   iou: 0.5
   batch: 16
   half: true              # FP16 on CUDA (T4 has no bf16)
-  max_input_width: 1920   # 4K frames are downscaled in the decode thread; boxes are mapped back
+  max_input_width: 960    # = imgsz: YOLO would shrink anything bigger anyway; boxes are mapped back
   # COCO ids -> our names. Animals are kept for road_obstacle.
   classes: {0: person, 1: bicycle, 2: car, 3: motorcycle, 5: bus, 7: truck,
             16: animal, 17: animal, 18: animal, 19: animal}
