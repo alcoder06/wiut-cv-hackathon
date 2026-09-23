@@ -52,7 +52,7 @@ class Synth:
         info = VideoInfo("synthetic.mp4", FPS, int(self.duration * FPS), W, H)
         tracks = add_kinematics(pd.DataFrame(self.rows, columns=TRACK_COLS),
                                 cfg.kinematics.smooth_window_sec, centered=True)
-        scene = build_scene(tracks, info, cfg)
+        scene = build_scene(tracks, info, cfg, manual={})   # no real-camera zones in tests
         tracks["on_road"] = scene.on_road(tracks["gx"], tracks["gy"])
         return Context(tracks=tracks, frames=pd.DataFrame({"frame": [], "t": []}),
                        scene=scene, info=info, cfg=cfg)

@@ -84,11 +84,14 @@ def track_video(info: VideoInfo, frame_hook: FrameHook | None = None) -> tuple[p
                 rows.append((idx, t, int(tid), names[int(k)], float(c), x1, y1, x2, y2))
         buf.clear()
 
-    deadline = time.perf_counter() + cfg.sampling.part_a_max_x * info.duration
+    # The time cap protects the official run; dev cache builds (TRAFFIC_CACHE set) must be complete.
+    deadline = float("inf") if cache else time.perf_counter() + cfg.sampling.part_a_max_x * info.duration
+    capped = False
     for idx, t, frame, extra in iter_frames(info.path, stride, max_w, frame_hook):
         if time.perf_counter() > deadline:
             print(f"[part A] time cap hit at t={t:.1f}s of {info.duration:.1f}s; "
                   "returning events found so far", file=sys.stderr)
+            capped = True
             break
         if frame_hook is not None:
             frame_rows.append({"frame": idx, "t": t, **extra})
@@ -102,7 +105,7 @@ def track_video(info: VideoInfo, frame_hook: FrameHook | None = None) -> tuple[p
     tracks = drop_short_tracks(tracks, cfg.tracker.min_track_len_sec)
     frames = pd.DataFrame(frame_rows) if frame_rows else pd.DataFrame({"frame": [], "t": []})
 
-    if cache:
+    if cache and not capped:        # never cache a truncated pass
         cache.parent.mkdir(parents=True, exist_ok=True)
         tracks.to_parquet(cache.with_suffix(".tracks.parquet"))
         frames.to_parquet(cache.with_suffix(".frames.parquet"))

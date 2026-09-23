@@ -11,7 +11,16 @@
 
 carriageway: []          # list of polygons; empty = use the learned road mask
 
-crosswalks: []           # list of polygons
+# Drawn on frames at 60 s and 211 s of C3897.MP4 (checked visually against the paint).
+crosswalks:
+  # boulevard
+  - [[0.1862, 0.5522], [0.5844, 0.4867], [0.605, 0.5133], [0.2013, 0.6056]]
+  # right
+  - [[0.62, 0.4889], [0.9656, 0.4333], [0.9781, 0.4667], [0.6281, 0.5222]]
+  # bottom
+  - [[0.1638, 0.7667], [0.2687, 0.7222], [0.4813, 1.0], [0.3219, 1.0]]
+  # lower_left
+  - [[0.0925, 0.6689], [0.1862, 0.6556], [0.245, 0.7389], [0.145, 0.7689]]
 
 solid_lines: []          # list of polylines [[x, y], [x, y], ...]
 

@@ -201,7 +201,11 @@ document.getElementById('export').onclick = () => {
 document.getElementById('imp').onchange = async e => {
   const data = JSON.parse(await e.target.files[0].text());
   const entry = data[videoName] || Object.values(data)[0];
-  if (entry) { events = entry.events; render(); say(`imported ${events.length} events`); }
+  if (entry) {
+    events = entry.events;
+    if (entry.fps) document.getElementById('fps').value = entry.fps;
+    render(); say(`imported ${events.length} events`);
+  }
 };
 </script>
 </body>

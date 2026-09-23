@@ -15,7 +15,6 @@ import numpy as np
 import pandas as pd
 
 from ..kinematics import runs
-from ..scene import in_any, in_polygon
 from . import Context
 
 
@@ -42,9 +41,7 @@ def jaywalking(ctx: Context) -> list[list]:
     for _, g in walkers(ctx).groupby("tid"):
         x = np.clip(g["gx"].to_numpy().astype(int), 0, w - 1)
         y = np.clip(g["gy"].to_numpy().astype(int), 0, h - 1)
-        on_road = road[y, x] > 0
-        if ctx.scene.crosswalks:
-            on_road &= ~np.array([in_any(ctx.scene.crosswalks, a, b) for a, b in zip(x, y)])
+        on_road = (road[y, x] > 0) & (ctx.scene.crosswalk_at(x, y) == 0)
         t = g["t"].to_numpy()
         for i, j in runs(on_road):
             if t[j] - t[i] >= c.min_len_sec:
@@ -53,31 +50,39 @@ def jaywalking(ctx: Context) -> list[list]:
 
 
 def failure_to_yield(ctx: Context) -> list[list]:
+    """A moving vehicle inside a crosswalk while a pedestrian on (or stepping onto) the SAME
+    crosswalk is near its path. "Near" matters: the boulevard crossing here spans 7+ lanes,
+    and a person at the far end is not being cut off by a car at the near end (without this,
+    the sample video produced 25 detections in 5 minutes)."""
     if not ctx.scene.crosswalks:
         return []
     c, k = ctx.cfg.rules.failure_to_yield, ctx.cfg.kinematics
     people = walkers(ctx)
+    veh = ctx.vehicles()
+    if people.empty or veh.empty:
+        return []
+    ped = people.assign(cw=ctx.scene.crosswalk_at(people["gx"], people["gy"], grow_px=c.ped_margin_px))
+    ped = ped[ped["cw"] > 0][["frame", "cw", "gx", "gy"]]
+    veh = veh.assign(cw=ctx.scene.crosswalk_at(veh["gx"], veh["gy"]))
+
+    # vehicle rows with a pedestrian on the same crosswalk, in the same frame, close to it
+    m = veh[veh["cw"] > 0].reset_index().merge(ped, on=["frame", "cw"], suffixes=("", "_p"))
+    # "near" in car lengths, capped at a normal car: a bus's box is so big that 2.5 bus
+    # sizes covered half the intersection
+    car_size = ctx.vehicles().loc[lambda d: d["cls"] == "car", "size"].median()
+    reach = c.near_sizes * np.minimum(m["size"], car_size if np.isfinite(car_size) else m["size"])
+    close = np.hypot(m["gx"] - m["gx_p"], m["gy"] - m["gy_p"]) < reach
+    conflict_rows = set(m.loc[close, "index"])
+
     events = []
-    for cw in ctx.scene.crosswalks:
-        grown = _grow(cw, c.ped_margin_px)
-        ped_frames = set(people.loc[[in_polygon(grown, x, y) for x, y in zip(people["gx"], people["gy"])], "frame"]) \
-            if not people.empty else set()
-        if not ped_frames:
-            continue
-        for _, g in ctx.vehicles().groupby("tid"):
-            inside = np.array([in_polygon(cw, x, y) for x, y in zip(g["gx"], g["gy"])])
-            t, frames, speed = g["t"].to_numpy(), g["frame"].to_numpy(), g["speed"].to_numpy()
-            for i, j in runs(inside):
-                if speed[i: j + 1].max() > k.moving_speed and ped_frames & set(frames[i: j + 1]):
-                    events.append([t[i], t[j], "failure_to_yield"])
+    for _, g in veh.groupby("tid"):
+        cw, t, speed = g["cw"].to_numpy(), g["t"].to_numpy(), g["speed"].to_numpy()
+        conflict = g.index.isin(conflict_rows)
+        for i in np.unique(cw[cw > 0]):
+            for a_, b_ in runs(cw == i):
+                if speed[a_: b_ + 1].max() > k.moving_speed and conflict[a_: b_ + 1].any():
+                    events.append([t[a_], t[b_], "failure_to_yield"])
     return events
-
-
-def _grow(poly: np.ndarray, px: float) -> np.ndarray:
-    centre = poly.mean(axis=0)
-    d = poly - centre
-    scale = 1 + px / (np.linalg.norm(d, axis=1).mean() + 1e-9)
-    return (centre + d * scale).astype(np.float32)
 
 
 def detect(ctx: Context) -> list[list]:

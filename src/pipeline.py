@@ -15,9 +15,10 @@ from .tracking import track_video
 from .video import VideoInfo, probe
 
 
-def build_scene(tracks, info: VideoInfo, cfg) -> Scene:
+def build_scene(tracks, info: VideoInfo, cfg, manual: dict | None = None) -> Scene:
     """Flow learned from this video, plus the one prebuilt from the sample videos
-    (same camera) when it exists at the same resolution: more data, steadier lanes."""
+    (same camera) when it exists at the same resolution: more data, steadier lanes.
+    `manual` overrides configs/scene.yaml (tests pass {} to stay camera-independent)."""
     flow = FlowField.learn(tracks, info.width, info.height,
                            grid_for(info.width, cfg.scene.cells_across), cfg.kinematics.moving_speed)
     prebuilt = resolve(cfg.scene.learned)
@@ -25,7 +26,9 @@ def build_scene(tracks, info: VideoInfo, cfg) -> Scene:
         base = FlowField.load(prebuilt)
         if (base.width, base.height, base.grid) == (flow.width, flow.height, flow.grid):
             flow = flow.merged(base)
-    return Scene.build(load_manual(resolve(cfg.scene.manual)), flow, cfg.scene.min_cell_obs)
+    if manual is None:
+        manual = load_manual(resolve(cfg.scene.manual))
+    return Scene.build(manual, flow, cfg.scene.min_cell_obs)
 
 
 def analyse(path: str) -> tuple[Context, list[list]]:

@@ -83,6 +83,7 @@ rules:
     road_erode_px: 12     # ignore people standing on the kerb edge
   failure_to_yield:
     ped_margin_px: 20
+    near_sizes: 2.5       # pedestrian within this many vehicle sizes of the vehicle
   red_light:
     vote_sec: 1.0         # majority vote window for the signal colour
     red_min_frac: 0.02    # share of ROI pixels that must be red

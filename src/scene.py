@@ -131,6 +131,7 @@ class Scene:
     approaches: list[Approach] = field(default_factory=list)
     u_turn_prohibited: list[np.ndarray] = field(default_factory=list)
     forbidden_moves: list[tuple[np.ndarray, np.ndarray]] = field(default_factory=list)
+    _cache: dict = field(default_factory=dict, repr=False)
 
     @classmethod
     def build(cls, manual: dict, flow: FlowField, min_obs: int) -> "Scene":
@@ -157,6 +158,27 @@ class Scene:
         xi = np.clip(np.asarray(x).astype(int), 0, self.width - 1)
         yi = np.clip(np.asarray(y).astype(int), 0, self.height - 1)
         return self.road[yi, xi] > 0
+
+    def crosswalk_at(self, x, y, grow_px: int = 0) -> np.ndarray:
+        """Index+1 of the crosswalk under each point (0 = none), optionally grown by grow_px.
+
+        Polygons are painted into a mask once and cached, so a lookup is one array index
+        instead of a Python-level polygon test per point (that cost minutes per video).
+        """
+        key = ("crosswalk_mask", grow_px)
+        if key not in self._cache:
+            mask = np.zeros((self.height, self.width), np.uint8)
+            for i, poly in enumerate(self.crosswalks):
+                layer = np.zeros_like(mask)
+                cv2.fillPoly(layer, [poly.astype(np.int32)], 1)
+                if grow_px:
+                    layer = cv2.dilate(layer, np.ones((2 * grow_px + 1,) * 2, np.uint8))
+                mask[(layer > 0) & (mask == 0)] = i + 1
+            self._cache[key] = mask
+        mask = self._cache[key]
+        xi = np.clip(np.asarray(x).astype(int), 0, self.width - 1)
+        yi = np.clip(np.asarray(y).astype(int), 0, self.height - 1)
+        return mask[yi, xi]
 
     def lane_direction(self, x: np.ndarray, y: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
         unit, coherence = self.flow.direction()
