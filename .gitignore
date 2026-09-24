@@ -13,3 +13,7 @@ out/
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# frames cut from the sample footage (local debugging only, never pushed)
+dev/*.png
+dev/*.jpg
