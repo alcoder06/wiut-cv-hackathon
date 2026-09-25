@@ -46,6 +46,8 @@ scene:
 segments:
   max_gap_sec: 1.0        # merge same-class fragments closer than this
   min_len_sec: 0.5        # drop blips shorter than this
+  # per-class [start_shift, end_shift] in seconds, fitted by scripts/tune.py against dev labels
+  boundary_shift: {}
 
 # Only classes listed here are ever emitted. A class we emit that is not in the test set
 # adds a zero to the macro-F1, so rare classes stay off until the samples prove the rule.

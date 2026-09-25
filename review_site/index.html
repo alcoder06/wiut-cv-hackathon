@@ -95,6 +95,11 @@
   .hint { font-size: 12px; color: var(--muted); }
 
   .queue { display: grid; gap: 10px; }
+  .data { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: grid; gap: 8px; }
+  .data .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .data input[type=file] { font-size: 13px; max-width: 100%; }
+  .data .summary { font-size: 13px; }
+  .data .summary.warn { color: var(--rejected); }
   .filters { display: flex; flex-wrap: wrap; gap: 6px; }
   .chip { border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 3px 11px; font-size: 13px; }
   .chip[aria-pressed="true"] { background: var(--ink); color: var(--ground); border-color: var(--ink); }
@@ -180,6 +185,23 @@
     </section>
 
     <section class="queue" aria-label="Detections">
+      <div class="data" aria-label="Files">
+        <h2>Files</h2>
+        <div class="row" id="importRow">
+          <label for="importFile" class="hint">Load results (predictions.json or a labels file)</label>
+          <input type="file" id="importFile" accept=".json,application/json">
+        </div>
+        <div class="row" id="importConfirm" hidden>
+          <span class="summary" id="importSummary"></span>
+          <button class="btn primary" id="importGo">Load them</button>
+          <button class="btn" id="importCancel">Cancel</button>
+        </div>
+        <div class="row" id="exportRow">
+          <button class="btn" id="exportKey">Download answer key</button>
+          <button class="btn" id="exportFull">Download full review</button>
+        </div>
+        <div class="hint" id="filesHint">The answer key is in the organizers' ground_truth.json format: only events marked real, with fixed times. Put it in dev/labels/ in the project.</div>
+      </div>
       <div class="filters" role="group" aria-label="Show">
         <button class="chip" data-f="pending" aria-pressed="true">To review</button>
         <button class="chip" data-f="all" aria-pressed="false">All</button>
@@ -399,6 +421,128 @@ $("markEnd").onclick = async () => {
   }
 };
 
+// ---------- files: load results, download answers ----------
+const VIDEO = "C3897.MP4";
+let downloads = null, staged = null;
+function tiou(a, b) {
+  const inter = Math.max(0, Math.min(a.end, b.end) - Math.max(a.start, b.start));
+  const union = (a.end - a.start) + (b.end - b.start) - inter;
+  return union > 0 ? inter / union : 0;
+}
+// Accepts the harness output {videos: {name: {events}}}, the organizers' ground truth
+// {name: {duration, fps, events}}, or this page's full review {video, events: [{...}]}.
+function parseResults(obj) {
+  const pick = map => {
+    const names = Object.keys(map || {});
+    const name = names.find(n => n.toLowerCase() === VIDEO.toLowerCase()) || (names.length === 1 ? names[0] : null);
+    return name ? { name, entry: map[name] } : null;
+  };
+  let kind, hit;
+  if (obj && obj.videos && typeof obj.videos === "object") { kind = "predictions"; hit = pick(obj.videos); }
+  else if (obj && Array.isArray(obj.events) && obj.video) {
+    kind = "labels";
+    hit = { name: obj.video, entry: { events: obj.events.filter(e => e.status === "yes").map(e => [e.start, e.end, e.label]) } };
+  }
+  else { kind = "labels"; hit = pick(obj); }
+  if (!hit || !hit.entry || !Array.isArray(hit.entry.events)) throw new Error("No events for " + VIDEO + " in this file.");
+  const evs = hit.entry.events
+    .filter(e => Array.isArray(e) && e.length === 3 && +e[1] > +e[0] && QUESTIONS[e[2]])
+    .map(([a, b, c]) => ({ start: +a, end: +b, label: c }));
+  return { kind, name: hit.name, events: evs };
+}
+function planImport(st) {
+  const cur = Object.entries(events);
+  const add = [], matched = new Set();
+  let skip = 0;
+  st.events.forEach(ev => {
+    const m = cur.find(([, x]) => x.label === ev.label && tiou(eff(x), ev) >= 0.5);
+    if (m) { skip++; matched.add(m[0]); } else add.push(ev);
+  });
+  // a new run replaces the system's unanswered guesses; answers and team additions are kept
+  const remove = st.kind === "predictions"
+    ? cur.filter(([id, x]) => !matched.has(id) && (x.status || "pending") === "pending" && x.source !== "added").map(([id]) => id)
+    : [];
+  return { add, skip, remove };
+}
+$("importFile").addEventListener("change", async e => {
+  const f = e.target.files[0]; if (!f) return;
+  try {
+    staged = parseResults(JSON.parse(await f.text()));
+    const other = staged.name.toLowerCase() !== VIDEO.toLowerCase();
+    const plan = planImport(staged);
+    $("importSummary").textContent =
+      staged.events.length + " events for " + staged.name +
+      (staged.kind === "predictions" ? " (system detections): " : " (confirmed labels): ") +
+      plan.add.length + " new, " + plan.skip + " already here" +
+      (plan.remove.length ? ", " + plan.remove.length + " unanswered old detections removed" : "") +
+      (other ? ". Warning: the clips on this page are " + VIDEO + "." : ".");
+    $("importSummary").className = "summary" + (other ? " warn" : "");
+    $("importConfirm").hidden = false;
+  } catch (err) {
+    staged = null; $("importConfirm").hidden = true;
+    toast(err instanceof SyntaxError ? "That file isn't valid JSON." : err.message);
+  }
+});
+$("importCancel").onclick = () => { staged = null; $("importConfirm").hidden = true; $("importFile").value = ""; };
+$("importGo").onclick = async () => {
+  if (!staged) return;
+  if (!db) return toast("Saving isn't available in this view.");
+  const plan = planImport(staged);
+  const labels = staged.kind === "labels";
+  $("importGo").disabled = true;
+  try {
+    for (const ev of plan.add) {
+      await db.collection("events").add({ ...ev, source: labels ? "added" : "system", status: labels ? "yes" : "pending", by: myId, at: new Date().toISOString() });
+    }
+    for (const id of plan.remove) await db.doc("events/" + id).delete();
+    toast("Loaded " + plan.add.length + " new" + (plan.remove.length ? ", removed " + plan.remove.length + " old" : ""));
+    $("importCancel").click();
+  } catch (err) {
+    toast(err && err.code === "quota_exceeded" ? "The review database is full." : "Loading stopped part-way. You may need Contributor access; reload and try again.");
+  } finally { $("importGo").disabled = false; }
+};
+
+function answerKey() {
+  const byClass = {};
+  Object.values(events).filter(x => x.status === "yes").forEach(x => {
+    const a = eff(x); (byClass[x.label] ??= []).push([a.start, a.end]);
+  });
+  const out = [];
+  Object.entries(byClass).forEach(([label, ivs]) => {
+    ivs.sort((p, q) => p[0] - q[0]);
+    const merged = [];
+    ivs.forEach(([s, e]) => {           // same-class overlaps become one segment (FAQ rule)
+      const last = merged[merged.length - 1];
+      if (last && s <= last[1]) last[1] = Math.max(last[1], e); else merged.push([s, e]);
+    });
+    merged.forEach(([s, e]) => out.push([+s.toFixed(3), +Math.min(e, DURATION).toFixed(3), label]));
+  });
+  out.sort((p, q) => p[0] - q[0]);
+  return { [VIDEO]: { duration: DURATION, fps: FPS, events: out } };
+}
+async function saveFile(filename, obj, what) {
+  if (!downloads) return toast("Downloads aren't available in this view.");
+  try {
+    await downloads.save({ filename, data: JSON.stringify(obj, null, 1) });
+    toast(what + " saved");
+  } catch (err) {
+    if (err && err.code !== "declined") toast("Couldn't save the file (" + (err.code || "error") + ").");
+  }
+}
+$("exportKey").onclick = () => {
+  const pending = Object.values(events).filter(x => (x.status || "pending") === "pending").length;
+  if (pending) toast(pending + " detections are still unreviewed and are left out.");
+  saveFile("C3897_labels.json", answerKey(), "Answer key");
+};
+$("exportFull").onclick = () => saveFile("C3897_review_full.json", {
+  video: VIDEO, exported_at: new Date().toISOString(),
+  events: sortedIds().map(id => {
+    const x = events[id], a = eff(x);
+    return { id, label: x.label, start: a.start, end: a.end, system_start: x.start, system_end: x.end,
+             status: x.status || "pending", source: x.source || "system" };
+  })
+}, "Full review");
+
 // ---------- rendering ----------
 async function render() {
   const ids = sortedIds();
@@ -492,8 +636,10 @@ async function render() {
 // ---------- boot ----------
 render();
 (async () => {
-  const [d, u] = await Promise.all([window.claude?.use?.("db"), window.claude?.use?.("user")]);
-  db = d || null; user = u || null;
+  const [d, u, dl] = await Promise.all([window.claude?.use?.("db"), window.claude?.use?.("user"), window.claude?.use?.("downloads")]);
+  db = d || null; user = u || null; downloads = dl || null;
+  if (!downloads) { $("exportRow").hidden = true; $("filesHint").textContent = "Downloading files isn't available in this view."; }
+  if (user && (await user.can("data.write")) === false) $("importRow").hidden = true;
   if (!db) {
     $("conn").textContent = "Shared answers are unavailable in this view.";
     $("conn").className = "conn bad";

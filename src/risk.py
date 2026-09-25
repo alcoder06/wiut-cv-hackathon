@@ -60,8 +60,8 @@ class CausalRisk:
         path = resolve(self.cfg.scene.learned)
         if not path.exists():
             return None
-        flow = FlowField.load(path)
-        return flow.road_mask(self.cfg.scene.min_cell_obs) if (flow.width, flow.height) == (w, h) else None
+        flow = FlowField.load(path).rescaled(w, h)
+        return flow.road_mask(self.cfg.scene.min_cell_obs) if flow is not None else None
 
     def step(self, frame: np.ndarray, t: float) -> float:
         """Detection runs in a worker thread so it overlaps the harness decoding the next

@@ -20,6 +20,10 @@ def stationary_runs(ctx: Context) -> list[dict]:
     k = ctx.cfg.kinematics
     out = []
     for tid, g in ctx.vehicles().groupby("tid"):
+        # Never seen moving = parked. The learned road area spills onto kerbside parking,
+        # and nothing around a parked car stops with it, so the queue test can't catch it.
+        if (g["speed"].to_numpy() <= k.moving_speed).all():
+            continue
         stopped = (g["speed"].to_numpy() < k.stopped_speed) & g["on_road"].to_numpy()
         t = g["t"].to_numpy()
         boxes = g[["x1", "y1", "x2", "y2"]].to_numpy()

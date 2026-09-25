@@ -23,11 +23,24 @@ class Cfg(dict):
         return Cfg(value) if isinstance(value, dict) and not isinstance(value, Cfg) else value
 
 
+def deep_merge(base: dict, over: dict) -> dict:
+    out = dict(base)
+    for k, v in over.items():
+        out[k] = deep_merge(out[k], v) if isinstance(v, dict) and isinstance(out.get(k), dict) else v
+    return out
+
+
 @lru_cache(maxsize=None)
 def load_config(path: str | None = None) -> Cfg:
+    """configs/pipeline.yaml, with configs/tuned.yaml (written by scripts/tune.py) on top.
+    Delete tuned.yaml to go back to the hand-set values."""
     path = Path(path) if path else ROOT / "configs" / "pipeline.yaml"
     with open(path, encoding="utf-8") as f:
-        return Cfg(yaml.safe_load(f))
+        cfg = yaml.safe_load(f)
+    tuned = path.parent / "tuned.yaml"
+    if tuned.exists():
+        cfg = deep_merge(cfg, yaml.safe_load(tuned.read_text(encoding="utf-8")) or {})
+    return Cfg(cfg)
 
 
 def resolve(rel: str) -> Path:

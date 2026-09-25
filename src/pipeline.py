@@ -23,12 +23,19 @@ def build_scene(tracks, info: VideoInfo, cfg, manual: dict | None = None) -> Sce
                            grid_for(info.width, cfg.scene.cells_across), cfg.kinematics.moving_speed)
     prebuilt = resolve(cfg.scene.learned)
     if prebuilt.exists():
-        base = FlowField.load(prebuilt)
-        if (base.width, base.height, base.grid) == (flow.width, flow.height, flow.grid):
+        base = FlowField.load(prebuilt).rescaled(info.width, info.height)
+        if base is not None and base.grid == flow.grid:
             flow = flow.merged(base)
     if manual is None:
         manual = load_manual(resolve(cfg.scene.manual))
     return Scene.build(manual, flow, cfg.scene.min_cell_obs)
+
+
+def shift_boundaries(events: list[list], cfg) -> list[list]:
+    """Per-class start/end corrections learned from labels (scripts/tune.py). A rule that
+    fires consistently 0.8 s late loses IoU 0.7 matches a constant shift wins back."""
+    shifts = cfg.segments.get("boundary_shift") or {}
+    return [[s + shifts.get(c, (0, 0))[0], e + shifts.get(c, (0, 0))[1], c] for s, e, c in events]
 
 
 def analyse(path: str) -> tuple[Context, list[list]]:
@@ -55,7 +62,7 @@ def analyse(path: str) -> tuple[Context, list[list]]:
         except Exception:  # one broken rule must not empty the whole video
             print(f"[{detector.__module__}] failed:\n{traceback.format_exc()}", file=sys.stderr)
 
-    events = finalize(raw, info.duration, cfg.segments.max_gap_sec, cfg.segments.min_len_sec)
+    events = finalize(shift_boundaries(raw, cfg), info.duration, cfg.segments.max_gap_sec, cfg.segments.min_len_sec)
     print(f"[part A] {info.path}: {len(tracks)} track rows, {len(events)} events, "
           f"tracking {t_track:.1f}s, total {time.perf_counter() - t0:.1f}s", file=sys.stderr)
     return ctx, events

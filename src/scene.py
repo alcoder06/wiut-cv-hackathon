@@ -46,6 +46,17 @@ class FlowField:
         return FlowField(self.grid, self.width, self.height,
                          self.count + other.count, self.dir_sum + other.dir_sum)
 
+    def rescaled(self, width: int, height: int) -> "FlowField | None":
+        """The same field for another resolution of the same view, or None if it can't be.
+        The grid is a fixed fraction of the frame (grid_for), so a 4K and a 1080p recording
+        of this camera have identical cell layouts: only the pixel size per cell changes."""
+        if abs(self.width / self.height - width / height) > 0.01:
+            return None
+        grid = max(8, round(self.grid * width / self.width))
+        if (-(-height // grid), -(-width // grid)) != self.count.shape:
+            return None
+        return FlowField(grid, width, height, self.count, self.dir_sum)
+
     def save(self, path: Path) -> None:
         np.savez_compressed(path, grid=self.grid, width=self.width, height=self.height,
                             count=self.count, dir_sum=self.dir_sum)
