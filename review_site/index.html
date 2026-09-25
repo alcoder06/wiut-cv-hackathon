@@ -1,0 +1,518 @@
+<title>C3897 Event Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ground: #F3F4F1;
+    --panel: #FFFFFF;
+    --ink: #1A211E;
+    --muted: #5E6863;
+    --line: #DADDD6;
+    --accent: #D99A00;
+    --accent-ink: #1A211E;
+    --accent-soft: #F7E7BE;
+    --kept: #2F8A5B;
+    --kept-soft: #DDEFE3;
+    --rejected: #C4473B;
+    --rejected-soft: #F6DEDA;
+    --pending: #7A8580;
+    --pending-soft: #E7EAE5;
+    --added: #3B6FB6;
+    --track: #E4E7E1;
+    --shadow: 0 1px 2px rgba(20, 30, 25, .06), 0 6px 20px rgba(20, 30, 25, .06);
+    --display: "IBM Plex Sans Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+    --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --ground: #161B19; --panel: #1F2522; --ink: #E7EBE8; --muted: #9AA59F; --line: #323A36;
+      --accent: #F0B429; --accent-ink: #161B19; --accent-soft: #3D3319;
+      --kept: #5CC08A; --kept-soft: #1E3A2B; --rejected: #EE7A6D; --rejected-soft: #45241F;
+      --pending: #97A29D; --pending-soft: #2A312E; --added: #7FA8E6; --track: #2A312E;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 20px rgba(0, 0, 0, .25);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --ground: #161B19; --panel: #1F2522; --ink: #E7EBE8; --muted: #9AA59F; --line: #323A36;
+    --accent: #F0B429; --accent-ink: #161B19; --accent-soft: #3D3319;
+    --kept: #5CC08A; --kept-soft: #1E3A2B; --rejected: #EE7A6D; --rejected-soft: #45241F;
+    --pending: #97A29D; --pending-soft: #2A312E; --added: #7FA8E6; --track: #2A312E;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 20px rgba(0, 0, 0, .25);
+  }
+
+  * { box-sizing: border-box; }
+  body { background: var(--ground); color: var(--ink); font: 15px/1.5 var(--body); padding-inline: 16px; padding-block: 18px 40px; }
+  .wrap { max-width: 1320px; margin-inline: auto; display: grid; gap: 18px; }
+  h1, h2 { font-family: var(--display); font-weight: 600; letter-spacing: .01em; text-wrap: balance; margin: 0; }
+  h1 { font-size: 26px; line-height: 1.15; }
+  h2 { font-size: 17px; }
+  .eyebrow { font: 500 11px/1 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  header.top { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; }
+  .intro { color: var(--muted); max-width: 62ch; margin: 6px 0 0; }
+  .tally { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .tally .bar { width: 220px; max-width: 60vw; height: 8px; border-radius: 4px; background: var(--track); overflow: hidden; display: flex; }
+  .tally .bar span { display: block; height: 100%; }
+  .tally .nums { font-size: 13px; color: var(--muted); }
+  .conn { font-size: 12px; color: var(--muted); }
+  .conn.bad { color: var(--rejected); }
+
+  .layout { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+
+  .stage { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); display: grid; gap: 10px; }
+  @media (max-width: 900px) { .stage { position: static; } }
+  .screen { background: #000; border-radius: 10px; overflow: hidden; aspect-ratio: 16 / 9; max-width: 100%; position: relative; box-shadow: var(--shadow); }
+  .screen video { width: 100%; height: 100%; display: block; object-fit: contain; }
+  .screen .overlay { position: absolute; inset: 0; display: grid; place-items: center; color: #e8ece9; font-size: 14px; text-align: center; padding: 20px; background: rgba(0,0,0,.55); }
+  .hud { position: absolute; left: 10px; top: 10px; display: flex; gap: 6px; flex-wrap: wrap; pointer-events: none; }
+  .hud span { background: rgba(0,0,0,.62); color: #fff; border-radius: 4px; padding: 2px 8px; font: 500 12px/1.6 var(--mono); }
+  .hud .live { background: var(--accent); color: #1A211E; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .btn { border: 1px solid var(--line); background: var(--panel); border-radius: 7px; padding: 6px 12px; font-size: 14px; }
+  .btn:hover { border-color: var(--muted); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+  .clock { margin-left: auto; font: 500 15px var(--mono); font-variant-numeric: tabular-nums; }
+
+  .timeline { position: relative; height: 54px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; cursor: pointer; overflow: hidden; }
+  .timeline .mark { position: absolute; height: 8px; border-radius: 2px; min-width: 3px; }
+  .timeline .head { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--ink); pointer-events: none; }
+  .timeline .scale { position: absolute; left: 0; right: 0; bottom: 2px; display: flex; justify-content: space-between; padding-inline: 6px; font: 10px var(--mono); color: var(--muted); pointer-events: none; }
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--muted); }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+
+  .addbox { background: var(--panel); border: 1px dashed var(--line); border-radius: 10px; padding: 12px; display: grid; gap: 8px; }
+  .addbox .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  select { font: inherit; color: inherit; background: var(--panel); border: 1px solid var(--line); border-radius: 7px; padding: 6px 8px; }
+  .hint { font-size: 12px; color: var(--muted); }
+
+  .queue { display: grid; gap: 10px; }
+  .filters { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 3px 11px; font-size: 13px; }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--ground); border-color: var(--ink); }
+  .list { display: grid; gap: 6px; max-height: calc(100vh - 150px); overflow-y: auto; padding-right: 2px; }
+  @media (max-width: 900px) { .list { max-height: none; } }
+
+  .item { background: var(--panel); border: 1px solid var(--line); border-radius: 9px; padding: 10px 12px; display: grid; gap: 6px; cursor: pointer; }
+  .item:hover { border-color: var(--muted); }
+  .item.current { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); cursor: default; }
+  .item .line1 { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .label { font: 600 14px var(--display); letter-spacing: .02em; }
+  .times { font: 13px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+  .pill { margin-left: auto; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; border-radius: 4px; padding: 2px 7px; }
+  .pill.pending { background: var(--pending-soft); color: var(--pending); }
+  .pill.yes { background: var(--kept-soft); color: var(--kept); }
+  .pill.no { background: var(--rejected-soft); color: var(--rejected); }
+  .src { font-size: 11px; color: var(--added); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+  .question { margin: 0; font-size: 14px; }
+  .who { font-size: 12px; color: var(--muted); }
+  .decide { display: flex; flex-wrap: wrap; gap: 8px; }
+  .decide .yes { background: var(--kept); border-color: var(--kept); color: #fff; font-weight: 600; }
+  .decide .no { background: var(--rejected); border-color: var(--rejected); color: #fff; font-weight: 600; }
+  .fix { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 13px; }
+  .fix .btn { padding: 3px 9px; font-size: 13px; }
+  .kbd { font: 11px var(--mono); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; color: var(--muted); }
+  .toast { position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); transform: translateX(-50%); background: var(--ink); color: var(--ground); padding: 8px 14px; border-radius: 8px; font-size: 14px; box-shadow: var(--shadow); }
+  @media (prefers-reduced-motion: no-preference) { .item { transition: border-color .15s, box-shadow .15s; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow">WIUT Hackathon · camera C3897 · 5 min 18 s</div>
+      <h1>C3897 Event Review</h1>
+      <p class="intro">The system flagged these moments in the sample video. For each one, watch the clip and answer the question: is this really that event? Your answers are shared with the team and become the answer key for scoring.</p>
+    </div>
+    <div class="tally" aria-live="polite">
+      <div class="bar" id="bar"></div>
+      <div class="nums" id="nums">Loading…</div>
+      <div class="conn" id="conn"></div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <section class="stage" aria-label="Video">
+      <div class="screen">
+        <video id="video" playsinline muted preload="auto"></video>
+        <div class="hud" id="hud"></div>
+        <div class="overlay" id="overlay">Loading the video clips…</div>
+      </div>
+      <div class="controls">
+        <button class="btn primary" id="play">Play</button>
+        <button class="btn" id="back2">−2 s</button>
+        <button class="btn" id="fwd2">+2 s</button>
+        <button class="btn" id="stepB" title="One frame back">◀ frame</button>
+        <button class="btn" id="stepF" title="One frame forward">frame ▶</button>
+        <button class="btn" id="rate">1×</button>
+        <span class="clock" id="clock">0.00 s</span>
+      </div>
+      <div class="timeline" id="timeline" role="slider" aria-label="Video position" tabindex="0" aria-valuemin="0" aria-valuemax="318" aria-valuenow="0">
+        <div class="scale"><span>0:00</span><span>1:00</span><span>2:00</span><span>3:00</span><span>4:00</span><span>5:00</span></div>
+        <div class="head" id="head"></div>
+      </div>
+      <div class="legend">
+        <span><i style="background:var(--pending)"></i>to review</span>
+        <span><i style="background:var(--kept)"></i>real</span>
+        <span><i style="background:var(--rejected)"></i>not real</span>
+        <span><i style="background:var(--added)"></i>added by the team</span>
+        <span><i style="background:var(--accent)"></i>selected</span>
+      </div>
+      <div class="addbox">
+        <h2>Spotted something the system missed?</h2>
+        <div class="row">
+          <label for="addClass" class="hint">Event</label>
+          <select id="addClass"></select>
+          <button class="btn" id="markStart">Mark start</button>
+          <button class="btn" id="markEnd">Mark end &amp; add</button>
+          <span class="hint mono" id="addState">Start not marked</span>
+        </div>
+        <div class="hint">Play the video to where it starts, press Mark start, play to where it ends, press Mark end &amp; add.</div>
+      </div>
+      <div class="hint">Keys: <span class="kbd">Space</span> play/pause · <span class="kbd">Y</span> real · <span class="kbd">N</span> not real · <span class="kbd">J</span>/<span class="kbd">K</span> next/previous · <span class="kbd">,</span>/<span class="kbd">.</span> one frame</div>
+    </section>
+
+    <section class="queue" aria-label="Detections">
+      <div class="filters" role="group" aria-label="Show">
+        <button class="chip" data-f="pending" aria-pressed="true">To review</button>
+        <button class="chip" data-f="all" aria-pressed="false">All</button>
+        <button class="chip" data-f="yes" aria-pressed="false">Real</button>
+        <button class="chip" data-f="no" aria-pressed="false">Not real</button>
+      </div>
+      <div class="list" id="list"></div>
+    </section>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const FPS = 29.97;
+const DURATION = 317.8;
+const QUESTIONS = {
+  jaywalking: "Is a person walking on the road, not on the zebra stripes?",
+  failure_to_yield: "Does a vehicle drive over the zebra stripes while a person is on them or stepping onto them?",
+  stopped_vehicle: "Is a vehicle standing still for 10 seconds or more, and not because of a red light or a line of cars? (A bus at its stop is no.)",
+  congestion: "Are all lanes of one direction stuck or crawling, and does the jam fail to clear when the light turns green?",
+  near_miss: "Does someone brake hard or swerve to avoid hitting a car or person, without touching?",
+  wrong_way: "Is a vehicle driving against the direction of its lane, or in the oncoming lanes? A normal turn is no.",
+  accident: "Do two road users (or a vehicle and an object) actually touch?",
+  red_light: "Does a vehicle cross the stop line while its light is red?",
+  stop_line: "Does a vehicle stop past the stop line on red, without entering the intersection?",
+  illegal_u_turn: "Does a vehicle make a U-turn where it isn't allowed?",
+  illegal_turn: "Does a vehicle turn from the wrong lane or in a forbidden direction?",
+  solid_line_crossing: "Does a vehicle cross a solid lane line?",
+  road_obstacle: "Is there debris, an animal or a fallen object on the road?",
+  fire_smoke: "Is there visible fire or smoke?"
+};
+const CLASSES = Object.keys(QUESTIONS);
+const PRETTY = c => c.replace(/_/g, " ");
+const fmt = s => (Math.max(0, s)).toFixed(2) + " s";
+const $ = id => document.getElementById(id);
+
+let db = null, user = null, myId = null;
+let clips = [];            // [{id, n, start, end, src}] sorted by start
+let events = {};           // id -> doc body
+let filter = "pending";
+let currentId = null;
+let clipIdx = -1;
+let stopAt = null;         // virtual time at which playback pauses (end of the selected event + 1 s)
+let pendingStart = null;
+let names = {};
+
+// ---------- virtual timeline across the clips ----------
+const video = $("video");
+function clipFor(t) {
+  for (let i = 0; i < clips.length; i++) if (t < clips[i].end || i === clips.length - 1) return i;
+  return 0;
+}
+function vtime() { return clipIdx < 0 ? 0 : clips[clipIdx].start + (video.currentTime || 0); }
+function seek(t, play) {
+  if (!clips.length) return;
+  t = Math.min(Math.max(0, t), DURATION - 0.05);
+  const i = clipFor(t);
+  const local = t - clips[i].start;
+  if (i !== clipIdx) {
+    clipIdx = i;
+    video.src = clips[i].src;
+    video.addEventListener("loadedmetadata", function once() {
+      video.removeEventListener("loadedmetadata", once);
+      video.currentTime = local;
+      if (play) video.play().catch(() => {});
+    });
+  } else {
+    video.currentTime = local;
+    if (play) video.play().catch(() => {});
+  }
+  paintClock(t);
+}
+video.addEventListener("ended", () => {
+  if (clipIdx < clips.length - 1) seek(clips[clipIdx + 1].start + 0.01, true);
+});
+video.addEventListener("timeupdate", () => {
+  const t = vtime();
+  paintClock(t);
+  if (stopAt !== null && t >= stopAt) { video.pause(); stopAt = null; }
+});
+video.addEventListener("play", () => $("play").textContent = "Pause");
+video.addEventListener("pause", () => $("play").textContent = "Play");
+video.addEventListener("error", () => { $("overlay").hidden = false; $("overlay").textContent = "This clip could not be played. Try reloading the page."; });
+video.addEventListener("loadeddata", () => { $("overlay").hidden = true; });
+
+function paintClock(t) {
+  $("clock").textContent = fmt(t) + "  ·  frame " + Math.round(t * FPS);
+  $("head").style.left = (100 * t / DURATION) + "%";
+  $("timeline").setAttribute("aria-valuenow", t.toFixed(1));
+  const ev = currentId && events[currentId];
+  const hud = $("hud"); hud.replaceChildren();
+  if (ev) {
+    const a = eff(ev);
+    const inside = t >= a.start && t <= a.end;
+    const s = document.createElement("span");
+    s.className = inside ? "live" : "";
+    s.textContent = (inside ? "▶ " : "") + PRETTY(ev.label) + "  " + a.start.toFixed(1) + "–" + a.end.toFixed(1) + " s";
+    hud.append(s);
+  }
+}
+
+// ---------- controls ----------
+$("play").onclick = () => { video.paused ? (stopAt = null, video.play().catch(() => {})) : video.pause(); };
+$("back2").onclick = () => seek(vtime() - 2, !video.paused);
+$("fwd2").onclick = () => seek(vtime() + 2, !video.paused);
+$("stepB").onclick = () => { video.pause(); seek(vtime() - 1 / FPS, false); };
+$("stepF").onclick = () => { video.pause(); seek(vtime() + 1 / FPS, false); };
+const RATES = [1, 2, 0.5, 0.25];
+$("rate").onclick = () => {
+  const i = (RATES.indexOf(video.playbackRate) + 1) % RATES.length;
+  video.playbackRate = RATES[i]; $("rate").textContent = RATES[i] + "×";
+};
+$("timeline").addEventListener("click", e => {
+  const r = e.currentTarget.getBoundingClientRect();
+  stopAt = null; seek((e.clientX - r.left) / r.width * DURATION, !video.paused);
+});
+$("timeline").addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft") { e.preventDefault(); seek(vtime() - 2, !video.paused); }
+  if (e.key === "ArrowRight") { e.preventDefault(); seek(vtime() + 2, !video.paused); }
+});
+document.querySelectorAll(".chip").forEach(b => b.onclick = () => {
+  filter = b.dataset.f;
+  document.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  render();
+});
+CLASSES.forEach(c => { const o = document.createElement("option"); o.value = c; o.textContent = PRETTY(c); $("addClass").append(o); });
+
+document.addEventListener("keydown", e => {
+  if (e.target.closest("input, select, textarea")) return;
+  const k = e.key.toLowerCase();
+  if (k === " ") { e.preventDefault(); $("play").click(); }
+  else if (k === ",") $("stepB").click();
+  else if (k === ".") $("stepF").click();
+  else if (k === "y" && currentId) decide(currentId, "yes");
+  else if (k === "n" && currentId) decide(currentId, "no");
+  else if (k === "j") move(1);
+  else if (k === "k") move(-1);
+});
+
+function toast(msg) {
+  const t = $("toast"); t.textContent = msg; t.hidden = false;
+  clearTimeout(toast.h); toast.h = setTimeout(() => t.hidden = true, 2200);
+}
+
+// ---------- data helpers ----------
+function eff(ev) {   // effective times (a fix overrides the system's times)
+  return { start: ev.fix_start ?? ev.start, end: ev.fix_end ?? ev.end };
+}
+function sortedIds() {
+  return Object.keys(events).sort((a, b) => eff(events[a]).start - eff(events[b]).start);
+}
+function visibleIds() {
+  const ids = sortedIds();
+  if (filter === "all") return ids;
+  return ids.filter(id => (events[id].status || "pending") === filter);
+}
+function select(id, play = true) {
+  currentId = id;
+  const a = eff(events[id]);
+  stopAt = a.end + 1;
+  seek(a.start - 2, play);
+  render();
+  const el = document.querySelector(`[data-id="${id}"]`);
+  if (el) el.scrollIntoView({ block: "nearest", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+}
+function move(dir) {
+  const ids = visibleIds();
+  if (!ids.length) return;
+  let i = ids.indexOf(currentId);
+  i = i < 0 ? 0 : Math.min(ids.length - 1, Math.max(0, i + dir));
+  select(ids[i]);
+}
+async function write(id, patch) {
+  if (!db) { toast("Saving isn't available in this view."); return false; }
+  try {
+    await db.doc("events/" + id).update({ ...patch, by: myId, at: new Date().toISOString() });
+    return true;
+  } catch (e) {
+    toast(e && e.code === "invalid_argument" ? "You can view this page but not change answers. Ask the owner for Contributor access." : "Couldn't save. Check your connection and try again.");
+    return false;
+  }
+}
+async function decide(id, status) {
+  const wasCurrent = id === currentId;
+  const ok = await write(id, { status });
+  if (!ok) return;
+  toast(status === "yes" ? "Marked real" : "Marked not real");
+  if (wasCurrent && filter === "pending") {
+    const next = visibleIds().find(x => x !== id);
+    if (next) select(next); else { currentId = null; render(); }
+  }
+}
+async function fix(id, which) {
+  const t = +vtime().toFixed(2);
+  const a = eff(events[id]);
+  if (which === "start" && t >= a.end) return toast("Start must be before the end (" + a.end.toFixed(2) + " s).");
+  if (which === "end" && t <= a.start) return toast("End must be after the start (" + a.start.toFixed(2) + " s).");
+  const ok = await write(id, { [which === "start" ? "fix_start" : "fix_end"]: t, status: "yes" });
+  if (ok) toast((which === "start" ? "Start" : "End") + " set to " + t.toFixed(2) + " s and marked real");
+}
+async function resetFix(id) {
+  if (await write(id, { fix_start: null, fix_end: null })) toast("Times reset to the system's");
+}
+
+$("markStart").onclick = () => { pendingStart = +vtime().toFixed(2); $("addState").textContent = "Start " + pendingStart.toFixed(2) + " s"; };
+$("markEnd").onclick = async () => {
+  if (pendingStart === null) return toast("Press Mark start first.");
+  const end = +vtime().toFixed(2);
+  if (end <= pendingStart) return toast("The end must be after the start.");
+  if (!db) return toast("Saving isn't available in this view.");
+  try {
+    await db.collection("events").add({ start: pendingStart, end, label: $("addClass").value, source: "added", status: "yes", by: myId, at: new Date().toISOString() });
+    toast("Added " + PRETTY($("addClass").value) + " " + pendingStart.toFixed(1) + "–" + end.toFixed(1) + " s");
+    pendingStart = null; $("addState").textContent = "Start not marked";
+  } catch (e) {
+    toast(e && e.code === "quota_exceeded" ? "The review database is full." : "Couldn't add it. You may need Contributor access.");
+  }
+};
+
+// ---------- rendering ----------
+async function render() {
+  const ids = sortedIds();
+  const n = ids.length;
+  const cnt = { pending: 0, yes: 0, no: 0 };
+  ids.forEach(id => cnt[events[id].status || "pending"]++);
+  const bar = $("bar"); bar.replaceChildren();
+  [["yes", "var(--kept)"], ["no", "var(--rejected)"]].forEach(([k, c]) => {
+    const s = document.createElement("span"); s.style.width = (n ? 100 * cnt[k] / n : 0) + "%"; s.style.background = c; bar.append(s);
+  });
+  $("nums").textContent = n ? `${cnt.yes + cnt.no} of ${n} checked · ${cnt.yes} real · ${cnt.no} not real` : "No detections loaded yet";
+
+  // timeline marks
+  const tl = $("timeline");
+  tl.querySelectorAll(".mark").forEach(m => m.remove());
+  const rows = {};
+  ids.forEach(id => {
+    const ev = events[id], a = eff(ev), st = ev.status || "pending";
+    const row = (rows[ev.label] ??= Object.keys(rows).length) % 4;
+    const m = document.createElement("div");
+    m.className = "mark";
+    m.style.left = (100 * a.start / DURATION) + "%";
+    m.style.width = (100 * (a.end - a.start) / DURATION) + "%";
+    m.style.top = (5 + row * 9) + "px";
+    m.style.background = id === currentId ? "var(--accent)" : ev.source === "added" ? "var(--added)" : st === "yes" ? "var(--kept)" : st === "no" ? "var(--rejected)" : "var(--pending)";
+    m.title = PRETTY(ev.label) + " " + a.start.toFixed(1) + "–" + a.end.toFixed(1) + " s";
+    tl.insertBefore(m, $("head"));
+  });
+
+  // reviewer names (store ids, resolve names at render)
+  const who = [...new Set(ids.map(id => events[id].by).filter(Boolean))];
+  if (user && who.length) { try { names = await user.profiles(who); } catch (_) {} }
+
+  const list = $("list"); list.replaceChildren();
+  const vis = visibleIds();
+  if (!vis.length) {
+    const p = document.createElement("p"); p.className = "hint";
+    p.textContent = n ? (filter === "pending" ? "Everything has been checked. Thank you!" : "Nothing in this group yet.") : "Waiting for detections…";
+    list.append(p);
+  }
+  vis.forEach(id => {
+    const ev = events[id], a = eff(ev), st = ev.status || "pending";
+    const item = document.createElement("article");
+    item.className = "item" + (id === currentId ? " current" : "");
+    item.dataset.id = id;
+    const l1 = document.createElement("div"); l1.className = "line1";
+    const lab = document.createElement("span"); lab.className = "label"; lab.textContent = PRETTY(ev.label);
+    const tm = document.createElement("span"); tm.className = "times";
+    tm.textContent = a.start.toFixed(1) + "–" + a.end.toFixed(1) + " s" + (ev.fix_start != null || ev.fix_end != null ? " (fixed)" : "");
+    l1.append(lab, tm);
+    if (ev.source === "added") { const s = document.createElement("span"); s.className = "src"; s.textContent = "added"; l1.append(s); }
+    const pill = document.createElement("span"); pill.className = "pill " + st;
+    pill.textContent = st === "yes" ? "real" : st === "no" ? "not real" : "to review";
+    l1.append(pill);
+    item.append(l1);
+
+    if (id === currentId) {
+      const q = document.createElement("p"); q.className = "question"; q.textContent = QUESTIONS[ev.label] || "Is this really that event?";
+      const d = document.createElement("div"); d.className = "decide";
+      const replay = document.createElement("button"); replay.className = "btn"; replay.textContent = "Replay";
+      replay.onclick = e => { e.stopPropagation(); select(id); };
+      const yes = document.createElement("button"); yes.className = "btn yes"; yes.textContent = "Yes, real";
+      yes.onclick = e => { e.stopPropagation(); decide(id, "yes"); };
+      const no = document.createElement("button"); no.className = "btn no"; no.textContent = "No / unsure";
+      no.onclick = e => { e.stopPropagation(); decide(id, "no"); };
+      d.append(yes, no, replay);
+      const f = document.createElement("div"); f.className = "fix";
+      const fl = document.createElement("span"); fl.className = "hint"; fl.textContent = "Times off? Pause at the right moment, then:";
+      const fs = document.createElement("button"); fs.className = "btn"; fs.textContent = "Start = now";
+      fs.onclick = e => { e.stopPropagation(); fix(id, "start"); };
+      const fe = document.createElement("button"); fe.className = "btn"; fe.textContent = "End = now";
+      fe.onclick = e => { e.stopPropagation(); fix(id, "end"); };
+      f.append(fl, fs, fe);
+      if (ev.fix_start != null || ev.fix_end != null) {
+        const r = document.createElement("button"); r.className = "btn"; r.textContent = "Undo time fix";
+        r.onclick = e => { e.stopPropagation(); resetFix(id); }; f.append(r);
+      }
+      item.append(q, d, f);
+    }
+    if (ev.by && st !== "pending") {
+      const w = document.createElement("div"); w.className = "who";
+      w.textContent = "Checked by " + ((names[ev.by] && names[ev.by].name) || "a teammate");
+      item.append(w);
+    }
+    item.onclick = () => { if (id !== currentId) select(id); };
+    list.append(item);
+  });
+  paintClock(vtime());
+}
+
+// ---------- boot ----------
+render();
+(async () => {
+  const [d, u] = await Promise.all([window.claude?.use?.("db"), window.claude?.use?.("user")]);
+  db = d || null; user = u || null;
+  if (!db) {
+    $("conn").textContent = "Shared answers are unavailable in this view.";
+    $("conn").className = "conn bad";
+    $("overlay").textContent = "Open this page from its claude.ai link to load the review.";
+    return;
+  }
+  if (user) { try { myId = await user.id(); } catch (_) {} }
+  db.collection("clips").orderBy("start").onSnapshot(snap => {
+    clips = snap.docs.map(s => ({ id: s.id, ...s.data(), src: "/_blob/" + s.data().asset_id }));
+    if (clips.length && clipIdx < 0) seek(0, false);
+    if (!clips.length) $("overlay").textContent = "The video clips haven't been uploaded yet.";
+  }, () => { $("conn").textContent = "Lost connection to the video list. Reload the page."; $("conn").className = "conn bad"; });
+  db.collection("events").onSnapshot(snap => {
+    events = {};
+    snap.docs.forEach(s => { events[s.id] = s.data(); });
+    if (currentId && !events[currentId]) currentId = null;
+    $("conn").textContent = "Live · answers save for everyone";
+    $("conn").className = "conn";
+    render();
+  }, () => { $("conn").textContent = "Lost connection to the answers. Reload the page."; $("conn").className = "conn bad"; });
+})();
+</script>
