@@ -17,3 +17,6 @@ __pycache__/
 # frames cut from the sample footage (local debugging only, never pushed)
 dev/*.png
 dev/*.jpg
+
+# harness output from ad-hoc runs (predictions_samples.json is the tracked one)
+predictions.json

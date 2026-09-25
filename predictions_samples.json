@@ -19,8 +19,8 @@
      "congestion"
     ],
     [
-     22.022,
-     88.221,
+     22.556,
+     40.173,
      "jaywalking"
     ],
     [
@@ -34,6 +34,16 @@
      "stopped_vehicle"
     ],
     [
+     41.241,
+     88.221,
+     "jaywalking"
+    ],
+    [
+     50.45,
+     58.458,
+     "failure_to_yield"
+    ],
+    [
      52.185,
      53.219,
      "near_miss"
@@ -44,19 +54,19 @@
      "congestion"
     ],
     [
+     81.281,
+     87.02,
+     "failure_to_yield"
+    ],
+    [
      91.158,
      123.59,
      "stopped_vehicle"
     ],
     [
-     98.765,
-     107.174,
-     "jaywalking"
-    ],
-    [
-     108.642,
-     111.311,
-     "jaywalking"
+     91.959,
+     93.827,
+     "failure_to_yield"
     ],
     [
      110.11,
@@ -79,19 +89,49 @@
      "near_miss"
     ],
     [
+     126.793,
+     127.327,
+     "failure_to_yield"
+    ],
+    [
+     129.863,
+     138.005,
+     "failure_to_yield"
+    ],
+    [
      134.0,
      174.0,
      "congestion"
     ],
     [
      134.401,
-     317.784,
+     136.67,
      "jaywalking"
     ],
     [
      135.335,
      137.036,
      "near_miss"
+    ],
+    [
+     140.273,
+     142.943,
+     "jaywalking"
+    ],
+    [
+     144.011,
+     209.676,
+     "jaywalking"
+    ],
+    [
+     157.491,
+     158.158,
+     "failure_to_yield"
+    ],
+    [
+     159.493,
+     160.027,
+     "failure_to_yield"
     ],
     [
      180.847,
@@ -109,9 +149,44 @@
      "stopped_vehicle"
     ],
     [
+     214.214,
+     216.349,
+     "failure_to_yield"
+    ],
+    [
+     217.951,
+     222.489,
+     "jaywalking"
+    ],
+    [
      222.0,
      247.0,
      "congestion"
+    ],
+    [
+     225.559,
+     288.555,
+     "jaywalking"
+    ],
+    [
+     236.236,
+     236.903,
+     "failure_to_yield"
+    ],
+    [
+     239.039,
+     241.308,
+     "failure_to_yield"
+    ],
+    [
+     242.375,
+     242.909,
+     "failure_to_yield"
+    ],
+    [
+     244.778,
+     246.78,
+     "failure_to_yield"
     ],
     [
      249.583,
@@ -119,14 +194,49 @@
      "stopped_vehicle"
     ],
     [
+     257.057,
+     257.991,
+     "failure_to_yield"
+    ],
+    [
      259.993,
      261.061,
      "near_miss"
     ],
     [
+     272.672,
+     273.74,
+     "failure_to_yield"
+    ],
+    [
+     279.079,
+     280.147,
+     "failure_to_yield"
+    ],
+    [
      290.0,
      317.817,
      "congestion"
+    ],
+    [
+     290.157,
+     290.69,
+     "failure_to_yield"
+    ],
+    [
+     290.157,
+     317.25,
+     "jaywalking"
+    ],
+    [
+     306.173,
+     306.706,
+     "failure_to_yield"
+    ],
+    [
+     311.511,
+     312.312,
+     "failure_to_yield"
     ]
    ],
    "risk": [
@@ -38238,9 +38348,9 @@
    "duration": 317.82,
    "budget_sec": 953.5,
    "errors": [],
-   "part_a_sec": 197.4,
-   "part_b_sec": 262.6,
-   "total_sec": 460.0
+   "part_a_sec": 174.5,
+   "part_b_sec": 223.3,
+   "total_sec": 397.8
   }
  }
 }
