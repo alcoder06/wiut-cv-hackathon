@@ -1,29 +1,64 @@
 # Progress — WIUT Hackathon 2026, CV track (elimination)
 
-**Deadline:** Sun 27 Sep 2026 · **Last updated:** Thu 24 Sep 2026
-**Repo:** local git in `D:\Projects\hakathon` (not on GitHub yet; required before submission)
+**Deadline:** Sun 27 Sep 2026 · **Last updated:** Sat 26 Sep 2026
+**Repo:** https://github.com/alcoder06/wiut-cv-hackathon (private until submission; must be made public to submit)
 
 ---
+
+## Start here (teammates)
+
+```powershell
+git clone https://github.com/alcoder06/wiut-cv-hackathon.git
+cd wiut-cv-hackathon
+py -3.11 -m venv .venv
+.venv\Scripts\python -m pip install -r requirements.txt     # ~3 GB (PyTorch), once
+```
+The videos are **not** in the repo (too big). Download the sample from the Drive link in the
+task materials and put it in `samples\` (for example `samples\C3897.MP4`). Then:
+```powershell
+.venv\Scripts\python -m pytest -q tests                      # 12 tests, ~15 s
+.venv\Scripts\python run_submission.py --videos samples --out predictions.json   # official run
+.venv\Scripts\python evaluate.py --pred predictions.json --validate-only
+```
+Keep laptops plugged in: on battery everything runs 2–3x slower and timing numbers are meaningless.
+Never commit videos, `predictions.json`, `cache/` or `out/` (already in `.gitignore`).
 
 ## Where we are
 
 | Area | Status |
 |---|---|
 | Submission package runs end to end | ✅ The organizers' `run_submission.py` works with our `solution.py`; `evaluate.py --validate-only` says VALID |
-| Part A: event detection | ✅ Working on the real video; ⏳ being tuned (needs reviewed labels) |
-| Part B: accident warning | ✅ Tuned for few false alarms; ⚠️ not yet tested on a real crash |
-| Time budget | ✅ 1.45× video length on an 8-core machine (limit 3×) |
+| Part A: event detection | ✅ 12 event types enabled; C3897 → 47 events, 0924 → 4 events; ⏳ not yet tuned against labels |
+| Part B: accident warning | ✅ Few false alarms (7 alarms in 5 min); ⚠️ not yet tested on a real crash |
+| Time budget | ✅ 1.45× video length on an 8-core machine (limit 3×), measured plugged in |
+| Resolutions | ✅ 4K and 1080p of this camera both work (zones and lane map rescale) |
 | Scene zones | ✅ 4 zebra crossings drawn · ❌ stop lines / traffic lights not yet |
-| Dev labels | ⏳ **Waiting on review** of 47 detections (see "Your next step") |
-| Website | ❌ Not started |
-| GitHub | ❌ Not created (needed on the last day) |
+| Dev labels | ⏳ Review site ready, **review not done yet** |
+| Tuning | ✅ `scripts/tune.py` written · ⚠️ not tested yet (needs labels) |
+| **Website (25% of the score)** | ❌ **Not started: highest priority** |
+| README team section | ❌ TODO |
 
-## Your next step
-Review the system's detections (30–40 min, no rulebook needed). Full guide: `dev/REVIEW.md`.
-1. Open `scripts/label_tool.html` in Chrome → **Choose File** → `samples/C3897.MP4`
-2. **Import JSON** → `dev/review/C3897_to_review.json`
-3. Each row: **▶**, watch. Real → keep. Not real or unsure → **✕**.
-4. **Export labels JSON** → move the file into `dev/labels/` → tell Claude "labels are ready".
+## Open work, in priority order
+1. **Public website** (Team, Approach with pipeline diagram, EDA, annotated sample videos with
+   event timelines and the risk curve, live upload demo, one-page report, links). Must stay online
+   during judging. Material to reuse: the pipeline diagram and approach table in `README.md`,
+   annotated clips from `scripts/render.py`, events from `predictions_samples.json`,
+   and the problem/fix list further down this page.
+2. **Review the detections** on the review site
+   (https://claude.ai/artifact/TYK9zFBpCZmk8Hkp5Pvisv, needs Contributor access from the owner), then
+   **Download answer key** → put it in `dev/labels/` → `python scripts/merge_labels.py dev/labels/*.json`
+   → `python scripts/tune.py` (report) → `python scripts/tune.py --apply`.
+3. **README team section:** members, roles, who did what.
+4. **Before submitting:** regenerate `predictions_samples.json`, make the repo public, tag the final
+   commit, and submit the repo link with the commit hash plus the website link.
+
+## Decisions already made (don't reopen without numbers)
+- **Our pipeline, not the alternatives.** A friend's model and a "Roadwatch" package were both tested on
+  26 Sep. One returns no events on 4K video and claims accidents that aren't in the footage; the other
+  detects only stopped vehicles and shipped without its weights.
+- **Conservative rules.** The metric averages F1 over event types, so false alarms cost as much as misses,
+  and a false accident is the most expensive mistake.
+- **No model training.** A pretrained YOLO11s plus rules; thresholds are tuned against our labels.
 
 ---
 
