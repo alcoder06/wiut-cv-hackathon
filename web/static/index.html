@@ -91,14 +91,12 @@
             <i class="fa-solid fa-terminal"></i>
           </div>
           <div class="bg-black text-brutLime p-4 font-mono text-xs brut-border space-y-2 overflow-x-auto">
-            <div class="text-gray-400">$ python run_submission.py --videos samples</div>
-            <div>[0924.mp4] 38.4s @ 30.00 fps, budget 115s</div>
-            <div>[part A] 10854 track rows, 4 events, tracking 23.1s</div>
-            <div class="text-brutYellow">[0924.mp4] 4 events, 1153 risk samples, 36.2s — OK</div>
-            <div class="text-gray-400">$ python evaluate.py --pred predictions.json --validate-only</div>
-            <div class="text-white">VALID</div>
+            <div class="text-gray-400">$ python run_submission.py --videos samples --team NexVision</div>
+            <div>[C3905.MP4] 127.6s @ 29.97 fps, budget 383s</div>
+            <div class="text-gray-400">$ python evaluate.py --pred predictions_samples.json --validate-only</div>
+            <div class="text-white">format: 3 video(s), 140 event(s), 0 error(s), 0 warning(s) -> VALID</div>
           </div>
-          <p class="text-xs text-gray-600">Laptop RTX 3050, 1080p clip. The same command is the one the organizers run on the hidden test set.</p>
+          <p class="text-xs text-gray-600">The same commands the organizers run on the hidden test set, on our 4K samples.</p>
           <div class="grid grid-cols-2 gap-3">
             <button type="button" onclick="switchTab('approach')" class="w-full py-2.5 bg-brutLime font-mono font-bold text-xs brut-border brut-btn uppercase">How it works</button>
             <button type="button" onclick="switchTab('report')" class="w-full py-2.5 bg-brutYellow font-mono font-bold text-xs brut-border brut-btn uppercase">Read the report</button>
@@ -261,7 +259,7 @@
       <h3 class="font-mono font-black text-lg uppercase"><i class="fa-solid fa-gauge-high text-brutBlue"></i> Engineering</h3>
       <ul class="space-y-2 text-sm list-disc pl-5">
         <li>The model loads when <code>solution.py</code> is imported, before the harness starts its per-video clock.</li>
-        <li>Measured with the official harness on a laptop RTX 3050: 0.34× (1080p) to 1.32× (4K) of video length across the 4 samples, against a 3× limit. Without a GPU, on 8 CPU cores: 1.45×.</li>
+        <li>Measured with the official harness on a laptop RTX 3050: 1.22× to 1.32× of video length on the 4K samples, against a 3× limit. Without a GPU, on 8 CPU cores: 1.45×.</li>
         <li>Decoding in a background thread, skipped frames only grabbed, exact halvings to 960 px: 787 s → 460 s.</li>
         <li>Seeds fixed, cuDNN deterministic, fixed frame stride: two runs give the same file.</li>
         <li>Detections cached during development, so a rule change is re-scored in seconds.</li>

@@ -224,6 +224,11 @@ def main() -> None:
     flow_path = resolve(cfg.scene.learned)
     flow = FlowField.load(flow_path) if flow_path.exists() else None
     videos = sorted(p for p in Path(args.videos).iterdir() if p.suffix.lower() == ".mp4")
+    if preds:   # the site shows exactly the videos in the submitted predictions, no stray clips
+        missing = set(preds) - {p.name for p in videos}
+        if missing:
+            raise SystemExit(f"videos in {args.pred} but not in {args.videos}: {sorted(missing)}")
+        videos = [p for p in videos if p.name in preds]
     summary = []
     for p in videos:
         v = build(p, preds.get(p.name), cfg, flow, not args.no_video, args.keep_video)
