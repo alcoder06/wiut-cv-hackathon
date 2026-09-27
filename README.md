@@ -117,6 +117,24 @@ python scripts/tune.py --gt dev/labels.json --videos <dir> --apply   # writes co
 A change is kept only if it beats the current setting by 0.02 F1 (one short video over-fits
 easily). `configs/tuned.yaml` is loaded on top of `configs/pipeline.yaml`; delete it to undo.
 
+## Known limitations
+
+- **Real crashes are untested on this camera.** None of the sample videos contains one. On a
+  public roadside-camera crash clip (TU-DAT, used only for this check), the accident rule and
+  Part B both missed a side-swipe. The detector saw both cars, but the tracker lost the car
+  that spun and gave it a new id, and the rule needs both tracks to continue after contact.
+  Part B treats side-by-side cars as normal lane-keeping, which removed most false alarms on
+  our camera and also hides side-swipes. Next steps: re-link a lost track near the contact
+  point, and a learned clip classifier to confirm accident candidates.
+- **The traffic light is read indirectly.** The boulevard's own lamps are side-on to the
+  camera; we read a lamp on the same 75 s cycle and correct for its measured 4.5 s / 0.6 s
+  offset. A retimed signal plan would need re-measuring.
+- **Labels are small.** Rules were tuned on ~40 real events judged by the team on the
+  samples, then checked by eye on two more videos (one at dusk). Expect lower scores on
+  the hidden set than on our dev key.
+- `road_obstacle`, `fire_smoke`, `wrong_way`, `illegal_turn` and `illegal_u_turn` are not
+  emitted (no reliable rule, or no zones for them).
+
 ## Prior work we learned from
 
 - AI City Challenge Track 4 winners: background-modelling for stalled vehicles, road masks
