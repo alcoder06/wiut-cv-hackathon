@@ -1,6 +1,7 @@
 "use strict";
 
 const REPO = "https://github.com/alcoder06/wiut-cv-hackathon";
+const SUBMITTED = `${REPO}/tree/elimination-final`;   // the tag the organizers run
 // Where the demo API lives: empty = same server as the page; a static host sets the Modal URL
 // in <meta name="demo-api"> (scripts/deploy_space.py --api).
 const API = (document.querySelector('meta[name="demo-api"]')?.content || "").replace(/\/$/, "");
@@ -476,9 +477,9 @@ function boxKey() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  $("#link-repo").href = REPO;
-  $("#link-repo-label").textContent = REPO.replace("https://", "");
-  $("#link-weights").href = `${REPO}/tree/main/weights`;
+  $("#link-repo").href = SUBMITTED;
+  $("#link-repo-label").textContent = `${REPO.replace("https://", "")} · tag elimination-final`;
+  $("#link-weights").href = `${SUBMITTED}/weights`;
   initNav();
   boxKey();
   initTeam();

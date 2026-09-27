@@ -6,14 +6,14 @@
 <title>NexVision · Traffic Event Watch</title>
 <meta name="description" content="NexVision, WIUT Hackathon 2026 CV track: traffic events as time segments and a warning before a crash, from one fixed CCTV camera.">
 <meta name="demo-api" content="">
-<link rel="stylesheet" href="tw.css?v=20260927h">
+<link rel="stylesheet" href="tw.css?v=20260927i">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="style.css?v=20260927h">
+<link rel="stylesheet" href="style.css?v=20260927i">
 <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js" defer></script>
-<script src="app.js?v=20260927h" defer></script>
+<script src="app.js?v=20260927i" defer></script>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-brutLime selection:text-black">
 
@@ -654,6 +654,7 @@
     <section class="space-y-2">
       <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">9. Reproduce it</h3>
       <div class="bg-black text-brutLime p-4 font-mono text-xs brut-border space-y-1 overflow-x-auto">
+        <div>git clone https://github.com/alcoder06/wiut-cv-hackathon &amp;&amp; cd wiut-cv-hackathon &amp;&amp; git checkout elimination-final</div>
         <div>pip install -r requirements.txt</div>
         <div>python run_submission.py --videos samples --out predictions_samples.json --team NexVision</div>
         <div>python evaluate.py --pred predictions_samples.json --validate-only</div>
@@ -730,7 +731,7 @@
     <a id="link-repo" href="#" target="_blank" rel="noopener" class="bg-white brut-border p-6 shadow-brut brut-btn block space-y-4 group">
       <span class="w-12 h-12 bg-black text-white brut-border flex items-center justify-center text-xl"><i class="fa-brands fa-github"></i></span>
       <span class="block"><span class="block font-mono font-black text-lg group-hover:underline">GitHub repository</span>
-        <span class="block text-xs text-gray-600 mt-1">Code, one-command entry point, tests, README with every licence.</span></span>
+        <span class="block text-xs text-gray-600 mt-1">The submitted version (tag <code>elimination-final</code>): code, one-command entry point, tests, README with every licence.</span></span>
       <span class="inline-block font-mono text-xs font-bold bg-brutYellow px-2 py-1 brut-border-2" id="link-repo-label">github.com</span>
     </a>
     <a id="link-weights" href="#" target="_blank" rel="noopener" class="bg-white brut-border p-6 shadow-brut brut-btn block space-y-4 group">
