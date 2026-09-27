@@ -92,6 +92,10 @@ rules:
   red_light:
     vote_sec: 1.0         # majority vote window for the signal colour
     red_min_frac: 0.004   # share of lamp-ROI pixels that must be lit red/green (a lit lamp is ~1-2%)
+    min_heading_cos: 0.8  # red_light: driving along the approach (cross traffic passes over the line's end)
+    min_approach_sec: 1.0 # red_light: seen behind the line this long before crossing
+    enter_within_sec: 3.0 # red_light: drives into the junction within this after crossing
+    past_margin: 0.3      # stop_line: past the line by this many box sizes, not just on it
   collision:
     radius_factor: 0.25   # road-user disc radius = this * box size, for TTC
     contact_iou: 0.05

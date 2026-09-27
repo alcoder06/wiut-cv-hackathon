@@ -82,8 +82,10 @@ def effective_red(state, a: Approach) -> np.ndarray:
     ts, labels = state
     red = np.zeros(len(ts), bool)
     for i, j in runs(labels == "red"):
-        greens = np.flatnonzero((ts > ts[j]) & (labels == "green"))
-        green_at = ts[greens[0]] if len(greens) else np.inf
+        # Red is always followed by green, so the lamp's red ending IS the green onset. Don't
+        # wait for a green reading: at dusk (C3905) the green lamp never reads, and waiting for
+        # it let two cars pulling away on green count as red_light.
+        green_at = ts[j + 1] if j + 1 < len(ts) else np.inf
         red |= (ts >= ts[i] + a.red_delay_sec) & (ts < green_at - a.red_early_end_sec) & (ts <= ts[j])
     return red
 
@@ -121,7 +123,7 @@ def _exit_time(in_box: np.ndarray, t: np.ndarray) -> float:
 
 
 def detect(ctx: Context) -> list[list]:
-    k = ctx.cfg.kinematics
+    k, c = ctx.cfg.kinematics, ctx.cfg.rules.red_light
     w, h = ctx.info.width, ctx.info.height
     events = []
     for a in ctx.scene.approaches:
@@ -136,22 +138,47 @@ def detect(ctx: Context) -> list[list]:
             x, y, t = g["gx"].to_numpy(), g["gy"].to_numpy(), g["t"].to_numpy()
             within = (along_line(a.stop_line, x, y) >= -0.05) & (along_line(a.stop_line, x, y) <= 1.05)
             side = np.where(within, side_of_line(a.stop_line, x, y), 0)   # 0 = not level with the line
-            along = g[["vx", "vy"]].to_numpy() @ a.direction
+            vel = g[["vx", "vy"]].to_numpy()
+            heading_cos = (vel @ a.direction) / (np.linalg.norm(vel, axis=1) + 1e-9)
+            speed = g["speed"].to_numpy()
+            # signed distance past the line in box sizes (>0 = downstream)
+            (x1, y1), (x2, y2) = a.stop_line[0], a.stop_line[-1]
+            normal = np.array([y2 - y1, x1 - x2], float); normal /= np.linalg.norm(normal) + 1e-9
+            if normal @ a.direction < 0:
+                normal = -normal
+            past_by = ((x - x1) * normal[0] + (y - y1) * normal[1]) / g["size"].to_numpy()
             in_box = (box[np.clip(y.astype(int), 0, h - 1), np.clip(x.astype(int), 0, w - 1)] > 0
                       if box is not None else np.zeros(len(t), bool))
 
-            # red_light: upstream -> downstream crossing while moving forward on red
+            # red_light: crossing upstream -> downstream on red, driving ALONG the approach, having
+            # come up to the line from behind it (cross traffic passing over the line's end was
+            # the false alarm on C3896)
             for i in range(1, len(t)):
-                if side[i - 1] == up and side[i] == -up and along[i] > 0 and _at(ts, red, t[i]):
-                    events.append([t[i - 1], _exit_time(in_box[i:], t[i:]), "red_light"])
+                if (side[i - 1] == up and side[i] == -up and _at(ts, red, t[i])
+                        and heading_cos[i] >= c.min_heading_cos
+                        and t[i] - t[max(0, np.flatnonzero(side[:i] == up)[0])] >= c.min_approach_sec):
+                    # ...and drives on into the junction. Creeping over the line and waiting
+                    # there is stop_line, not red_light (C3896, 79 s).
+                    after = (t >= t[i]) & (t <= t[i] + c.enter_within_sec)
+                    keeps_going = speed[after].min() > k.stopped_speed
+                    entered = box is None or bool((in_box & after).any())
+                    if keeps_going and entered:
+                        events.append([t[i - 1], _exit_time(in_box[i:], t[i:]), "red_light"])
                     break
 
+            # a vehicle never seen moving is parked or a phantom box (C3896: the median kerb)
+            if speed.max() <= k.moving_speed:
+                continue
+
             # stop_line: stopped past the line (not in the intersection) on red, until green
-            past = (side == -up) & ~in_box & (g["speed"].to_numpy() < k.stopped_speed)
+            # clearly past the line, not just sitting on it with its nose over
+            past = (side == -up) & (past_by >= c.past_margin) & ~in_box & (speed < k.stopped_speed)
             for i, j in runs(past):
                 if not _at(ts, red, t[i]):
                     continue
-                green = np.flatnonzero((ts > t[i]) & (labels == "green"))
-                end = ts[green[0]] if len(green) else t[j]
-                events.append([t[i], end, "stop_line"])
+                # ends when this approach turns green: the lamp's red ending, shifted by the offset
+                red_over = np.flatnonzero((ts > t[i]) & (labels != "red"))
+                end = ts[red_over[0]] - a.red_early_end_sec if len(red_over) else t[j]
+                end = min(end, t[min(j + 1, len(t) - 1)])      # or earlier, when it moves on / leaves
+                events.append([t[i], max(end, t[i] + 0.5), "stop_line"])
     return events
