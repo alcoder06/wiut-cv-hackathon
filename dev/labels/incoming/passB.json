@@ -1,0 +1,1146 @@
+{
+ "pass": "B",
+ "labeller": null,
+ "person_id": null,
+ "exported_at": "2026-09-27T17:27:46.806Z",
+ "total": 71,
+ "answered": 71,
+ "answers": [
+  {
+   "cid": "C3896-03",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": null,
+   "proposed": [
+    0.53,
+    3.2
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T12:19:40.337Z"
+  },
+  {
+   "cid": "C3896-07",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": null,
+   "proposed": [
+    14.01,
+    15.35
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T12:19:44.106Z"
+  },
+  {
+   "cid": "C3896-09",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": null,
+   "proposed": [
+    16.42,
+    17.35
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T12:19:46.745Z"
+  },
+  {
+   "cid": "C3896-10",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": null,
+   "proposed": [
+    18.95,
+    19.89
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T12:19:48.887Z"
+  },
+  {
+   "cid": "C3896-14",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "there is only people here",
+   "proposed": [
+    46.58,
+    47.11
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T12:23:14.337Z"
+  },
+  {
+   "cid": "C3896-17",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": null,
+   "proposed": [
+    68.2,
+    70.47
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:13:55.088Z"
+  },
+  {
+   "cid": "C3896-19",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "Person far from the car's path",
+   "note": null,
+   "proposed": [
+    72.07,
+    73.01
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:14:22.680Z"
+  },
+  {
+   "cid": "C3896-22",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": null,
+   "proposed": [
+    81.28,
+    81.81
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:14:29.303Z"
+  },
+  {
+   "cid": "C3896-25",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "Person far from the car's path",
+   "note": null,
+   "proposed": [
+    94.09,
+    97.7
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:14:36.768Z"
+  },
+  {
+   "cid": "C3896-26",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "Person far from the car's path",
+   "note": null,
+   "proposed": [
+    99.3,
+    100.23
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:14:42.736Z"
+  },
+  {
+   "cid": "C3896-27",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "Person far from the car's path",
+   "note": null,
+   "proposed": [
+    101.3,
+    103.44
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:14:48.110Z"
+  },
+  {
+   "cid": "C3896-28",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "green light is on for cars",
+   "proposed": [
+    102.64,
+    103.44
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:15:16.928Z"
+  },
+  {
+   "cid": "C3896-29",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "green light is on for cars",
+   "proposed": [
+    104.5,
+    105.17
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:15:36.073Z"
+  },
+  {
+   "cid": "C3896-30",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "green light is on for cars",
+   "proposed": [
+    106.24,
+    106.91
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:15:44.347Z"
+  },
+  {
+   "cid": "C3896-31",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "green light is on for cars",
+   "proposed": [
+    107.97,
+    108.64
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:15:52.467Z"
+  },
+  {
+   "cid": "C3896-32",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "green light is on for cars",
+   "proposed": [
+    109.98,
+    111.71
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:15:59.178Z"
+  },
+  {
+   "cid": "C3896-33",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "green light is on for cars",
+   "proposed": [
+    109.98,
+    126.79
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:16:44.966Z"
+  },
+  {
+   "cid": "C3896-35",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "green light is on for cars",
+   "proposed": [
+    113.85,
+    116.25
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:16:57.349Z"
+  },
+  {
+   "cid": "C3896-36",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "green light is on for cars",
+   "proposed": [
+    117.45,
+    118.12
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:17:11.788Z"
+  },
+  {
+   "cid": "C3896-38",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "green light is on for cars",
+   "proposed": [
+    120.52,
+    121.99
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:17:24.863Z"
+  },
+  {
+   "cid": "C3896-40",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "green light is on for cars",
+   "proposed": [
+    123.72,
+    126.79
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:17:31.187Z"
+  },
+  {
+   "cid": "C3896-41",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "green light is on for cars",
+   "proposed": [
+    135.34,
+    137.74
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:17:37.568Z"
+  },
+  {
+   "cid": "C3896-42",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": null,
+   "proposed": [
+    156.56,
+    158.96
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:18:07.784Z"
+  },
+  {
+   "cid": "C3896-44",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "Person far from the car's path",
+   "note": null,
+   "proposed": [
+    160.43,
+    165.63
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:18:16.245Z"
+  },
+  {
+   "cid": "C3896-45",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "Person far from the car's path",
+   "note": null,
+   "proposed": [
+    167.1,
+    172.04
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:18:34.502Z"
+  },
+  {
+   "cid": "C3896-47",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "no car was marked",
+   "proposed": [
+    171.5,
+    172.04
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:18:59.735Z"
+  },
+  {
+   "cid": "C3896-48",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "green light is on for cars",
+   "proposed": [
+    175.11,
+    176.31
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:19:08.683Z"
+  },
+  {
+   "cid": "C3896-49",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "green light is on for cars",
+   "proposed": [
+    178.44,
+    180.05
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:19:16.784Z"
+  },
+  {
+   "cid": "C3896-50",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "green light is on for cars",
+   "proposed": [
+    183.78,
+    199.8
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:19:39.768Z"
+  },
+  {
+   "cid": "C3896-51",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "green light is on for cars",
+   "proposed": [
+    202.74,
+    203.27
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:19:48.790Z"
+  },
+  {
+   "cid": "C3896-52",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "green light is on for cars",
+   "proposed": [
+    207.01,
+    210.21
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:19:55.426Z"
+  },
+  {
+   "cid": "C3896-54",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": null,
+   "proposed": [
+    220.62,
+    221.42
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:20:03.117Z"
+  },
+  {
+   "cid": "C3896-58",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "Person far from the car's path",
+   "note": null,
+   "proposed": [
+    243.31,
+    243.98
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:20:09.242Z"
+  },
+  {
+   "cid": "C3896-60",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "Person far from the car's path",
+   "note": null,
+   "proposed": [
+    255.06,
+    255.72
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:20:17.910Z"
+  },
+  {
+   "cid": "C3896-61",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "unsure",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "no car was marked",
+   "proposed": [
+    261.86,
+    262.39
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:20:43.816Z"
+  },
+  {
+   "cid": "C3896-63",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "green light is on for cars",
+   "proposed": [
+    267.73,
+    329.93
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:21:22.204Z"
+  },
+  {
+   "cid": "C3896-71",
+   "video": "C3896.MP4",
+   "label": "failure_to_yield",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "green light is on for cars",
+   "proposed": [
+    337.54,
+    339.54
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:21:30.354Z"
+  },
+  {
+   "cid": "C3896-02",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": null,
+   "proposed": [
+    0,
+    2.8
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:21:48.873Z"
+  },
+  {
+   "cid": "C3896-05",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "On the zebra crossing",
+   "note": null,
+   "proposed": [
+    10.14,
+    11.48
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:22:06.151Z"
+  },
+  {
+   "cid": "C3896-06",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "na car was marked",
+   "proposed": [
+    13.88,
+    14.95
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:22:27.608Z"
+  },
+  {
+   "cid": "C3896-08",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "no car was marked",
+   "proposed": [
+    16.02,
+    17.35
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:22:46.529Z"
+  },
+  {
+   "cid": "C3896-11",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "no car was marked",
+   "proposed": [
+    36.44,
+    40.44
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:23:06.899Z"
+  },
+  {
+   "cid": "C3896-15",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "On the zebra crossing",
+   "note": null,
+   "proposed": [
+    49.65,
+    51.65
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T16:23:15.990Z"
+  },
+  {
+   "cid": "C3896-16",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "unsure",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "no human marked",
+   "proposed": [
+    64.33,
+    65.67
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:20:19.824Z"
+  },
+  {
+   "cid": "C3896-18",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "unsure",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": "No human marked",
+   "proposed": [
+    68.6,
+    70.34
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:20:50.705Z"
+  },
+  {
+   "cid": "C3896-20",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "On the zebra crossing",
+   "note": null,
+   "proposed": [
+    77.14,
+    78.48
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:21:24.019Z"
+  },
+  {
+   "cid": "C3896-23",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "On the zebra crossing",
+   "note": null,
+   "proposed": [
+    81.68,
+    86.62
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:21:35.511Z"
+  },
+  {
+   "cid": "C3896-24",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "On the zebra crossing",
+   "note": null,
+   "proposed": [
+    89.02,
+    152.42
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:21:39.917Z"
+  },
+  {
+   "cid": "C3896-43",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "On the zebra crossing",
+   "note": null,
+   "proposed": [
+    158.69,
+    224.89
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:21:46.602Z"
+  },
+  {
+   "cid": "C3896-56",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "On the zebra crossing",
+   "note": null,
+   "proposed": [
+    232.5,
+    234.5
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:21:53.810Z"
+  },
+  {
+   "cid": "C3896-57",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "On the zebra crossing",
+   "note": null,
+   "proposed": [
+    235.97,
+    249.05
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:21:57.563Z"
+  },
+  {
+   "cid": "C3896-59",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": null,
+   "proposed": [
+    251.18,
+    262.26
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:22:09.098Z"
+  },
+  {
+   "cid": "C3896-62",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "On the zebra crossing",
+   "note": null,
+   "proposed": [
+    265.46,
+    272.94
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:22:16.865Z"
+  },
+  {
+   "cid": "C3896-65",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "On the zebra crossing",
+   "note": null,
+   "proposed": [
+    275.21,
+    277.34
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:22:25.339Z"
+  },
+  {
+   "cid": "C3896-66",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "unsure",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": null,
+   "proposed": [
+    287.09,
+    296.96
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:23:17.698Z"
+  },
+  {
+   "cid": "C3896-67",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "Waiting at the road edge",
+   "note": null,
+   "proposed": [
+    322.72,
+    323.66
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:23:33.048Z"
+  },
+  {
+   "cid": "C3896-69",
+   "video": "C3896.MP4",
+   "label": "jaywalking",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "Waiting at the road edge",
+   "note": null,
+   "proposed": [
+    325.52,
+    340.21
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:23:38.934Z"
+  },
+  {
+   "cid": "C3896-01",
+   "video": "C3896.MP4",
+   "label": "congestion",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "Normal red-light queue",
+   "note": null,
+   "proposed": [
+    0,
+    33
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:24:01.619Z"
+  },
+  {
+   "cid": "C3896-13",
+   "video": "C3896.MP4",
+   "label": "congestion",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "Normal red-light queue",
+   "note": null,
+   "proposed": [
+    43,
+    110
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:24:12.401Z"
+  },
+  {
+   "cid": "C3896-39",
+   "video": "C3896.MP4",
+   "label": "congestion",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "Normal red-light queue",
+   "note": null,
+   "proposed": [
+    123,
+    183
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:24:26.814Z"
+  },
+  {
+   "cid": "C3896-55",
+   "video": "C3896.MP4",
+   "label": "congestion",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "Normal red-light queue",
+   "note": null,
+   "proposed": [
+    223,
+    256
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:24:36.007Z"
+  },
+  {
+   "cid": "C3896-64",
+   "video": "C3896.MP4",
+   "label": "congestion",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "Normal red-light queue",
+   "note": null,
+   "proposed": [
+    275,
+    329
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:24:42.504Z"
+  },
+  {
+   "cid": "C3896-04",
+   "video": "C3896.MP4",
+   "label": "stopped_vehicle",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "Red-light queue",
+   "note": null,
+   "proposed": [
+    3.67,
+    48.68
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:24:49.218Z"
+  },
+  {
+   "cid": "C3896-34",
+   "video": "C3896.MP4",
+   "label": "stopped_vehicle",
+   "verdict": "real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": null,
+   "proposed": [
+    110.31,
+    127.03
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:25:08.032Z"
+  },
+  {
+   "cid": "C3896-46",
+   "video": "C3896.MP4",
+   "label": "stopped_vehicle",
+   "verdict": "real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": null,
+   "proposed": [
+    168.1,
+    321.22
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:26:15.060Z"
+  },
+  {
+   "cid": "C3896-68",
+   "video": "C3896.MP4",
+   "label": "stopped_vehicle",
+   "verdict": "real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": null,
+   "proposed": [
+    324.79,
+    338.71
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:26:20.247Z"
+  },
+  {
+   "cid": "C3896-12",
+   "video": "C3896.MP4",
+   "label": "near_miss",
+   "verdict": "real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": null,
+   "proposed": [
+    37.64,
+    40.31
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:26:29.203Z"
+  },
+  {
+   "cid": "C3896-37",
+   "video": "C3896.MP4",
+   "label": "near_miss",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "Normal slowing",
+   "note": null,
+   "proposed": [
+    119.72,
+    121.05
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:26:54.904Z"
+  },
+  {
+   "cid": "C3896-70",
+   "video": "C3896.MP4",
+   "label": "near_miss",
+   "verdict": "not_real",
+   "start": null,
+   "end": null,
+   "reason": "Never close to each other",
+   "note": null,
+   "proposed": [
+    337.14,
+    338.17
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:27:02.080Z"
+  },
+  {
+   "cid": "C3896-21",
+   "video": "C3896.MP4",
+   "label": "red_light",
+   "verdict": "real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": null,
+   "proposed": [
+    78.75,
+    111.04
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:27:14.511Z"
+  },
+  {
+   "cid": "C3896-53",
+   "video": "C3896.MP4",
+   "label": "stop_line",
+   "verdict": "real",
+   "start": null,
+   "end": null,
+   "reason": null,
+   "note": null,
+   "proposed": [
+    215.68,
+    218.49
+   ],
+   "retime_of": null,
+   "at": "2026-09-27T17:27:25.608Z"
+  }
+ ]
+}

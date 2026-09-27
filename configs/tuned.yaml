@@ -3,14 +3,16 @@
 # round 2 (27 Sep, + 85 answers on C3897/C3905; official sample videos only): jaywalking and the
 #   failure_to_yield / jaywalking / near_miss boundaries. Its congestion result (crawl_speed 0.15,
 #   min_len_sec 30) was left out: 4 labels, and it swung far from round 1's optimum
+# round 3 (27 Sep, + C3896 answered in full: 59 events on 3 official samples): jaywalking
+#   0.365 -> 0.424, failure_to_yield 0.316 -> 0.417 (its end shift goes back to 0)
 rules:
   congestion:
     crawl_speed: 0.4
     min_vehicles: 3
   jaywalking:
     crosswalk_margin_frac: 0.0
-    min_len_sec: 0.5
-    road_erode_px: 1
+    min_len_sec: 2.0
+    road_erode_px: 12
   near_miss:
     max_turn_deg: 30
     ttc_sec: 2.0
@@ -18,11 +20,8 @@ rules:
     queue_share: 0.7
 segments:
   boundary_shift:
-    failure_to_yield:
-    - 0.0
-    - -0.5
     jaywalking:
-    - -0.5
+    - -1.5
     - 0.0
     near_miss:
     - 0.0

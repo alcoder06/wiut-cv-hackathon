@@ -230,5 +230,86 @@
     "failure_to_yield"
    ]
   ]
+ },
+ "C3896.MP4": {
+  "duration": 340.34,
+  "fps": 29.97002997002997,
+  "events": [
+   [
+    0.0,
+    2.8,
+    "jaywalking"
+   ],
+   [
+    0.53,
+    3.2,
+    "failure_to_yield"
+   ],
+   [
+    14.01,
+    15.35,
+    "failure_to_yield"
+   ],
+   [
+    16.42,
+    17.35,
+    "failure_to_yield"
+   ],
+   [
+    18.95,
+    19.89,
+    "failure_to_yield"
+   ],
+   [
+    37.64,
+    40.31,
+    "near_miss"
+   ],
+   [
+    78.75,
+    111.04,
+    "red_light"
+   ],
+   [
+    81.28,
+    81.81,
+    "failure_to_yield"
+   ],
+   [
+    110.31,
+    127.03,
+    "stopped_vehicle"
+   ],
+   [
+    156.56,
+    158.96,
+    "failure_to_yield"
+   ],
+   [
+    168.1,
+    321.22,
+    "stopped_vehicle"
+   ],
+   [
+    215.68,
+    218.49,
+    "stop_line"
+   ],
+   [
+    220.62,
+    221.42,
+    "failure_to_yield"
+   ],
+   [
+    251.18,
+    262.26,
+    "jaywalking"
+   ],
+   [
+    324.79,
+    338.71,
+    "stopped_vehicle"
+   ]
+  ]
  }
 }
