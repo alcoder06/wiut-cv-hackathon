@@ -212,6 +212,25 @@ class Scene:
         yi = np.clip(np.asarray(y).astype(int), 0, self.height - 1)
         return mask[yi, xi] > 0
 
+    def crossing_group_at(self, x, y, grow_px: int = 0) -> np.ndarray:
+        """Id (>0) of the whole crossing under each point, 0 = none. Crosswalk polygons and
+        refuges that touch form one crossing: a zebra interrupted by an island is still one
+        crossing for yielding (0924: a scooter on the lower half while people walk the upper
+        half was a real failure_to_yield that per-polygon ids missed)."""
+        key = ("crossing_groups", grow_px)
+        if key not in self._cache:
+            union = np.zeros((self.height, self.width), np.uint8)
+            polys = [p.astype(np.int32) for p in self.crosswalks + self.refuges]
+            if polys:
+                cv2.fillPoly(union, polys, 1)
+            union = cv2.dilate(union, np.ones((2 * grow_px + 5,) * 2, np.uint8))   # +2 px: touching pieces join
+            _, groups = cv2.connectedComponents(union)
+            self._cache[key] = groups.astype(np.int32)
+        groups = self._cache[key]
+        xi = np.clip(np.asarray(x).astype(int), 0, self.width - 1)
+        yi = np.clip(np.asarray(y).astype(int), 0, self.height - 1)
+        return groups[yi, xi]
+
     def in_refuge(self, x, y) -> np.ndarray:
         """On a traffic island: a pedestrian there is neither jaywalking nor being cut off."""
         return self._lookup(self._polys_mask("refuges", self.refuges), x, y)

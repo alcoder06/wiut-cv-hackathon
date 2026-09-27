@@ -61,12 +61,12 @@ def failure_to_yield(ctx: Context) -> list[list]:
     veh = ctx.vehicles()
     if people.empty or veh.empty:
         return []
-    ped = people.assign(cw=ctx.scene.crosswalk_at(people["gx"], people["gy"], grow_px=c.ped_margin_px))
+    ped = people.assign(cw=ctx.scene.crossing_group_at(people["gx"], people["gy"], grow_px=c.ped_margin_px))
     # on (or stepping onto) the crossing, not standing on an island, and actually walking:
     # "a person waiting on the zebra, not crossing" was the second most common reject
     keep = (ped["cw"] > 0) & ~ctx.scene.in_refuge(ped["gx"], ped["gy"]) & (ped["speed"] >= c.ped_min_speed)
     ped = ped[keep][["frame", "cw", "gx", "gy"]]
-    veh = veh.assign(cw=ctx.scene.crosswalk_at(veh["gx"], veh["gy"]))
+    veh = veh.assign(cw=ctx.scene.crossing_group_at(veh["gx"], veh["gy"]))
 
     # vehicle rows with a pedestrian on the same crosswalk, in the same frame, close to it
     m = veh[veh["cw"] > 0].reset_index().merge(ped, on=["frame", "cw"], suffixes=("", "_p"))
