@@ -72,8 +72,8 @@
           <div class="font-mono text-xs font-bold text-gray-600 uppercase">event types we report</div>
         </div>
         <div class="bg-white p-4 brut-border shadow-brut-sm">
-          <div class="font-mono text-3xl font-black text-brutCoral">1.45×</div>
-          <div class="font-mono text-xs font-bold text-gray-600 uppercase">video length, 4K on 8 CPU cores (limit 3×)</div>
+          <div class="font-mono text-3xl font-black text-brutCoral">≤1.32×</div>
+          <div class="font-mono text-xs font-bold text-gray-600 uppercase">video length, official harness, 4K (limit 3×)</div>
         </div>
         <div class="bg-white p-4 brut-border shadow-brut-sm">
           <div class="font-mono text-3xl font-black"><span class="bg-brutLime px-1" id="tile-minutes">…</span></div>
@@ -261,7 +261,7 @@
       <h3 class="font-mono font-black text-lg uppercase"><i class="fa-solid fa-gauge-high text-brutBlue"></i> Engineering</h3>
       <ul class="space-y-2 text-sm list-disc pl-5">
         <li>The model loads when <code>solution.py</code> is imported, before the harness starts its per-video clock.</li>
-        <li>Measured: 460 s for a 318 s 4K video on 8 CPU cores (1.45×, limit 3×); 36 s for a 38 s 1080p clip on a laptop RTX 3050.</li>
+        <li>Measured with the official harness on a laptop RTX 3050: 0.34× (1080p) to 1.32× (4K) of video length across the 4 samples, against a 3× limit. Without a GPU, on 8 CPU cores: 1.45×.</li>
         <li>Decoding in a background thread, skipped frames only grabbed, exact halvings to 960 px: 787 s → 460 s.</li>
         <li>Seeds fixed, cuDNN deterministic, fixed frame stride: two runs give the same file.</li>
         <li>Detections cached during development, so a rule change is re-scored in seconds.</li>
@@ -391,7 +391,7 @@
       <div class="p-3 bg-brutPink/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">failure_to_yield is the loudest class</div>Pedestrians waiting at the kerb of a 7-lane crossing were its main false alarm; the rule now needs a walking pedestrian near the car's path. F1 on our labels went from 0.56 to 0.67.</div>
       <div class="p-3 bg-brutPink/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Near misses in dense turning traffic</div>9 of 13 rejected near misses were cars turning past each other. The rule now ignores vehicles turning more than 30°: F1 0.31 → 0.57 on our labels, still the weakest class.</div>
       <div class="p-3 bg-brutCoral/30 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Missed a real crash</div>No sample video contains a crash. On a public roadside crash clip (TU-DAT), both the accident rule and Part B missed a side-swipe: the tracker lost the car that spun and gave it a new id, and Part B treats side-by-side cars as normal lane-keeping, the filter that removed most false alarms on our camera.</div>
-      <div class="p-3 bg-brutYellow/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Long merged segments</div>Several jaywalking and stopped_vehicle segments on C3897 run over a minute, because overlapping events of one type merge into one. If the annotators split them, these will not match.</div>
+      <div class="p-3 bg-brutYellow/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Long merged segments</div>On C3896 one stopped_vehicle runs 153 s and one failure_to_yield 62 s, because overlapping events of one type merge into one segment. If the annotators split them, these will not match.</div>
       <div class="p-3 bg-brutPink/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Tracker id switches</div>In dense queues a stationary car can split into two tracks. <code>stopped_vehicle</code> re-joins gaps under 3 s, but a long occlusion by a bus still splits the event.</div>
     </div>
   </div>
@@ -473,7 +473,7 @@
       <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">1. What we built</h3>
       <p>A fixed-camera traffic analyser that reports 9 of the 14 official event types as time segments (Part A) and a per-frame accident risk from past frames only (Part B).
         It is a pretrained YOLO11s detector with ByteTrack, a scene model learned from the traffic itself, and one rule per event type. No model was trained.
-        It runs inside the organizers' unchanged harness at 1.45× video length on 8 CPU cores, against a 3× limit.</p>
+        It runs inside the organizers' unchanged harness at up to 1.32× video length on a laptop GPU (1.45× on 8 CPU cores alone), against a 3× limit.</p>
     </section>
     <section class="space-y-2">
       <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">2. What worked</h3>
