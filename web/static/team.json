@@ -6,9 +6,11 @@
     "proud": "",
     "links": {
       "GitHub": "https://github.com/alcoder06",
-      "LinkedIn": "",
+      "LinkedIn": "https://www.linkedin.com/in/alcoder/",
       "Portfolio": ""
-    }
+    },
+    "photo": "team/lutfullo.jpg",
+    "captain": true
   },
   {
     "name": "Lazizbek Raimqulov",
@@ -17,7 +19,7 @@
     "proud": "",
     "links": {
       "GitHub": "https://github.com/Lazizbek-web1",
-      "LinkedIn": "",
+      "LinkedIn": "https://linkedin.com/in/laziz-raimkulov-83611643b",
       "Portfolio": ""
     }
   },

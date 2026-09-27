@@ -10,7 +10,7 @@ const GROUPS = [["car", "Cars"], ["person", "People"], ["heavy", "Buses and truc
 const PAGES = [
   ["home", "Home", "fa-house"], ["team", "Team", "fa-users"], ["approach", "Pipeline", "fa-diagram-project"],
   ["eda", "EDA", "fa-chart-pie"], ["results", "Results", "fa-bolt"], ["demo", "Live demo", "fa-play"],
-  ["report", "Report", "fa-file-lines"], ["links", "Links", "fa-link"],
+  ["report", "Report", "fa-file-lines"], ["future", "Future", "fa-city"], ["links", "Links", "fa-link"],
 ];
 // Chart ink follows the page: black axes, mono type, blue marks, coral for alarms.
 const INK = "#121212", GRID = "#E5E5E0", BLUE = "#0055FF", CORAL = "#FF5733";
@@ -227,9 +227,11 @@ function showResults(stem) {
   video.src = d.media;
   const counts = Object.entries(d.event_counts).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k} ${n}`).join(" · ");
   $("#res-events-sub").textContent = d.events.length ? `${d.events.length} events: ${counts}` : "No events";
-  $("#res-risk-sub").textContent = d.risk.length
-    ? `${d.alarms.length} alarm${d.alarms.length === 1 ? "" : "s"} (risk ≥ 0.5). There is no crash in this video, so each one is a false alarm.`
-    : "";
+  const peak = d.risk.reduce((m, r) => Math.max(m, r[1]), 0);
+  $("#res-risk-sub").textContent = !d.risk.length ? ""
+    : d.alarms.length
+      ? `${d.alarms.length} alarm${d.alarms.length === 1 ? "" : "s"} (risk ≥ 0.5). There is no crash in this video, so each one is a false alarm.`
+      : `No alarms: the risk stays below 0.5 all the way (peak ${peak.toFixed(2)}). There is no crash in this video.`;
   eventsTable($("#res-table"), d.events, seek);
   $("#res-examples").innerHTML = d.examples.length ? d.examples.map((x) =>
     `<div class="example" data-t="${x.start}" tabindex="0"><img src="${x.img}" alt="${esc(x.label)} at ${x.start.toFixed(1)} s" loading="lazy">
@@ -446,8 +448,14 @@ async function initTeam() {
     const initials = p.name.split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
     const links = Object.entries(p.links || {}).filter(([, u]) => u)
       .map(([k, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener" aria-label="${esc(k)}" class="w-9 h-9 bg-black text-white flex items-center justify-center brut-border-2 hover:bg-brutCoral"><i class="${LINK_ICONS[k] || "fa-solid fa-link"}"></i></a>`).join("");
+    const face = p.photo
+      ? `<img src="${esc(p.photo)}" alt="${esc(p.name)}" class="w-full h-full object-cover rounded-full brut-border shadow-brut-sm">`
+      : `<div class="w-full h-full rounded-full ${AVATAR[i % AVATAR.length]} brut-border flex items-center justify-center text-2xl font-black font-mono shadow-brut-sm">${esc(initials)}</div>`;
+    const captain = p.captain
+      ? `<span class="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-brutYellow brut-border-2 flex items-center justify-center font-mono font-black text-xs" title="Team captain" aria-label="Team captain">C</span>`
+      : "";
     return `<div class="bg-white brut-border p-6 shadow-brut space-y-4">
-      <div class="w-20 h-20 ${AVATAR[i % AVATAR.length]} brut-border mx-auto flex items-center justify-center text-3xl font-black font-mono shadow-brut-sm">${esc(initials)}</div>
+      <div class="relative w-20 h-20 mx-auto">${face}${captain}</div>
       <div class="text-center"><h3 class="font-mono font-black text-lg">${esc(p.name)}</h3>
         <span class="text-xs font-mono font-bold bg-brutYellow px-2 py-0.5 brut-border-2 inline-block mt-1">${esc(p.role)}</span></div>
       <p class="text-sm font-medium text-gray-700">${esc(p.did)}</p>

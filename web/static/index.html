@@ -6,14 +6,14 @@
 <title>NexVision · Traffic Event Watch</title>
 <meta name="description" content="NexVision, WIUT Hackathon 2026 CV track: traffic events as time segments and a warning before a crash, from one fixed CCTV camera.">
 <meta name="demo-api" content="">
-<link rel="stylesheet" href="tw.css">
+<link rel="stylesheet" href="tw.css?v=20260927f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=20260927f">
 <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js" defer></script>
-<script src="app.js" defer></script>
+<script src="app.js?v=20260927f" defer></script>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-brutLime selection:text-black">
 
@@ -68,11 +68,11 @@
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6">
         <div class="bg-white p-4 brut-border shadow-brut-sm">
-          <div class="font-mono text-3xl font-black text-brutBlue">9<span class="text-lg">/14</span></div>
+          <div class="font-mono text-3xl font-black text-brutBlue">8<span class="text-lg">/14</span></div>
           <div class="font-mono text-xs font-bold text-gray-600 uppercase">event types we report</div>
         </div>
         <div class="bg-white p-4 brut-border shadow-brut-sm">
-          <div class="font-mono text-3xl font-black text-brutCoral">≤1.32×</div>
+          <div class="font-mono text-3xl font-black text-brutCoral">≤1.42×</div>
           <div class="font-mono text-xs font-bold text-gray-600 uppercase">video length, official harness, 4K (limit 3×)</div>
         </div>
         <div class="bg-white p-4 brut-border shadow-brut-sm">
@@ -93,8 +93,9 @@
           <div class="bg-black text-brutLime p-4 font-mono text-xs brut-border space-y-2 overflow-x-auto">
             <div class="text-gray-400">$ python run_submission.py --videos samples --team NexVision</div>
             <div>[C3905.MP4] 127.6s @ 29.97 fps, budget 383s</div>
+            <div class="text-brutYellow">[C3905.MP4] 15 events, 3825 risk samples, 150.1s — OK</div>
             <div class="text-gray-400">$ python evaluate.py --pred predictions_samples.json --validate-only</div>
-            <div class="text-white">format: 3 video(s), 140 event(s), 0 error(s), 0 warning(s) -> VALID</div>
+            <div class="text-white">format: 4 video(s), 135 event(s), 0 error(s), 0 warning(s) -> VALID</div>
           </div>
           <p class="text-xs text-gray-600">The same commands the organizers run on the hidden test set, on our 4K samples.</p>
           <div class="grid grid-cols-2 gap-3">
@@ -110,7 +111,7 @@
     <div class="bg-brutYellow p-6 brut-border shadow-brut space-y-3">
       <div class="w-12 h-12 bg-black text-white brut-border flex items-center justify-center text-xl"><i class="fa-solid fa-timeline"></i></div>
       <h3 class="font-mono text-lg font-black uppercase">Events as segments</h3>
-      <p class="text-sm font-medium">Stopped vehicles, congestion, jaywalking, failure to yield, red light, stop line, near misses and more: each with a start and end that follow the annotators' rules.</p>
+      <p class="text-sm font-medium">Stopped vehicles, congestion, jaywalking, failure to yield, red light, solid-line crossing and near misses: each with a start and end that follow the annotators' rules.</p>
     </div>
     <div class="bg-brutLime p-6 brut-border shadow-brut space-y-3">
       <div class="w-12 h-12 bg-black text-white brut-border flex items-center justify-center text-xl"><i class="fa-solid fa-triangle-exclamation"></i></div>
@@ -208,7 +209,7 @@
           <tr><td>Carriageway + lane directions</td><td>statistics from trajectories</td><td>ours</td></tr>
           <tr><td>Event rules, signal colour</td><td>rules</td><td>ours</td></tr>
           <tr><td>Accident risk</td><td>rules (TTC + braking)</td><td>ours</td></tr>
-          <tr><td>Our labels: 93 detections on the samples judged by the team</td><td>tuning only</td><td>ours</td></tr>
+          <tr><td>Our labels: the team's review of two official samples (C3897: 38 events, C3905: 6)</td><td>tuning only</td><td>ours</td></tr>
           <tr><td>TU-DAT (public roadside crash clips)</td><td>testing only, one clip</td><td>public research dataset</td></tr>
         </tbody>
       </table></div>
@@ -220,7 +221,7 @@
       <ul class="space-y-3 text-sm">
         <li class="bg-brutBg p-3 brut-border-2"><b>YOLO11s at 960 px:</b> small, distant pedestrians need the resolution; it is the largest model that keeps 4K inside the time budget with margin.</li>
         <li class="bg-brutBg p-3 brut-border-2"><b>Speed in box sizes per second:</b> no camera calibration, and one threshold works across the frame.</li>
-        <li class="bg-brutBg p-3 brut-border-2"><b>Precision over recall:</b> the score averages F1 over event types, and a type we predict that is not in the test set adds a zero. <code>road_obstacle</code>, <code>fire_smoke</code> and <code>wrong_way</code> stay off.</li>
+        <li class="bg-brutBg p-3 brut-border-2"><b>Precision over recall:</b> the score averages F1 over event types, and a type we predict that is not in the test set adds a zero. <code>road_obstacle</code>, <code>fire_smoke</code>, <code>wrong_way</code> and <code>stop_line</code> stay off.</li>
         <li class="bg-brutBg p-3 brut-border-2"><b>Boundaries follow the annotation rules:</b> e.g. <code>stopped_vehicle</code> starts when the car stops, not 10 s later when the rule is confirmed. Events are matched by temporal IoU up to 0.7.</li>
         <li class="bg-brutBg p-3 brut-border-2"><b>Time safety valves:</b> each part caps its own time, so a slow machine loses a few events instead of scoring zero for the video.</li>
       </ul>
@@ -237,7 +238,7 @@
         <tr><td><code>wrong_way</code> (off)</td><td>moving against the learned lane direction for 1.5 s, outside the junction box. Switched off: 0 true and 1 false detection on our labels</td><td>enters → leaves the lane</td></tr>
         <tr><td><code>jaywalking</code></td><td>pedestrian on the learned carriageway, outside every crossing and traffic island, for 1 s or more</td><td>steps on → leaves</td></tr>
         <tr><td><code>failure_to_yield</code></td><td>vehicle moving through a crossing while a pedestrian walks on it (not just waits) within 2.5 car sizes of its path. A zebra split by a traffic island counts as one crossing</td><td>enters → leaves the crossing</td></tr>
-        <tr><td><code>red_light</code> / <code>stop_line</code></td><td>moving along the approach, past the stop line while the lamp reads red, then into the junction within 3 s / stopped clearly past the line on red, outside the junction</td><td>crosses → leaves junction / stops → green</td></tr>
+        <tr><td><code>red_light</code> / <code>stop_line</code> (off)</td><td>moving along the approach, past the stop line while the lamp reads red, then into the junction within 3 s / stopped clearly past the line on red, outside the junction. <code>stop_line</code> is switched off: 0 true and 1 false detection on our labels</td><td>crosses → leaves junction / stops → green</td></tr>
         <tr><td><code>solid_line_crossing</code></td><td>ground point crosses a solid lane line we drew</td><td>crosses → fully across</td></tr>
         <tr><td><code>illegal_turn</code> / <code>illegal_u_turn</code></td><td>heading turns 60° / 150° inside a prohibited zone. None drawn yet (we had no <code>camera.md</code> listing prohibited turns), so these stay silent</td><td>starts → ends turning</td></tr>
         <tr><td><code>accident</code></td><td>boxes touch while the striking vehicle still moves at 1 size/s or more, its speed then drops 60% within 1 s, and both stay stopped 2 s</td><td>contact → all stop</td></tr>
@@ -259,7 +260,7 @@
       <h3 class="font-mono font-black text-lg uppercase"><i class="fa-solid fa-gauge-high text-brutBlue"></i> Engineering</h3>
       <ul class="space-y-2 text-sm list-disc pl-5">
         <li>The model loads when <code>solution.py</code> is imported, before the harness starts its per-video clock.</li>
-        <li>Measured with the official harness on a laptop RTX 3050: 1.22× to 1.32× of video length on the 4K samples, against a 3× limit. Without a GPU, on 8 CPU cores: 1.45×.</li>
+        <li>Measured with the official harness on a laptop RTX 3050: 1.14× to 1.42× of video length on the four 4K samples, against a 3× limit. Without a GPU, on 8 CPU cores: 1.45×.</li>
         <li>Decoding in a background thread, skipped frames only grabbed, exact halvings to 960 px: 787 s → 460 s.</li>
         <li>Seeds fixed, cuDNN deterministic, fixed frame stride: two runs give the same file.</li>
         <li>Detections cached during development, so a rule change is re-scored in seconds.</li>
@@ -313,6 +314,16 @@
     <figure class="bg-white brut-border p-4 shadow-brut"><img id="img-heat-ppl" alt="Motion heatmap of pedestrians" loading="lazy" class="brut-border-2 w-full"><figcaption>Motion heatmap, pedestrians: the crossings, and where people cross without one.</figcaption></figure>
     <figure class="bg-white brut-border p-4 shadow-brut"><img id="img-tracks" alt="Trajectories" loading="lazy" class="brut-border-2 w-full"><figcaption>Every trajectory: vehicles in blue, pedestrians in orange.</figcaption></figure>
     <figure class="bg-white brut-border p-4 shadow-brut"><img id="img-lanes" alt="Learned lane directions" loading="lazy" class="brut-border-2 w-full"><figcaption>Lane directions learned from traffic (no hand drawing): the two carriageways in blue and orange. <code>wrong_way</code> checks against this map.</figcaption></figure>
+  </div>
+
+  <div class="bg-white brut-border p-6 shadow-brut space-y-3">
+    <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-magnifying-glass text-brutCoral"></i> Found by looking at the data: the camera moved</h3>
+    <p class="text-sm font-medium">Between recordings the camera is not quite in the same place. C3902 is shifted by (-126, +77) px and turned -0.9° from the
+      view we drew our zones on, C3905 by (-35, +43) px and -1.1°. With the zones as drawn (red), crossings and the stop line sat off the real paint, and
+      two segments covered almost the whole of C3902. Each video is now registered to the reference view automatically (ORB features + RANSAC on a
+      median background frame, about 5 s per video), and the zones, lamp window and learned lanes move with it (green).</p>
+    <figure><img src="data/zones_shift.jpg" alt="Crossing zones as drawn (red) and after automatic alignment (green) on C3902 (top) and C3905 (bottom)" loading="lazy" class="brut-border-2 w-full">
+      <figcaption>Top: C3902. Bottom: C3905 at dusk. Red: zones as drawn on the reference view. Green: after automatic alignment.</figcaption></figure>
   </div>
 
   <div class="bg-brutLime brut-border p-6 shadow-brut space-y-3">
@@ -382,14 +393,62 @@
     </div>
   </div>
 
+  <div class="bg-white brut-border p-6 shadow-brut space-y-5" id="ablations">
+    <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-flask text-brutBlue"></i> Ablations and error analysis</h3>
+    <div class="grid grid-cols-1 gap-8">
+      <div class="space-y-2">
+        <h4 class="font-mono font-black uppercase text-sm">Part B: the false-alarm floor</h4>
+        <p class="text-xs font-medium text-gray-600">Minimum closing speed a same-direction or stopped pair needs before it can raise the risk, replayed on
+          the 4 official samples and on public TU-DAT crash clips.</p>
+        <div class="table-wrap"><table class="brut-table">
+          <thead><tr><th>Floor (sizes/s)</th><th class="num">1.0 (old)</th><th class="num">1.5</th><th class="num">2.0</th><th class="num">2.5 (chosen)</th><th class="num">3.0</th></tr></thead>
+          <tbody>
+            <tr><td>False alarms, 4 samples</td><td class="num">30</td><td class="num">15</td><td class="num">5</td><td class="num"><b>0</b></td><td class="num">0</td></tr>
+            <tr><td>Crash in view (TU-DAT pos_v11)</td><td class="num">warned</td><td class="num">warned</td><td class="num">warned</td><td class="num"><b>warned</b></td><td class="num">warned</td></tr>
+            <tr><td>Car entering at the frame edge (pos_v1)</td><td class="num">by chance</td><td class="num">by chance</td><td class="num">by chance</td><td class="num">by chance</td><td class="num">missed</td></tr>
+          </tbody>
+        </table></div>
+        <p class="text-xs font-medium">2.5 removes the false alarms without losing the crash that is in view. Raising the time-to-collision midpoint to
+          2 to 3 s would add only 0.1 to 0.2 s of warning and bring back 7 to 23 false alarms, so it stays at 1.5 s. On the full official run,
+          alarms went from 14 to 3.</p>
+      </div>
+      <div class="space-y-2">
+        <h4 class="font-mono font-black uppercase text-sm">Part A: what each tuning step bought</h4>
+        <p class="text-xs font-medium text-gray-600">Score A on the team's labels of two official samples (C3897, C3905). Tuned and scored on the same
+          labels, so it overstates what to expect on the hidden set.</p>
+        <div class="table-wrap"><table class="brut-table">
+          <thead><tr><th>Settings</th><th class="num">Score A</th></tr></thead>
+          <tbody>
+            <tr><td>Hand-set thresholds (round 1)</td><td class="num">0.502</td></tr>
+            <tr><td>+ round-2 tuning on the team's review</td><td class="num">0.576</td></tr>
+            <tr><td>+ <code>stop_line</code> switched off (0 true, 1 false)</td><td class="num"><b>0.672</b></td></tr>
+          </tbody>
+        </table></div>
+        <div class="table-wrap"><table class="brut-table">
+          <thead><tr><th>Class, at IoU 0.5</th><th class="num">TP / FP / FN before</th><th class="num">after round 2</th></tr></thead>
+          <tbody>
+            <tr><td><code>jaywalking</code></td><td class="num">1 / 30 / 6</td><td class="num">7 / 10 / 0</td></tr>
+            <tr><td><code>failure_to_yield</code></td><td class="num">8 / 22 / 11</td><td class="num">9 / 13 / 10</td></tr>
+            <tr><td><code>near_miss</code></td><td class="num">4 / 6 / 0</td><td class="num">4 / 5 / 0</td></tr>
+            <tr><td><code>congestion</code></td><td class="num">4 / 2 / 0</td><td class="num">4 / 2 / 0</td></tr>
+            <tr><td><code>stopped_vehicle</code></td><td class="num">7 / 5 / 1</td><td class="num">7 / 5 / 1</td></tr>
+            <tr><td><code>solid_line_crossing</code></td><td class="num">2 / 0 / 0</td><td class="num">2 / 0 / 0</td></tr>
+          </tbody>
+        </table></div>
+        <p class="text-xs font-medium">Errors are mostly false positives: jaywalking at the ragged edges of hand-drawn crossings (fixed by a margin around
+          them) and failure_to_yield with pedestrians who were waiting, not crossing. failure_to_yield also misses 10 events, which is why it is our weakest class.</p>
+      </div>
+    </div>
+  </div>
+
   <div class="bg-white brut-border p-6 shadow-brut space-y-4">
     <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-shield-halved text-brutCoral"></i> Honest failure cases</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-medium">
-      <div class="p-3 bg-brutYellow/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Small, reused labels</div>The team judged 93 detections on the samples (37 real). Tuning on them raised Score A on those samples from 0.53 to 0.74, but it was tuned and scored on the same labels: expect less on the hidden set.</div>
-      <div class="p-3 bg-brutPink/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">failure_to_yield is the loudest class</div>Pedestrians waiting at the kerb of a 7-lane crossing were its main false alarm; the rule now needs a walking pedestrian near the car's path. F1 on our labels went from 0.56 to 0.67.</div>
-      <div class="p-3 bg-brutPink/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Near misses in dense turning traffic</div>9 of 13 rejected near misses were cars turning past each other. The rule now ignores vehicles turning more than 30°: F1 0.31 → 0.57 on our labels, still the weakest class.</div>
+      <div class="p-3 bg-brutYellow/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Small, reused labels</div>The team fully reviewed two official samples (C3897: 38 events, C3905: 6). Two rounds of tuning raised Score A on that key from 0.50 to 0.67, but it was tuned and scored on the same labels: expect less on the hidden set.</div>
+      <div class="p-3 bg-brutPink/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">failure_to_yield is our weakest class</div>It fires most often, and pedestrians waiting at the kerb of a 7-lane crossing were its main false alarm. It now needs a walking pedestrian near the car's path, but its score on our key is still only 0.42 (from 0.37).</div>
+      <div class="p-3 bg-brutPink/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Near misses in dense turning traffic</div>9 of 13 rejected near misses were cars turning past each other. The rule now ignores vehicles turning more than 30°; its score on our key is 0.62.</div>
       <div class="p-3 bg-brutCoral/30 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Missed a real crash</div>No sample video contains a crash. On a public roadside crash clip (TU-DAT), both the accident rule and Part B missed a side-swipe: the tracker lost the car that spun and gave it a new id, and Part B treats side-by-side cars as normal lane-keeping, the filter that removed most false alarms on our camera.</div>
-      <div class="p-3 bg-brutYellow/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Long merged segments</div>On C3896 one stopped_vehicle runs 153 s and one failure_to_yield 62 s, because overlapping events of one type merge into one segment. If the annotators split them, these will not match.</div>
+      <div class="p-3 bg-brutYellow/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Near-whole-video segments</div>On C3902, which nothing was tuned on, one stopped_vehicle and one jaywalking segment each cover almost the whole video (316 s and 318 s); on C3896 a stopped_vehicle runs 153 s. A road user that never leaves the carriageway keeps one segment open, and overlapping events of one type merge. If these are not single real events, they will not match.</div>
       <div class="p-3 bg-brutPink/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Tracker id switches</div>In dense queues a stationary car can split into two tracks. <code>stopped_vehicle</code> re-joins gaps under 3 s, but a long occlusion by a bus still splits the event.</div>
     </div>
   </div>
@@ -469,18 +528,18 @@
   <div class="bg-white brut-border p-8 shadow-brut space-y-6 font-medium leading-relaxed">
     <section class="space-y-2">
       <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">1. What we built</h3>
-      <p>A fixed-camera traffic analyser that reports 9 of the 14 official event types as time segments (Part A) and a per-frame accident risk from past frames only (Part B).
+      <p>A fixed-camera traffic analyser that reports 8 of the 14 official event types as time segments (Part A) and a per-frame accident risk from past frames only (Part B).
         It is a pretrained YOLO11s detector with ByteTrack, a scene model learned from the traffic itself, and one rule per event type. No model was trained.
-        It runs inside the organizers' unchanged harness at up to 1.32× video length on a laptop GPU (1.45× on 8 CPU cores alone), against a 3× limit.</p>
+        It runs inside the organizers' unchanged harness at up to 1.42× video length on a laptop GPU (1.45× on 8 CPU cores alone), against a 3× limit.</p>
     </section>
     <section class="space-y-2">
       <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">2. What worked</h3>
       <ul class="list-disc pl-6 space-y-1">
-        <li>Trajectory rules cover 9 of 14 classes with no training data, and every event can be traced to a track and a rule.</li>
-        <li>Tuning on 93 detections the team judged raised Score A on the labelled samples from 0.53 to 0.74 (same labels, so optimistic).</li>
+        <li>Trajectory rules cover 8 of 14 classes with no training data, and every event can be traced to a track and a rule.</li>
+        <li>Two rounds of tuning on the team's review of the official samples raised Score A on that key from 0.50 to 0.67 (same labels, so optimistic); jaywalking gained most, 0.11 → 0.53.</li>
         <li>Learning the road and lane directions from traffic removed most hand drawing and kept parked cars out.</li>
         <li>Speed in box sizes per second made one set of thresholds work across the whole frame.</li>
-        <li>Filtering Part B by closing speed and lane offset cut false alarms from 35 to 7 in 5 minutes.</li>
+        <li>Filtering Part B by closing speed and lane offset cut false alarms from 35 to 7 in 5 minutes; a last rule for same-direction and stopped pairs brought alarms across all four samples (19 minutes) from 14 to 3.</li>
         <li>Threaded decoding and 960 px input cut runtime by 42%.</li>
       </ul>
     </section>
@@ -491,7 +550,7 @@
         <li>"Anyone on the crossing" for failure_to_yield fired on nearly every car.</li>
         <li>Counting every red-light queue as a stopped vehicle.</li>
         <li>Reading the gantry signal heads: they face sideways.</li>
-        <li><code>wrong_way</code>: 0 real and 1 false detection on our labels, so it is off.</li>
+        <li><code>wrong_way</code> and <code>stop_line</code>: 0 real and 1 false detection each on our labels, so both are off.</li>
         <li>A real side-swipe on a public crash clip: the tracker lost the car that spun, so the accident rule and Part B both missed it.</li>
       </ul>
     </section>
@@ -506,6 +565,61 @@
         <li>Run Part B on a live stream, with alerts to an operator.</li>
       </ul>
     </section>
+  </div>
+</div>
+
+<!-- ============================ FUTURE ============================ -->
+<div id="page-future" class="page-view space-y-8 hidden">
+  <div class="border-b-4 border-black pb-4">
+    <span class="font-mono text-xs font-black bg-brutLime px-2 py-1 brut-border uppercase">For the city and for business</span>
+    <h2 class="text-4xl font-black font-mono mt-2 uppercase">Where this goes next</h2>
+    <p class="text-gray-700 font-medium max-w-3xl">What the same detections could do once they run on more than one camera. None of this is built yet;
+      each card says what it would take, and what it must not do.</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="bg-brutYellow brut-border p-6 shadow-brut space-y-3 relative">
+      <div class="absolute -top-3 -left-3 w-8 h-8 bg-white brut-border flex items-center justify-center font-mono font-black text-sm shadow-brut-sm">01</div>
+      <h3 class="font-mono font-black text-lg uppercase"><i class="fa-solid fa-file-invoice"></i> Automatic violation tickets (jarima)</h3>
+      <p class="text-sm font-medium">Every event we detect already has a start, an end and the road user involved. For vehicle violations we detect today
+        (<code>red_light</code>, <code>failure_to_yield</code>, <code>solid_line_crossing</code>, illegal turns, a vehicle stopped on the carriageway),
+        the system can cut the clip and the timestamps as evidence and pre-fill a ticket. The same works for jaywalking pedestrians.</p>
+      <p class="text-sm font-medium"><b>What it would take:</b> a licence-plate reader, which we do not have yet, and <b>a person who reviews every ticket</b>
+        before a fine is issued. Our detections are not accurate enough to fine anyone on their own.</p>
+      <p class="text-sm font-medium"><b>Pedestrians are harder:</b> fining a person means identifying them, which raises privacy and legal questions
+        (face recognition, data protection, how long footage is kept). That is a decision for the city and its law, not for the software.</p>
+    </div>
+
+    <div class="bg-white brut-border p-6 shadow-brut space-y-3 relative">
+      <div class="absolute -top-3 -left-3 w-8 h-8 bg-brutLime brut-border flex items-center justify-center font-mono font-black text-sm shadow-brut-sm">02</div>
+      <h3 class="font-mono font-black text-lg uppercase"><i class="fa-solid fa-truck-medical text-brutCoral"></i> Crash detection on every camera</h3>
+      <p class="text-sm font-medium">The same pipeline on every city camera, working as one network. An <code>accident</code> event sends the place, the time
+        and the clip straight to police and ambulance dispatch, seconds after impact instead of after the first phone call. Nearby signals can be
+        retimed around the crash: hold traffic heading into it and clear a path for the ambulance.</p>
+      <p class="text-sm font-medium"><b>What it would take:</b> a more reliable accident rule first. On a real public crash clip ours missed a side-swipe
+        (see Results), so today it would need a person to confirm each alert.</p>
+    </div>
+
+    <div class="bg-white brut-border p-6 shadow-brut space-y-3 relative">
+      <div class="absolute -top-3 -left-3 w-8 h-8 bg-brutPink brut-border flex items-center justify-center font-mono font-black text-sm shadow-brut-sm">03</div>
+      <h3 class="font-mono font-black text-lg uppercase"><i class="fa-solid fa-tower-broadcast text-brutBlue"></i> Cameras that warn cars (V2X)</h3>
+      <p class="text-sm font-medium">Part B scores, frame by frame, how likely a crash is in the next 5 seconds. A camera could broadcast that warning to
+        approaching cars over vehicle-to-everything radio, and a car could combine it with its own radar and cameras to react earlier.</p>
+      <p class="text-sm font-medium"><b>What it cannot do: fire an airbag.</b> An airbag must deploy within about 15 to 30 milliseconds of impact, from
+        the car's own crash sensors. A radio message can't arrive that fast, and must not be trusted to fire it.
+        <b>What it can do:</b> seconds before a possible crash, let the car pre-arm. It can tighten the seat belts, pre-charge the brakes and prepare
+        its restraint systems, the way on-board "pre-crash" systems already do. The decision to fire stays inside the car.</p>
+    </div>
+
+    <div class="bg-brutLime brut-border p-6 shadow-brut space-y-3 relative">
+      <div class="absolute -top-3 -left-3 w-8 h-8 bg-white brut-border flex items-center justify-center font-mono font-black text-sm shadow-brut-sm">04</div>
+      <h3 class="font-mono font-black text-lg uppercase"><i class="fa-solid fa-car-side"></i> Extra eyes for driver-assist and self-driving cars</h3>
+      <p class="text-sm font-medium">A camera above the junction sees what a car can't: around the corner, and past the bus a pedestrian is about to step
+        out from behind. The city network could share those road users with nearby cars as an extra sensor. The near misses and conflicts it records
+        are also the rare, hard examples carmakers need to improve their own software.</p>
+      <p class="text-sm font-medium"><b>What it would take:</b> agreed message standards, guaranteed latency, signed messages so a car can trust the source,
+        and privacy rules for sharing what the cameras see.</p>
+    </div>
   </div>
 </div>
 
