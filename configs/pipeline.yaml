@@ -85,6 +85,7 @@ rules:
   jaywalking:
     min_len_sec: 1.0
     road_erode_px: 12     # ignore people standing on the kerb edge
+    crosswalk_margin_frac: 0.004  # crossings grown by this share of frame width (~15 px at 4K)
   failure_to_yield:
     ped_margin_px: 20
     near_sizes: 2.5       # pedestrian within this many vehicle sizes of the vehicle

@@ -41,7 +41,11 @@ def jaywalking(ctx: Context) -> list[list]:
     for _, g in walkers(ctx).groupby("tid"):
         x = np.clip(g["gx"].to_numpy().astype(int), 0, w - 1)
         y = np.clip(g["gy"].to_numpy().astype(int), 0, h - 1)
-        on_road = (road[y, x] > 0) & (ctx.scene.crosswalk_at(x, y) == 0) & ~ctx.scene.in_refuge(x, y)
+        # the team's zebra outlines are freehand and a little tight: people at the painted
+        # edge are crossing, not jaywalking. Margin is a fraction of frame width (4K = 1080p)
+        grow = int(round(c.crosswalk_margin_frac * ctx.info.width))
+        on_road = ((road[y, x] > 0) & (ctx.scene.crosswalk_at(x, y, grow_px=grow) == 0)
+                   & ~ctx.scene.in_refuge(x, y))
         t = g["t"].to_numpy()
         for i, j in runs(on_road):
             if t[j] - t[i] >= c.min_len_sec:
