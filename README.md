@@ -81,6 +81,15 @@ that on 126 stop-line crossings in C3897. Read naively, that is ~3 false `red_li
 cycle, so each approach in `configs/scene.yaml` carries `red_delay_sec` / `red_early_end_sec`.
 The stop line, solid lane lines and crossings were drawn by the team on a frame of the sample.
 
+**Camera drift.** The camera is fixed within a recording but not between them: C3902 is framed
+(-126, +77) px at 4K and 0.9 deg off C3897, the view the zones were drawn on, and C3905 is off by
+(-35, +43) px and 1.1 deg. That misplaced the crossings, the stop line and the 38x75 px lamp
+window (on C3902 it missed the lamp). `src/view.py` registers each video to
+`configs/reference_view.png` before tracking (median background of 7 frames, ORB on
+contrast-equalised images so dusk works, similarity transform by seeded RANSAC) and moves the
+zones, lamp window and prebuilt lane field with it. A view that matches the reference leaves
+the zones exactly as drawn (C3896 and C3897 give identical output with and without it).
+
 **Safety valves.** Over 3x the video length the harness scores the whole video as empty, so Part A
 stops analysing new frames at 1.3x (returning what it found) and Part B skips detection while
 its own processing exceeds 0.4x the video time, then resumes. (It counts only its own work: an
@@ -130,13 +139,14 @@ Measured with the official harness on an RTX 3050 laptop GPU, plugged in (budget
 
 | Video | CPU threads | Part A | Part B | Total | x video length |
 |---|---|---|---|---|---|
-| C3896, 4K, 340.3 s | 16 | 157 s | 230 s | 387 s | 1.14x |
-| C3897, 4K, 317.8 s | 16 | 171 s | 254 s | 425 s | 1.34x |
-| C3902, 4K, 317.8 s | 16 | 221 s | 230 s | 451 s | 1.42x |
-| C3905, 4K, 127.6 s (dusk) | 16 | 58 s | 92 s | 150 s | 1.18x |
+| C3896, 4K, 340.3 s | 16 | 218 s | 249 s | 467 s | 1.37x |
+| C3897, 4K, 317.8 s | 16 | 213 s | 250 s | 462 s | 1.45x |
+| C3902, 4K, 317.8 s | 16 | 227 s | 248 s | 475 s | 1.50x |
+| C3905, 4K, 127.6 s (dusk) | 16 | 74 s | 105 s | 179 s | 1.41x |
 | C3897, 4K, 317.8 s (earlier build) | 8 (like the evaluation machine) | 197 s | 263 s | 460 s | **1.45x** |
 
-The four official samples are from the final `predictions_samples.json` run.
+The four official samples are from the final `predictions_samples.json` run (the website build
+shared the machine during it; an earlier run of the same videos alone took 1.14-1.42x).
 
 About half of Part B is the harness's own 4K decoding (0.8x on 8 threads), which no solution
 avoids. Not yet measured on a T4.
@@ -160,7 +170,9 @@ The key covers the official samples that are fully reviewed: C3897 (38 events) a
 Round 2 (after the team redrew the crossings) moved Score A on it from 0.502 to 0.576:
 jaywalking 0.105 -> 0.528, failure_to_yield 0.367 -> 0.423, near_miss 0.571 -> 0.615. Its
 congestion result (4 labels, far from round 1's optimum) was left out. Turning `stop_line` off
-takes it to 0.672. These are scores on the data we tuned on, so they overstate the hidden set.
+takes it to 0.672. With view alignment (below) the zones move on C3905 and the key scores 0.666:
+its answers were given on clips from the old, misplaced zones, so it slightly favours them. These
+are scores on the data we tuned on, so they overstate the hidden set.
 
 ## Known limitations
 

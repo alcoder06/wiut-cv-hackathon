@@ -79382,18 +79382,13 @@
    "events": [
     [
      0.0,
+     13.647,
+     "failure_to_yield"
+    ],
+    [
+     0.0,
      40.0,
      "congestion"
-    ],
-    [
-     0.0,
-     316.284,
-     "stopped_vehicle"
-    ],
-    [
-     0.0,
-     317.784,
-     "jaywalking"
     ],
     [
      0.667,
@@ -79401,28 +79396,58 @@
      "near_miss"
     ],
     [
-     16.55,
-     17.118,
+     2.837,
+     14.681,
+     "jaywalking"
+    ],
+    [
+     21.255,
+     34.034,
+     "jaywalking"
+    ],
+    [
+     23.357,
+     24.058,
      "failure_to_yield"
     ],
     [
-     23.757,
-     24.325,
+     25.092,
+     25.926,
      "failure_to_yield"
     ],
     [
-     28.962,
-     30.598,
+     28.562,
+     30.464,
      "failure_to_yield"
     ],
     [
-     51.251,
-     53.154,
+     35.803,
+     37.104,
+     "jaywalking"
+    ],
+    [
+     40.074,
+     41.108,
+     "jaywalking"
+    ],
+    [
+     45.546,
+     280.814,
+     "jaywalking"
+    ],
+    [
+     47.448,
+     81.917,
+     "stopped_vehicle"
+    ],
+    [
+     52.853,
+     53.554,
      "failure_to_yield"
     ],
     [
-     68.735,
-     74.741,
+     69.136,
+     73.273,
      "solid_line_crossing"
     ],
     [
@@ -79431,14 +79456,24 @@
      "congestion"
     ],
     [
-     91.291,
-     93.461,
+     91.959,
+     92.66,
      "failure_to_yield"
     ],
     [
-     99.166,
-     117.885,
+     108.508,
+     109.21,
      "failure_to_yield"
+    ],
+    [
+     110.243,
+     110.945,
+     "failure_to_yield"
+    ],
+    [
+     124.726,
+     308.143,
+     "stopped_vehicle"
     ],
     [
      146.279,
@@ -79456,18 +79491,8 @@
      "near_miss"
     ],
     [
-     183.25,
-     183.951,
-     "failure_to_yield"
-    ],
-    [
-     195.662,
-     196.63,
-     "failure_to_yield"
-    ],
-    [
-     201.935,
-     202.77,
+     182.983,
+     183.684,
      "failure_to_yield"
     ],
     [
@@ -79481,38 +79506,28 @@
      "near_miss"
     ],
     [
-     248.115,
-     249.483,
-     "failure_to_yield"
-    ],
-    [
      260.0,
      280.0,
      "congestion"
     ],
     [
-     268.535,
-     270.037,
-     "failure_to_yield"
-    ],
-    [
-     274.407,
+     268.135,
      279.913,
      "failure_to_yield"
     ],
     [
-     282.282,
-     285.653,
+     281.915,
+     317.784,
+     "jaywalking"
+    ],
+    [
+     285.218,
+     286.186,
      "failure_to_yield"
     ],
     [
-     287.621,
-     288.188,
-     "failure_to_yield"
-    ],
-    [
-     294.828,
-     305.539,
+     304.971,
+     306.073,
      "failure_to_yield"
     ]
    ],
@@ -117632,7 +117647,7 @@
      "stopped_vehicle"
     ],
     [
-     8.942,
+     9.343,
      20.054,
      "failure_to_yield"
     ],
@@ -117648,7 +117663,7 @@
     ],
     [
      53.287,
-     94.227,
+     127.594,
      "jaywalking"
     ],
     [
@@ -117657,8 +117672,8 @@
      "near_miss"
     ],
     [
-     58.325,
-     60.494,
+     60.06,
+     61.028,
      "failure_to_yield"
     ],
     [
@@ -117672,28 +117687,28 @@
      "congestion"
     ],
     [
-     81.148,
-     83.717,
+     77.01,
+     98.265,
      "failure_to_yield"
-    ],
-    [
-     97.064,
-     127.594,
-     "jaywalking"
     ],
     [
      99.299,
-     100.267,
+     100.134,
      "failure_to_yield"
     ],
     [
-     101.835,
+     101.568,
      102.536,
      "failure_to_yield"
     ],
     [
-     109.042,
+     109.176,
      110.277,
+     "failure_to_yield"
+    ],
+    [
+     112.512,
+     113.347,
      "failure_to_yield"
     ]
    ],
@@ -133006,33 +133021,33 @@
    "duration": 340.34,
    "budget_sec": 1021.0,
    "errors": [],
-   "part_a_sec": 157.3,
-   "part_b_sec": 229.3,
-   "total_sec": 386.5
+   "part_a_sec": 218.8,
+   "part_b_sec": 248.2,
+   "total_sec": 467.0
   },
   "C3897.MP4": {
    "duration": 317.82,
    "budget_sec": 953.5,
    "errors": [],
-   "part_a_sec": 171.2,
-   "part_b_sec": 254.0,
-   "total_sec": 425.2
+   "part_a_sec": 212.8,
+   "part_b_sec": 249.5,
+   "total_sec": 462.3
   },
   "C3902.MP4": {
    "duration": 317.82,
    "budget_sec": 953.5,
    "errors": [],
-   "part_a_sec": 221.3,
-   "part_b_sec": 230.1,
-   "total_sec": 451.4
+   "part_a_sec": 227.6,
+   "part_b_sec": 247.5,
+   "total_sec": 475.1
   },
   "C3905.MP4": {
    "duration": 127.63,
    "budget_sec": 382.9,
    "errors": [],
-   "part_a_sec": 58.5,
-   "part_b_sec": 91.7,
-   "total_sec": 150.1
+   "part_a_sec": 74.4,
+   "part_b_sec": 104.9,
+   "total_sec": 179.3
   }
  }
 }
