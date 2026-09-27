@@ -158,7 +158,9 @@ training signal: rule thresholds and per-class start/end shifts are fitted to it
 time because Score A averages per-class F1.
 
 ```bash
-python scripts/merge_labels.py dev/labels/*.json            # -> dev/labels.json
+python scripts/label_pool.py --videos <dir>                # candidates: every segment tune.py's grid can emit
+python scripts/label_clips.py --videos <dir>               # zoomed clip per candidate for the label desk (review_site/)
+python scripts/export_labels.py <answers dump> --json dev/labels/incoming/*.json   # -> dev/labels.json
 python scripts/tune.py --gt dev/labels.json --videos <dir>  # report
 python scripts/tune.py --gt dev/labels.json --videos <dir> --apply   # writes configs/tuned.yaml
 ```

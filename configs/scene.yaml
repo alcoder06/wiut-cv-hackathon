@@ -44,7 +44,7 @@ solid_lines:
 approaches:
   # Boulevard traffic from the upper left. Its own (gantry) lights are side-on and unreadable;
   # the left-pole lamp is readable and locked to the same 75 s cycle, but red ~4.5 s early and
-  # green ~0.6 s late (measured: 126 stop-line crossings on C3897, dev notes in PROGRESS.md).
+  # green ~0.6 s late (measured: 126 stop-line crossings on C3897).
   - name: boulevard_in
     stop_line: [[0.1482, 0.4862], [0.4862, 0.4221]]
     direction: [0.880, 0.475]                   # image-space direction of travel (pixels)
