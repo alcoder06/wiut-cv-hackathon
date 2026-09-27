@@ -45,7 +45,7 @@ def to_sv(det):
     return sv.Detections(xyxy=det.xyxy, confidence=det.conf, class_id=det.cls)
 
 
-def _cache_path(info: VideoInfo, cfg) -> Path | None:
+def _cache_path(info: VideoInfo, cfg, view_key=None) -> Path | None:
     root = os.environ.get("TRAFFIC_CACHE")
     if not root:
         return None
@@ -53,16 +53,17 @@ def _cache_path(info: VideoInfo, cfg) -> Path | None:
     # the signal lamps are read in this same pass, so their areas are part of the key
     approaches = load_manual(resolve(cfg.scene.manual)).get("approaches") or []
     key = json.dumps([Path(info.path).name, st.st_size, cfg.detector, cfg.sampling.part_a_fps,
-                      cfg.tracker, [a.get("signal_roi") for a in approaches]], sort_keys=True, default=str)
+                      cfg.tracker, [a.get("signal_roi") for a in approaches]]
+                     + ([view_key] if view_key is not None else []), sort_keys=True, default=str)
     h = hashlib.sha1(key.encode()).hexdigest()[:12]
     return Path(root) / f"{Path(info.path).stem}_{h}"
 
 
 def track_video(info: VideoInfo, frame_hook: FrameHook | None = None,
-                progress: Progress | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
+                progress: Progress | None = None, view_key=None) -> tuple[pd.DataFrame, pd.DataFrame]:
     """`progress(fraction_of_video_done)` is called once per detector batch (the web demo's bar)."""
     cfg = load_config()
-    cache = _cache_path(info, cfg)
+    cache = _cache_path(info, cfg, view_key)
     if cache and cache.with_suffix(".tracks.parquet").exists():
         return (pd.read_parquet(cache.with_suffix(".tracks.parquet")),
                 pd.read_parquet(cache.with_suffix(".frames.parquet")))

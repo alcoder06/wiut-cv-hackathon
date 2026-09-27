@@ -13,18 +13,24 @@ from .scene import FlowField, Scene, grid_for, load_approaches, load_manual
 from .segments import finalize
 from .tracking import Progress, track_video
 from .video import VideoInfo, probe
+from .view import view_transform, warp_grid, warp_manual
 
 
-def build_scene(tracks, info: VideoInfo, cfg, manual: dict | None = None) -> Scene:
+def build_scene(tracks, info: VideoInfo, cfg, manual: dict | None = None, view=None) -> Scene:
     """Flow learned from this video, plus the one prebuilt from the sample videos
     (same camera) when it exists at the same resolution: more data, steadier lanes.
-    `manual` overrides configs/scene.yaml (tests pass {} to stay camera-independent)."""
+    `manual` overrides configs/scene.yaml (tests pass {} to stay camera-independent).
+    `view` (src/view.py) moves the prebuilt field into this recording's framing."""
     flow = FlowField.learn(tracks, info.width, info.height,
                            grid_for(info.width, cfg.scene.cells_across), cfg.kinematics.moving_speed)
     prebuilt = resolve(cfg.scene.learned)
     if prebuilt.exists():
         base = FlowField.load(prebuilt).rescaled(info.width, info.height)
         if base is not None and base.grid == flow.grid:
+            if view is not None:
+                base = FlowField(base.grid, base.width, base.height,
+                                 warp_grid(base.count, view, base.width, base.height, base.grid),
+                                 warp_grid(base.dir_sum, view, base.width, base.height, base.grid))
             flow = flow.merged(base)
     if manual is None:
         manual = load_manual(resolve(cfg.scene.manual))
@@ -44,13 +50,16 @@ def analyse(path: str, progress: Progress | None = None) -> tuple[Context, list[
     info = probe(path)
     t0 = time.perf_counter()
 
-    approaches = load_approaches(load_manual(resolve(cfg.scene.manual)), info.width, info.height)
+    view = view_transform(path, info.width, info.height, cfg)
+    manual = warp_manual(load_manual(resolve(cfg.scene.manual)), view)
+    approaches = load_approaches(manual, info.width, info.height)
     hook = (lambda frame: signal_colours(frame, approaches)) if approaches else None
-    tracks, frames = track_video(info, hook, progress)
+    view_key = None if view is None else view.round(5).tolist()
+    tracks, frames = track_video(info, hook, progress, view_key)
     t_track = time.perf_counter() - t0
 
     tracks = add_kinematics(tracks, cfg.kinematics.smooth_window_sec, centered=True)
-    scene = build_scene(tracks, info, cfg)
+    scene = build_scene(tracks, info, cfg, manual, view)
     tracks["on_road"] = scene.on_road(tracks["gx"], tracks["gy"]) if len(tracks) else []
     ctx = Context(tracks=tracks, frames=frames, scene=scene, info=info, cfg=cfg)
 

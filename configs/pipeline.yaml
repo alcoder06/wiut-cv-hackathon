@@ -43,6 +43,14 @@ scene:
   cells_across: 60        # flow-field grid: frame width / 60 (64 px cells at 4K, 32 at 1080p)
   min_cell_obs: 5         # moving-vehicle observations for a cell to count as carriageway
   min_coherence: 0.75     # direction agreement in a cell before wrong-way is trusted
+  registration:           # move the zones when a recording is framed differently (src/view.py)
+    enabled: true
+    reference: configs/reference_view.png   # C3897 background, the view scene.yaml was drawn on
+    frames: 7             # frames median-stacked into the video's background
+    min_inliers: 40       # matched features needed to trust the fit (dusk C3905: ~130)
+    same_shift_frac: 0.0025  # below all three the view counts as the reference:
+    same_scale: 0.003        #   ~10 px at 4K, 0.3 % zoom, 0.15 deg
+    same_deg: 0.15
 
 segments:
   max_gap_sec: 1.0        # merge same-class fragments closer than this
