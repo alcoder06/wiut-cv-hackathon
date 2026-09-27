@@ -95,6 +95,17 @@ def _impact(track: pd.DataFrame, t: float, cfg) -> bool:
     return not np.isnan(after) and after <= (1 - c.decel_drop) * at
 
 
+def _turning(track: pd.DataFrame, t: float, moving: float, max_deg: float) -> bool:
+    """Heading changes more than max_deg around t: the vehicle is turning, and slowing
+    through a turn is not evasive braking. 9 of 13 rejected near-misses on the sample
+    were "turning past each other"."""
+    w = track[(track["t"] >= t - 1.5) & (track["t"] <= t + 1.5) & (track["speed"] > moving)]
+    if len(w) < 3:
+        return False
+    h = np.degrees(np.unwrap(np.radians(w["heading"].to_numpy())))
+    return float(h.max() - h.min()) > max_deg
+
+
 def _stop_or_leave_time(track: pd.DataFrame, t: float, stopped: float) -> float:
     rest = track[track["t"] >= t]
     idx = np.flatnonzero(rest["speed"].to_numpy() < stopped)
@@ -137,7 +148,8 @@ def detect(ctx: Context) -> list[list]:
         t_crit = float(t[ttc.argmin()])
         # the evasive action must be a vehicle braking from real speed, not a pedestrian pausing
         onsets = [_abrupt_drop(tr, t_crit, 1.5, n.decel_drop, c.impact_speed)
-                  for tr in (by_tid[a], by_tid[b]) if _is_vehicle(tr)]
+                  for tr in (by_tid[a], by_tid[b])
+                  if _is_vehicle(tr) and not _turning(tr, t_crit, k.moving_speed, n.max_turn_deg)]
         onsets = [o for o in onsets if o is not None]
         if not onsets:
             continue

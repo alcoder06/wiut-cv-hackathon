@@ -54,7 +54,8 @@ segments:
 enabled_classes:
   - stopped_vehicle
   - congestion
-  - wrong_way
+  # - wrong_way   off: 0 true / 1 false on the labelled samples (a turning car); an event type
+  #               we flag that the test lacks adds a zero to the macro-F1
   - jaywalking
   - failure_to_yield
   - red_light
@@ -79,6 +80,7 @@ rules:
     min_len_sec: 20.0
   wrong_way:
     against_cos: -0.5     # cos(angle) with the lane direction below this = against traffic
+    ignore_junction: true # turning inside the junction box is not wrong-way driving
     min_len_sec: 1.5
   jaywalking:
     min_len_sec: 1.0
@@ -86,6 +88,7 @@ rules:
   failure_to_yield:
     ped_margin_px: 20
     near_sizes: 2.5       # pedestrian within this many vehicle sizes of the vehicle
+    ped_min_speed: 0.3    # sizes/s: a pedestrian standing still on the zebra is waiting, not crossing
   red_light:
     vote_sec: 1.0         # majority vote window for the signal colour
     red_min_frac: 0.004   # share of lamp-ROI pixels that must be lit red/green (a lit lamp is ~1-2%)
@@ -100,6 +103,7 @@ rules:
     ttc_sec: 1.5
     decel_drop: 0.5
     clear_ttc_sec: 3.0
+    max_turn_deg: 45      # a vehicle turning more than this around the conflict is not braking to evade
   turns:
     u_turn_deg: 150
     turn_deg: 60

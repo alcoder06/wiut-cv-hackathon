@@ -28,7 +28,7 @@ sys.path.insert(0, str(ROOT))
 os.environ.setdefault("TRAFFIC_CACHE", str(ROOT / "cache"))
 
 from evaluate import evaluate_part_a  # noqa: E402
-from src.config import Cfg, load_config  # noqa: E402
+from src.config import Cfg, deep_merge, load_config  # noqa: E402
 from src.events import collision, congestion, lines, pedestrian, signal, stationary, wrong_way  # noqa: E402
 from src.pipeline import analyse  # noqa: E402
 from src.segments import finalize  # noqa: E402
@@ -47,13 +47,16 @@ GRID = {
     "jaywalking": (pedestrian, {"rules.jaywalking.min_len_sec": [0.5, 1.0, 2.0],
                                 "rules.jaywalking.road_erode_px": [1, 12, 30]}),
     "failure_to_yield": (pedestrian, {"rules.failure_to_yield.near_sizes": [1.5, 2.5, 4.0],
-                                      "rules.failure_to_yield.ped_margin_px": [0, 20, 50]}),
+                                      "rules.failure_to_yield.ped_margin_px": [0, 20, 50],
+                                      "rules.failure_to_yield.ped_min_speed": [0.0, 0.2, 0.3, 0.5]}),
     "near_miss": (collision, {"rules.near_miss.ttc_sec": [1.0, 1.5, 2.0],
-                              "rules.near_miss.decel_drop": [0.4, 0.5, 0.6]}),
+                              "rules.near_miss.decel_drop": [0.4, 0.5, 0.6],
+                              "rules.near_miss.max_turn_deg": [30, 45, 60, 999]}),
     "accident": (collision, {"rules.collision.impact_speed": [0.8, 1.0, 1.4],
                              "rules.collision.decel_drop": [0.5, 0.6, 0.7]}),
     "wrong_way": (wrong_way, {"rules.wrong_way.against_cos": [-0.7, -0.5, -0.3],
-                              "rules.wrong_way.min_len_sec": [1.0, 1.5, 3.0]}),
+                              "rules.wrong_way.min_len_sec": [1.0, 1.5, 3.0],
+                              "rules.wrong_way.ignore_junction": [True, False]}),
     # geometric rules without thresholds worth tuning: start/end shifts only
     "solid_line_crossing": (lines, {}),
     "red_light": (signal, {}),
@@ -102,6 +105,7 @@ def main() -> None:
     ap.add_argument("--gt", default="dev/labels.json")
     ap.add_argument("--videos", default="samples")
     ap.add_argument("--apply", action="store_true", help="write configs/tuned.yaml")
+    ap.add_argument("--classes", nargs="*", help="tune only these classes (default: all)")
     args = ap.parse_args()
 
     gt = json.loads(Path(args.gt).read_text(encoding="utf-8"))
@@ -122,6 +126,8 @@ def main() -> None:
     tuned: dict = {}
     print(f"\n{'class':<18}{'labels':>7}{'before':>9}{'after':>8}  changes")
     for label, (module, grid) in GRID.items():
+        if args.classes and label not in args.classes:
+            continue
         n_gt = sum(1 for e in gt.values() for x in e["events"] if x[2] == label)
         shift0 = tuple(base_shift.get(label, (0.0, 0.0)))
         base_raw = detect_raw(ctxs, base, label, module)
@@ -160,9 +166,11 @@ def main() -> None:
     if missing:
         print(f"\nlabelled but not tunable here (no rule, or it needs zones): {', '.join(missing)}")
     if args.apply and tuned:
+        # merge into what earlier runs tuned: this run only saw changes relative to them
         out = ROOT / "configs" / "tuned.yaml"
+        before = (yaml.safe_load(out.read_text(encoding="utf-8")) or {}) if out.exists() else {}
         out.write_text("# written by scripts/tune.py against " + args.gt + "; delete to undo\n"
-                       + yaml.safe_dump(tuned, sort_keys=True), encoding="utf-8")
+                       + yaml.safe_dump(deep_merge(before, tuned), sort_keys=True), encoding="utf-8")
         print(f"\nwrote {out.relative_to(ROOT)}")
     elif tuned:
         print("\nnot applied; re-run with --apply to write configs/tuned.yaml:\n" + yaml.safe_dump(tuned, sort_keys=True))

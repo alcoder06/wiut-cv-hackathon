@@ -144,6 +144,7 @@ class Scene:
     flow: FlowField
     road: np.ndarray                               # uint8 (H, W)
     crosswalks: list[np.ndarray] = field(default_factory=list)
+    refuges: list[np.ndarray] = field(default_factory=list)      # traffic islands: pedestrians are safe there
     solid_lines: list[np.ndarray] = field(default_factory=list)
     approaches: list[Approach] = field(default_factory=list)
     u_turn_prohibited: list[np.ndarray] = field(default_factory=list)
@@ -163,6 +164,7 @@ class Scene:
         return cls(
             width=w, height=h, flow=flow, road=road,
             crosswalks=[_denorm(p, w, h) for p in m.get("crosswalks") or []],
+            refuges=[_denorm(p, w, h) for p in m.get("refuges") or []],
             solid_lines=[_denorm(p, w, h) for p in m.get("solid_lines") or []],
             approaches=load_approaches(m, w, h),
             u_turn_prohibited=[_denorm(p, w, h) for p in moves.get("u_turn_prohibited") or []],
@@ -196,6 +198,29 @@ class Scene:
         xi = np.clip(np.asarray(x).astype(int), 0, self.width - 1)
         yi = np.clip(np.asarray(y).astype(int), 0, self.height - 1)
         return mask[yi, xi]
+
+    def _polys_mask(self, key: str, polys: list[np.ndarray]) -> np.ndarray:
+        if key not in self._cache:
+            mask = np.zeros((self.height, self.width), np.uint8)
+            if polys:
+                cv2.fillPoly(mask, [p.astype(np.int32) for p in polys], 1)
+            self._cache[key] = mask
+        return self._cache[key]
+
+    def _lookup(self, mask: np.ndarray, x, y) -> np.ndarray:
+        xi = np.clip(np.asarray(x).astype(int), 0, self.width - 1)
+        yi = np.clip(np.asarray(y).astype(int), 0, self.height - 1)
+        return mask[yi, xi] > 0
+
+    def in_refuge(self, x, y) -> np.ndarray:
+        """On a traffic island: a pedestrian there is neither jaywalking nor being cut off."""
+        return self._lookup(self._polys_mask("refuges", self.refuges), x, y)
+
+    def in_junction(self, x, y) -> np.ndarray:
+        """Inside a junction box (the approaches' intersection polygons), where vehicles turn
+        and legitimately move against any single lane direction."""
+        boxes = [a.intersection for a in self.approaches if a.intersection is not None]
+        return self._lookup(self._polys_mask("junction", boxes), x, y)
 
     def lane_direction(self, x: np.ndarray, y: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
         unit, coherence = self.flow.direction()

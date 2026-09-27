@@ -23,6 +23,8 @@ def detect(ctx: Context) -> list[list]:
                    & g["on_road"].to_numpy()
                    & (coh >= ctx.cfg.scene.min_coherence)
                    & ((unit * lane).sum(axis=1) < c.against_cos))
+        if c.ignore_junction:          # turning inside the junction is not wrong-way driving
+            against &= ~ctx.scene.in_junction(x, y)
         t = g["t"].to_numpy()
         for i, j in runs(fill_gaps(against, t, 0.75)):
             if t[j] - t[i] >= c.min_len_sec:

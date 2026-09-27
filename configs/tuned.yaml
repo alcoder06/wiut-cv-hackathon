@@ -1,0 +1,15 @@
+# written by scripts/tune.py against dev/labels.json (93 candidates judged by the team, 27 Sep); delete to undo
+rules:
+  congestion:
+    crawl_speed: 0.4
+    min_vehicles: 3
+  near_miss:
+    max_turn_deg: 30
+    ttc_sec: 2.0
+  stopped_vehicle:
+    queue_share: 0.7
+segments:
+  boundary_shift:
+    stopped_vehicle:
+    - -1.0
+    - -1.5
