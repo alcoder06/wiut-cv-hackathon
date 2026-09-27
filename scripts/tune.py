@@ -29,7 +29,7 @@ os.environ.setdefault("TRAFFIC_CACHE", str(ROOT / "cache"))
 
 from evaluate import evaluate_part_a  # noqa: E402
 from src.config import Cfg, load_config  # noqa: E402
-from src.events import collision, congestion, pedestrian, stationary, wrong_way  # noqa: E402
+from src.events import collision, congestion, lines, pedestrian, signal, stationary, wrong_way  # noqa: E402
 from src.pipeline import analyse  # noqa: E402
 from src.segments import finalize  # noqa: E402
 
@@ -54,6 +54,10 @@ GRID = {
                              "rules.collision.decel_drop": [0.5, 0.6, 0.7]}),
     "wrong_way": (wrong_way, {"rules.wrong_way.against_cos": [-0.7, -0.5, -0.3],
                               "rules.wrong_way.min_len_sec": [1.0, 1.5, 3.0]}),
+    # geometric rules without thresholds worth tuning: start/end shifts only
+    "solid_line_crossing": (lines, {}),
+    "red_light": (signal, {}),
+    "stop_line": (signal, {}),
 }
 
 
@@ -78,14 +82,19 @@ def class_score(gt: dict, preds: dict, label: str) -> float:
     return rep["per_class"].get(label, {}).get("f1_mean", 0.0)
 
 
-def run_class(ctxs: dict, raw_cfg: dict, label: str, module, shift=(0.0, 0.0)) -> dict:
+def detect_raw(ctxs: dict, raw_cfg: dict, label: str, module) -> dict:
+    """The rule's raw detections of `label` per video (the expensive part: run once per setting)."""
     cfg = Cfg(raw_cfg)
-    out = {}
-    for vid, ctx in ctxs.items():
-        c = dataclasses.replace(ctx, cfg=cfg)
-        raw = [[s + shift[0], e + shift[1], lab] for s, e, lab in module.detect(c) if lab == label]
-        out[vid] = finalize(raw, ctx.info.duration, cfg.segments.max_gap_sec, cfg.segments.min_len_sec)
-    return out
+    return {vid: [e for e in module.detect(dataclasses.replace(ctx, cfg=cfg)) if e[2] == label]
+            for vid, ctx in ctxs.items()}
+
+
+def shifted(ctxs: dict, raw: dict, raw_cfg: dict, shift=(0.0, 0.0)) -> dict:
+    """Apply a start/end shift and the pipeline's clean-up to saved raw detections (cheap)."""
+    seg = Cfg(raw_cfg).segments
+    return {vid: finalize([[s + shift[0], e + shift[1], lab] for s, e, lab in ev],
+                          ctxs[vid].info.duration, seg.max_gap_sec, seg.min_len_sec)
+            for vid, ev in raw.items()}
 
 
 def main() -> None:
@@ -115,20 +124,22 @@ def main() -> None:
     for label, (module, grid) in GRID.items():
         n_gt = sum(1 for e in gt.values() for x in e["events"] if x[2] == label)
         shift0 = tuple(base_shift.get(label, (0.0, 0.0)))
-        before = class_score(gt, run_class(ctxs, base, label, module, shift0), label)
-        best, best_cfg, changes = before, base, {}
+        base_raw = detect_raw(ctxs, base, label, module)
+        before = class_score(gt, shifted(ctxs, base_raw, base, shift0), label)
+        best, best_cfg, best_raw, changes = before, base, base_raw, {}
         keys = list(grid)
         for combo in itertools.product(*(grid[k] for k in keys)):
             trial = copy.deepcopy(base)
             for k, v in zip(keys, combo):
                 set_key(trial, k, v)
-            score = class_score(gt, run_class(ctxs, trial, label, module, shift0), label)
+            raw = detect_raw(ctxs, trial, label, module)
+            score = class_score(gt, shifted(ctxs, raw, trial, shift0), label)
             if score > best + MIN_GAIN:
-                best, best_cfg = score, trial
+                best, best_cfg, best_raw = score, trial, raw
                 changes = {k: v for k, v in zip(keys, combo) if get_key(base, k) != v}
         best_shift = shift0
         for ds, de in itertools.product(SHIFTS, SHIFTS):
-            score = class_score(gt, run_class(ctxs, best_cfg, label, module, (ds, de)), label)
+            score = class_score(gt, shifted(ctxs, best_raw, best_cfg, (ds, de)), label)
             if score > best + MIN_GAIN:
                 best, best_shift = score, (ds, de)
         for k, v in changes.items():
@@ -138,8 +149,11 @@ def main() -> None:
         note = ", ".join(f"{k.split('.')[-1]}={v}" for k, v in changes.items())
         if best_shift != shift0:
             note += (", " if note else "") + f"shift {best_shift[0]:+.1f}/{best_shift[1]:+.1f} s"
-        if n_gt == 0 and label not in labelled:
-            note = "no labels of this class: every detection is a false positive here"
+        n_pred = sum(len(v) for v in base_raw.values())
+        if n_gt == 0 and n_pred:
+            note = f"no labels of this class, {n_pred} detections: all false positives here"
+        elif n_gt == 0:
+            note = "not labelled, not predicted"
         print(f"{label:<18}{n_gt:>7}{before:>9.3f}{best:>8.3f}  {note or 'keep'}")
 
     missing = sorted(labelled - set(GRID))
