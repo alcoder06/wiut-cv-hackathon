@@ -198,9 +198,9 @@ let index = { videos: [] };
 
 async function loadData() {
   try {
-    index = await (await fetch("data/index.json")).json();
+    index = await (await fetch("data/index.json", { cache: "no-cache" })).json();
   } catch { index = { videos: [] }; }
-  await Promise.all(index.videos.map(async (v) => { videos[v.stem] = await (await fetch(`data/${v.stem}.json`)).json(); }));
+  await Promise.all(index.videos.map(async (v) => { videos[v.stem] = await (await fetch(`data/${v.stem}.json`, { cache: "no-cache" })).json(); }));
   const minutes = index.videos.reduce((a, v) => a + v.duration, 0) / 60;
   $("#tile-minutes").textContent = minutes.toFixed(1);
   $("#tile-minutes-note").textContent = `minutes of sample footage · ${index.videos.length} videos · ${index.videos.reduce((a, v) => a + v.events, 0)} events`;
@@ -443,7 +443,7 @@ const AVATAR = ["bg-brutLime", "bg-brutCoral text-white", "bg-brutBlue text-whit
 
 async function initTeam() {
   let team = [];
-  try { team = await (await fetch("team.json")).json(); } catch { /* none */ }
+  try { team = await (await fetch("team.json", { cache: "no-cache" })).json(); } catch { /* none */ }
   $("#team-cards").innerHTML = team.map((p, i) => {
     const initials = p.name.split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
     const links = Object.entries(p.links || {}).filter(([, u]) => u)
