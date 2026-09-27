@@ -62,3 +62,13 @@ def test_passing_a_stopped_queue_is_not_a_threat():
         tt = t[(t >= start) & (t <= start + 8)]
         s.actor("car", path(tt, start, start + 8, (0, RIGHT_LANES[3]), (1280, RIGHT_LANES[3])), tt)
     assert alarm_starts(risk_curve(s)) == []
+
+
+def test_part_b_catches_up_after_falling_behind():
+    """Only Part B's own processing counts against its cap, so skipping lets it resume.
+    (Capping total wall time froze the risk curve for good on a loaded machine.)"""
+    est = CausalRisk()
+    est.reset({"video_id": "x.mp4", "fps": FPS, "width": W, "height": H, "n_frames": 1000})
+    est.own_sec = 10.0
+    assert est._behind_schedule(5.0)          # 10 s of our own work in 5 s of video: skip
+    assert not est._behind_schedule(40.0)     # the video moved on while we skipped: resume

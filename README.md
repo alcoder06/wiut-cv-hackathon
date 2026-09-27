@@ -59,8 +59,10 @@ cycle, so each approach in `configs/scene.yaml` carries `red_delay_sec` / `red_e
 The stop line, solid lane lines and crossings were drawn by the team on a frame of the sample.
 
 **Safety valves.** Over 3x the video length the harness scores the whole video as empty, so Part A
-stops analysing new frames at 1.3x (returning what it found) and Part B repeats its last score
-when it falls behind 1.4x. Each rule runs in its own `try` so one failure can't empty a video.
+stops analysing new frames at 1.3x (returning what it found) and Part B skips detection while
+its own processing exceeds 0.4x the video time, then resumes. (It counts only its own work: an
+earlier version capped total wall time, which on a loaded machine froze the risk curve for the
+rest of the video, because the harness's own decoding kept it behind.) Each rule runs in its own `try` so one failure can't empty a video.
 
 `road_obstacle` and `fire_smoke` are disabled: predicting a class that never occurs adds a
 zero to the macro-F1, and we have no reliable detector for them.

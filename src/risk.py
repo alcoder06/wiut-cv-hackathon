@@ -47,14 +47,19 @@ class CausalRisk:
         self.tracks: dict[int, _Track] = {}
         self.score, self.last_t = 0.0, None
         self.road = self._load_road(int(meta["width"]), int(meta["height"]))
-        self.wall_start = time.perf_counter()
+        self.own_sec = 0.0       # time spent inside step() on analysed frames
         self.pool = ThreadPoolExecutor(max_workers=1)   # one worker keeps frame order
         self.pending = None
         self.streak: dict = {}
 
     def _behind_schedule(self, t: float) -> bool:
-        """True when this part has used more than part_b_max_x times the video time so far."""
-        return time.perf_counter() - self.wall_start > self.cfg.sampling.part_b_max_x * t + 5.0
+        """True when OUR OWN processing has used more than part_b_own_max_x of the video time.
+
+        Only our own time counts: the harness's 4K decoding is most of Part B's wall clock and
+        skipping can't shorten it. Measuring total wall time (the first version) meant that on a
+        loaded machine Part B fell behind once and never caught up, and the risk curve went flat
+        for the rest of the video. Our own time stops growing while we skip, so we resume."""
+        return self.own_sec > self.cfg.sampling.part_b_own_max_x * t + 2.0
 
     def _load_road(self, w: int, h: int):
         path = resolve(self.cfg.scene.learned)
@@ -69,10 +74,12 @@ class CausalRisk:
         frame k+1 (0.2 s later), always, so the curve is identical run to run."""
         if int(round(t * self.fps)) % self.stride or self._behind_schedule(t):
             return self.score           # skipped frame (or catching up): O(1)
+        started = time.perf_counter()
         if self.pending is not None:
             tracked, t_prev = self.pending.result()
             self._fold_in(tracked, t_prev)
         self.pending = self.pool.submit(self._detect, frame, t)
+        self.own_sec += time.perf_counter() - started
         return self.score
 
     def _detect(self, frame: np.ndarray, t: float):
