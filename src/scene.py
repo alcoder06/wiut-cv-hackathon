@@ -110,6 +110,10 @@ class Approach:
     direction: np.ndarray          # unit vector of travel
     signal_roi: tuple[int, int, int, int] | None
     intersection: np.ndarray | None
+    # The readable lamp may run on an offset from this approach's own (unreadable) signal:
+    # its red starts red_delay_sec after the lamp's and ends red_early_end_sec before green.
+    red_delay_sec: float = 0.0
+    red_early_end_sec: float = 0.0
 
 
 def load_manual(path: Path) -> dict:
@@ -127,6 +131,8 @@ def load_approaches(manual: dict, w: int, h: int) -> list[Approach]:
             direction=np.asarray(a["direction"], np.float32) / np.linalg.norm(a["direction"]),
             signal_roi=tuple(int(v) for v in _denorm([roi[:2], roi[2:]], w, h).ravel()) if roi else None,
             intersection=_denorm(a["intersection"], w, h) if a.get("intersection") else None,
+            red_delay_sec=float(a.get("red_delay_sec", 0.0)),
+            red_early_end_sec=float(a.get("red_early_end_sec", 0.0)),
         ))
     return out
 

@@ -1,8 +1,14 @@
 """Traffic-signal state, red_light and stop_line.
 
-Signal state: share of red vs green pixels (HSV) in the lamp ROI of each approach,
+Signal state: share of lit red vs lit green pixels (HSV) in the lamp ROI of each approach,
 measured on every analysed frame during the tracking pass, then smoothed with a
 majority vote over `vote_sec` so a single glare frame can't flip it.
+
+The camera often can't read the approach's own lamp (the gantry heads here are side-on),
+but can read another lamp locked to the same cycle with an offset. On C3897 the readable
+left-pole lamp turns red ~4.5 s before boulevard traffic stops and green ~0.6 s after it
+starts, every cycle; read naively that is ~3 false red_light events per 75 s cycle. So the
+approach's effective red is the lamp's red shifted by red_delay_sec / red_early_end_sec.
 
 red_light: the vehicle's ground point crosses the stop line (upstream -> downstream,
 moving in the approach direction) while the vote says red. End = leaves the
@@ -17,12 +23,13 @@ import cv2
 import numpy as np
 
 from ..kinematics import runs
-from ..scene import Approach, in_polygon, side_of_line
+from ..scene import Approach, side_of_line
 from . import Context
 
-# HSV ranges (OpenCV hue is 0..179). Red wraps around 0.
-RED = [((0, 90, 120), (10, 255, 255)), ((165, 90, 120), (179, 255, 255))]
-GREEN = [((45, 80, 110), (95, 255, 255))]
+# Lit-lamp HSV ranges (OpenCV hue is 0..179; red wraps around 0). Measured on the real
+# lamps of C3897: saturation >= 90 and value >= 150 separates a lit lamp from an unlit one.
+RED = [((0, 90, 150), (10, 255, 255)), ((165, 90, 150), (179, 255, 255))]
+GREEN = [((40, 90, 150), (100, 255, 255))]
 
 
 def _frac(hsv: np.ndarray, ranges) -> float:
@@ -69,9 +76,37 @@ def upstream_sign(a: Approach) -> float:
     return float(side_of_line(a.stop_line, p[0], p[1]))
 
 
-def _state_at(state, t: float) -> str:
+def effective_red(state, a: Approach) -> np.ndarray:
+    """Per sample: is THIS approach on red? The lamp's red runs, each moved by the
+    approach's offsets (start later by red_delay_sec, end red_early_end_sec before green)."""
     ts, labels = state
-    return labels[min(np.searchsorted(ts, t), len(ts) - 1)]
+    red = np.zeros(len(ts), bool)
+    for i, j in runs(labels == "red"):
+        greens = np.flatnonzero((ts > ts[j]) & (labels == "green"))
+        green_at = ts[greens[0]] if len(greens) else np.inf
+        red |= (ts >= ts[i] + a.red_delay_sec) & (ts < green_at - a.red_early_end_sec) & (ts <= ts[j])
+    return red
+
+
+def along_line(line: np.ndarray, x: np.ndarray, y: np.ndarray) -> np.ndarray:
+    """Position along the stop line: 0 at one end, 1 at the other. Used to keep "past the
+    line" to the lanes the line actually spans; as an infinite line it also caught cars on
+    the neighbouring arm (5 false stop_line events on C3897)."""
+    a, b = line[0], line[-1]
+    d = b - a
+    return ((np.asarray(x) - a[0]) * d[0] + (np.asarray(y) - a[1]) * d[1]) / float(d @ d)
+
+
+def _at(ts: np.ndarray, values: np.ndarray, t: float):
+    return values[min(np.searchsorted(ts, t), len(ts) - 1)]
+
+
+def _mask_of(poly: np.ndarray | None, w: int, h: int) -> np.ndarray | None:
+    if poly is None:
+        return None
+    mask = np.zeros((h, w), np.uint8)
+    cv2.fillPoly(mask, [poly.astype(np.int32)], 1)
+    return mask
 
 
 def _exit_time(in_box: np.ndarray, t: np.ndarray) -> float:
@@ -87,32 +122,36 @@ def _exit_time(in_box: np.ndarray, t: np.ndarray) -> float:
 
 def detect(ctx: Context) -> list[list]:
     k = ctx.cfg.kinematics
+    w, h = ctx.info.width, ctx.info.height
     events = []
     for a in ctx.scene.approaches:
         state = signal_state(ctx, a.name)
         if state is None:
             continue
+        ts, labels = state
+        red = effective_red(state, a)
+        box = _mask_of(a.intersection, w, h)
         up = upstream_sign(a)
         for _, g in ctx.vehicles().groupby("tid"):
             x, y, t = g["gx"].to_numpy(), g["gy"].to_numpy(), g["t"].to_numpy()
-            side = side_of_line(a.stop_line, x, y)
+            within = (along_line(a.stop_line, x, y) >= -0.05) & (along_line(a.stop_line, x, y) <= 1.05)
+            side = np.where(within, side_of_line(a.stop_line, x, y), 0)   # 0 = not level with the line
             along = g[["vx", "vy"]].to_numpy() @ a.direction
-            in_box = (np.array([in_polygon(a.intersection, p, q) for p, q in zip(x, y)])
-                      if a.intersection is not None else np.zeros(len(t), bool))
+            in_box = (box[np.clip(y.astype(int), 0, h - 1), np.clip(x.astype(int), 0, w - 1)] > 0
+                      if box is not None else np.zeros(len(t), bool))
 
             # red_light: upstream -> downstream crossing while moving forward on red
             for i in range(1, len(t)):
-                if side[i - 1] == up and side[i] == -up and along[i] > 0 and _state_at(state, t[i]) == "red":
+                if side[i - 1] == up and side[i] == -up and along[i] > 0 and _at(ts, red, t[i]):
                     events.append([t[i - 1], _exit_time(in_box[i:], t[i:]), "red_light"])
                     break
 
             # stop_line: stopped past the line (not in the intersection) on red, until green
             past = (side == -up) & ~in_box & (g["speed"].to_numpy() < k.stopped_speed)
             for i, j in runs(past):
-                if _state_at(state, t[i]) != "red":
+                if not _at(ts, red, t[i]):
                     continue
-                ts, labels = state
-                green = np.where((ts > t[i]) & (labels == "green"))[0]
+                green = np.flatnonzero((ts > t[i]) & (labels == "green"))
                 end = ts[green[0]] if len(green) else t[j]
                 events.append([t[i], end, "stop_line"])
     return events

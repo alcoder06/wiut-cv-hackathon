@@ -19,6 +19,7 @@ import numpy as np
 import pandas as pd
 
 from .config import load_config, resolve
+from .scene import load_manual
 from .video import VideoInfo, iter_frames, stride_for
 
 TRACK_COLS = ["frame", "t", "tid", "cls", "conf", "x1", "y1", "x2", "y2"]
@@ -48,8 +49,10 @@ def _cache_path(info: VideoInfo, cfg) -> Path | None:
     if not root:
         return None
     st = os.stat(info.path)
+    # the signal lamps are read in this same pass, so their areas are part of the key
+    approaches = load_manual(resolve(cfg.scene.manual)).get("approaches") or []
     key = json.dumps([Path(info.path).name, st.st_size, cfg.detector, cfg.sampling.part_a_fps,
-                      cfg.tracker], sort_keys=True, default=str)
+                      cfg.tracker, [a.get("signal_roi") for a in approaches]], sort_keys=True, default=str)
     h = hashlib.sha1(key.encode()).hexdigest()[:12]
     return Path(root) / f"{Path(info.path).stem}_{h}"
 
