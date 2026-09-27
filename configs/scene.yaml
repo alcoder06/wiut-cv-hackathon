@@ -11,16 +11,28 @@
 
 carriageway: []          # list of polygons; empty = use the learned road mask
 
-# Drawn on frames at 60 s and 211 s of C3897.MP4 (checked visually against the paint).
+# Redrawn by the team on 27 Sep in the label desk's zone editor (dev/zones/zebra_path.png),
+# mapped onto the frame with SIFT (332 matches, 0.5 px median error). The old outlines
+# ran onto the kerb and over the island, so people waiting there looked like they were
+# on the crossing.
 crosswalks:
   # boulevard
-  - [[0.1862, 0.5522], [0.5844, 0.4867], [0.605, 0.5133], [0.2013, 0.6056]]
+  - [[0.5993, 0.5167], [0.5743, 0.5294], [0.2031, 0.6135], [0.1727, 0.5642], [0.5448, 0.4753]]
   # right
-  - [[0.62, 0.4889], [0.9656, 0.4333], [0.9781, 0.4667], [0.6281, 0.5222]]
+  - [[0.967, 0.4723], [0.6816, 0.5135], [0.6575, 0.5103], [0.6181, 0.4737], [0.6244, 0.4642], [0.9106, 0.4245], [0.9634, 0.4627]]
   # bottom
-  - [[0.1638, 0.7667], [0.2687, 0.7222], [0.4813, 1.0], [0.3219, 1.0]]
+  - [[0.4714, 0.9921], [0.3157, 0.9991], [0.2486, 0.8489], [0.3873, 0.8314]]
   # lower_left
-  - [[0.0925, 0.6689], [0.1862, 0.6556], [0.245, 0.7389], [0.145, 0.7689]]
+  - [[0.0912, 0.7009], [0.093, 0.6962], [0.1592, 0.6389], [0.2478, 0.7201], [0.2478, 0.7248], [0.1664, 0.7837], [0.0993, 0.72], [0.0939, 0.7121]]
+
+# Traffic islands (refuges): a pedestrian standing here is never jaywalking and never
+# counts against a car at a crossing. Checked on the tracks: over the whole of C3897 no
+# vehicle drives through them, while 62 and 49 people pass through.
+refuges:
+  # island by the pole, between the boulevard and right crossings
+  - [[0.5689, 0.4801], [0.6065, 0.4658], [0.6262, 0.4658], [0.6333, 0.4721], [0.6503, 0.5024], [0.6503, 0.5055], [0.6056, 0.5151], [0.5966, 0.5151], [0.5689, 0.4848]]
+  # middle of the long lower-left zebra, between the pink islands
+  - [[0.1682, 0.7773], [0.2755, 0.7042], [0.3784, 0.8283], [0.3801, 0.841], [0.2182, 0.8457], [0.1977, 0.8234]]
 
 # Drawn by the team on C3897 at 211 s (dev/zones_marked.png): the solid lane lines on the
 # boulevard approach before its stop line.
