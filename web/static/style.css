@@ -1,0 +1,85 @@
+/* Neo-brutalist look (from the team's template, website/neo.html) + the pieces Tailwind can't express. */
+:root {
+  /* Object groups: the same hues as the boxes in the annotated videos (src/annotate.py). */
+  --car: #2a78d6;
+  --person: #eb6834;
+  --heavy: #1baf7a;
+  --two_wheeler: #eda100;
+}
+body { background-color: #F4F4F0; color: #121212; font-family: 'Inter', sans-serif; }
+html { scroll-behavior: smooth; }
+
+.hero-grid { position: relative; isolation: isolate; }
+.hero-grid::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: linear-gradient(rgba(18, 18, 18, 0.035) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(18, 18, 18, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 92%);
+}
+.brut-border { border: 3px solid #000; }
+.brut-border-2 { border: 2px solid #000; }
+.brut-btn { box-shadow: 4px 4px 0 #000; transition: all 0.08s ease; }
+.brut-btn:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 #000; }
+.brut-btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #000; }
+button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px solid #0055FF; outline-offset: 2px; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #F4F4F0; border-left: 3px solid #000; }
+::-webkit-scrollbar-thumb { background: #000; }
+
+code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: #F4F4F0; padding: 0 0.3em; border: 1px solid #000; }
+
+/* tabs (sample-video pickers) */
+.pill {
+  font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 0.75rem; padding: 0.4rem 0.8rem;
+  background: #fff; border: 3px solid #000; box-shadow: 3px 3px 0 #000; cursor: pointer;
+}
+.pill[aria-selected="true"] { background: #CCFF00; }
+
+/* charts */
+.chart { width: 100%; min-height: 120px; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font: 700 0.75rem 'JetBrains Mono', monospace; }
+.legend span::before {
+  content: ""; display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -1px;
+  background: var(--c); border: 2px solid #000;
+}
+
+/* tables */
+.table-wrap { overflow-x: auto; }
+.table-wrap.tall { max-height: 420px; overflow-y: auto; border: 2px solid #000; }
+.brut-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.brut-table th {
+  background: #000; color: #fff; text-align: left; padding: 8px 10px; font: 700 0.72rem 'JetBrains Mono', monospace;
+  text-transform: uppercase; position: sticky; top: 0; white-space: nowrap;
+}
+.brut-table td { padding: 7px 10px; border-bottom: 2px solid #000; white-space: nowrap; }
+.brut-table.text td { white-space: normal; min-width: 7em; vertical-align: top; }
+.brut-table tbody tr:nth-child(even) td { background: #F4F4F0; }
+.brut-table td.num, .brut-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.brut-table tr.clickable { cursor: pointer; }
+.brut-table tr.clickable:hover td { background: #CCFF00; }
+.tag {
+  display: inline-block; font: 700 0.7rem 'JetBrains Mono', monospace; padding: 1px 6px; border: 2px solid #000; background: #FFDE00;
+}
+
+/* example stills */
+.examples { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); }
+.example { cursor: pointer; border: 3px solid #000; background: #fff; box-shadow: 3px 3px 0 #000; }
+.example:hover { background: #CCFF00; }
+.example img { aspect-ratio: 16 / 9; object-fit: cover; width: 100%; border-bottom: 3px solid #000; }
+.example div { padding: 6px 8px; font: 700 0.72rem 'JetBrains Mono', monospace; }
+
+figcaption { font-size: 0.8rem; font-weight: 500; color: #333; margin-top: 8px; }
+
+/* live demo */
+.drop.over { background: #CCFF00; }
+
+/* pipeline diagram */
+.pipeline .svg-scroll { overflow-x: auto; }
+.pipeline svg { width: 100%; min-width: 760px; height: auto; }
+.pipeline text { fill: #121212; font: 700 13px 'JetBrains Mono', monospace; }
+.pipeline .sm { fill: #444; font-size: 11px; font-weight: 500; }
+.pipeline .box { fill: #fff; stroke: #000; stroke-width: 3; }
+.pipeline .box.learned { fill: #CCFF00; }
+.pipeline .arrow { stroke: #000; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }

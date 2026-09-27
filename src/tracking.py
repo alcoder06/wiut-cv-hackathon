@@ -24,6 +24,7 @@ from .video import VideoInfo, iter_frames, stride_for
 
 TRACK_COLS = ["frame", "t", "tid", "cls", "conf", "x1", "y1", "x2", "y2"]
 FrameHook = Callable[[np.ndarray], dict]
+Progress = Callable[[float], None]
 
 
 def make_tracker(fps: float, cfg):
@@ -57,7 +58,9 @@ def _cache_path(info: VideoInfo, cfg) -> Path | None:
     return Path(root) / f"{Path(info.path).stem}_{h}"
 
 
-def track_video(info: VideoInfo, frame_hook: FrameHook | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
+def track_video(info: VideoInfo, frame_hook: FrameHook | None = None,
+                progress: Progress | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """`progress(fraction_of_video_done)` is called once per detector batch (the web demo's bar)."""
     cfg = load_config()
     cache = _cache_path(info, cfg)
     if cache and cache.with_suffix(".tracks.parquet").exists():
@@ -101,6 +104,8 @@ def track_video(info: VideoInfo, frame_hook: FrameHook | None = None) -> tuple[p
         buf.append((idx, t, frame))
         if len(buf) == batch_size:
             flush()
+            if progress:
+                progress(min(1.0, t / max(info.duration, 1e-6)))
     if buf:
         flush()
 

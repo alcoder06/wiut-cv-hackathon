@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexVision · Traffic Event Watch</title>
+<meta name="description" content="NexVision, WIUT Hackathon 2026 CV track: traffic events as time segments and a warning before a crash, from one fixed CCTV camera.">
+<meta name="demo-api" content="">
+<link rel="stylesheet" href="tw.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-brutLime selection:text-black">
+
+<!-- ============================ HEADER ============================ -->
+<header class="sticky top-0 z-50 bg-brutCard brut-border border-t-0 border-x-0 px-4 lg:px-8 py-3">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex items-center justify-between w-full md:w-auto">
+      <button type="button" class="flex items-center space-x-3 text-left" onclick="switchTab('home')">
+        <span class="w-10 h-10 bg-brutLime brut-border flex items-center justify-center font-mono font-black text-lg shadow-brut-sm">NV</span>
+        <span>
+          <span class="block font-black tracking-wider text-lg uppercase font-mono leading-none">NexVision</span>
+          <span class="text-[10px] font-bold bg-brutYellow px-1 py-0.5 brut-border-2 inline-block -rotate-1 mt-1">WIUT HACKATHON 2026 · CV</span>
+        </span>
+      </button>
+      <button type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 bg-brutYellow brut-border font-bold shadow-brut-sm" aria-label="Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+    <nav id="nav-tabs" class="hidden md:flex flex-wrap items-center justify-center gap-2" aria-label="Sections"></nav>
+    <div class="hidden lg:flex items-center gap-2" title="Status of the live-demo server">
+      <span id="server-dot" class="w-3 h-3 bg-gray-400 rounded-full"></span>
+      <span id="server-text" class="font-mono text-xs font-bold">DEMO: …</span>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden pt-3 border-t-2 border-black mt-3 grid grid-cols-2 sm:grid-cols-4 gap-2"></div>
+</header>
+
+<main class="flex-grow max-w-7xl mx-auto w-full p-4 lg:p-8">
+
+<!-- ============================ HOME ============================ -->
+<div id="page-home" class="page-view space-y-12">
+  <div class="hero-grid grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-4">
+    <div class="lg:col-span-7 space-y-6">
+      <div class="inline-flex items-center gap-2 bg-brutYellow px-3 py-1 brut-border-2 font-mono text-xs font-black shadow-brut-sm uppercase -rotate-1">
+        <i class="fa-solid fa-traffic-light text-brutCoral"></i> Elimination submission · fixed CCTV camera
+      </div>
+      <h1 class="text-4xl sm:text-6xl font-black font-mono tracking-tight leading-none uppercase">
+        Every traffic <span class="bg-brutLime px-2 brut-border inline-block rotate-1 shadow-brut">event</span> as a time segment
+      </h1>
+      <p class="text-lg sm:text-xl font-medium text-gray-800 leading-relaxed">
+        A pretrained detector and tracker turn one road camera into trajectories. One rule per event type turns
+        trajectories into <code class="font-mono text-base bg-white px-1 brut-border-2">[start, end, class]</code>. A separate model, using
+        only past frames, scores how likely a crash is in the next 5 seconds.
+      </p>
+      <div class="flex flex-wrap gap-4 pt-2">
+        <button type="button" onclick="switchTab('demo')" class="px-6 py-3.5 bg-brutCoral text-white font-mono font-black text-sm uppercase brut-border brut-btn flex items-center gap-3">
+          <i class="fa-solid fa-upload"></i> Try it on your video
+        </button>
+        <button type="button" onclick="switchTab('results')" class="px-6 py-3.5 bg-brutYellow text-black font-mono font-black text-sm uppercase brut-border brut-btn flex items-center gap-3">
+          <i class="fa-solid fa-film"></i> See the sample results
+        </button>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6">
+        <div class="bg-white p-4 brut-border shadow-brut-sm">
+          <div class="font-mono text-3xl font-black text-brutBlue">9<span class="text-lg">/14</span></div>
+          <div class="font-mono text-xs font-bold text-gray-600 uppercase">event types we report</div>
+        </div>
+        <div class="bg-white p-4 brut-border shadow-brut-sm">
+          <div class="font-mono text-3xl font-black text-brutCoral">1.45×</div>
+          <div class="font-mono text-xs font-bold text-gray-600 uppercase">video length, 4K on 8 CPU cores (limit 3×)</div>
+        </div>
+        <div class="bg-white p-4 brut-border shadow-brut-sm">
+          <div class="font-mono text-3xl font-black"><span class="bg-brutLime px-1" id="tile-minutes">…</span></div>
+          <div class="font-mono text-xs font-bold text-gray-600 uppercase" id="tile-minutes-note">minutes of sample footage</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-5">
+      <div class="bg-white brut-border p-6 shadow-brut-lg relative">
+        <div class="absolute -top-4 -right-4 bg-brutPink px-3 py-1 font-mono text-xs font-black brut-border uppercase rotate-3">Real run</div>
+        <div class="space-y-4">
+          <div class="flex items-center justify-between border-b-2 border-black pb-3">
+            <span class="font-mono font-bold text-sm">organizers' harness, unchanged</span>
+            <i class="fa-solid fa-terminal"></i>
+          </div>
+          <div class="bg-black text-brutLime p-4 font-mono text-xs brut-border space-y-2 overflow-x-auto">
+            <div class="text-gray-400">$ python run_submission.py --videos samples</div>
+            <div>[0924.mp4] 38.4s @ 30.00 fps, budget 115s</div>
+            <div>[part A] 10854 track rows, 4 events, tracking 23.1s</div>
+            <div class="text-brutYellow">[0924.mp4] 4 events, 1153 risk samples, 36.2s — OK</div>
+            <div class="text-gray-400">$ python evaluate.py --pred predictions.json --validate-only</div>
+            <div class="text-white">VALID</div>
+          </div>
+          <p class="text-xs text-gray-600">Laptop RTX 3050, 1080p clip. The same command is the one the organizers run on the hidden test set.</p>
+          <div class="grid grid-cols-2 gap-3">
+            <button type="button" onclick="switchTab('approach')" class="w-full py-2.5 bg-brutLime font-mono font-bold text-xs brut-border brut-btn uppercase">How it works</button>
+            <button type="button" onclick="switchTab('report')" class="w-full py-2.5 bg-brutYellow font-mono font-bold text-xs brut-border brut-btn uppercase">Read the report</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="bg-brutYellow p-6 brut-border shadow-brut space-y-3">
+      <div class="w-12 h-12 bg-black text-white brut-border flex items-center justify-center text-xl"><i class="fa-solid fa-timeline"></i></div>
+      <h3 class="font-mono text-lg font-black uppercase">Events as segments</h3>
+      <p class="text-sm font-medium">Stopped vehicles, congestion, jaywalking, failure to yield, red light, stop line, near misses and more: each with a start and end that follow the annotators' rules.</p>
+    </div>
+    <div class="bg-brutLime p-6 brut-border shadow-brut space-y-3">
+      <div class="w-12 h-12 bg-black text-white brut-border flex items-center justify-center text-xl"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      <h3 class="font-mono text-lg font-black uppercase">Warning before a crash</h3>
+      <p class="text-sm font-medium">Frame by frame, from past frames only: time-to-collision between every pair of road users plus sudden braking, as a risk score from 0 to 1.</p>
+    </div>
+    <div class="bg-brutPink p-6 brut-border shadow-brut space-y-3">
+      <div class="w-12 h-12 bg-black text-white brut-border flex items-center justify-center text-xl"><i class="fa-solid fa-route"></i></div>
+      <h3 class="font-mono text-lg font-black uppercase">Learns the road</h3>
+      <p class="text-sm font-medium">Where the carriageway is and which way each lane flows are learned from the traffic itself, so parked cars and people on the pavement never count as traffic.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ TEAM ============================ -->
+<div id="page-team" class="page-view space-y-8 hidden">
+  <div class="border-b-4 border-black pb-4">
+    <span class="font-mono text-xs font-black bg-brutYellow px-2 py-1 brut-border uppercase">The team</span>
+    <h2 class="text-4xl font-black font-mono mt-2 uppercase">NexVision</h2>
+    <p class="text-gray-700 font-medium">Three people, four days, one camera.</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="team-cards"></div>
+</div>
+
+<!-- ============================ APPROACH ============================ -->
+<div id="page-approach" class="page-view space-y-8 hidden">
+  <div class="border-b-4 border-black pb-4">
+    <span class="font-mono text-xs font-black bg-brutPink px-2 py-1 brut-border uppercase">Architecture</span>
+    <h2 class="text-4xl font-black font-mono mt-2 uppercase">Problem &amp; approach</h2>
+    <p class="text-gray-700 font-medium max-w-3xl">Part A runs offline, so it may use the whole video: it smooths tracks in both directions and backdates event starts.
+      Part B must use past frames only: it runs its own detector and tracker and never reads Part A's output.</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div class="bg-white brut-border p-6 shadow-brut space-y-3 relative">
+      <div class="absolute -top-3 -left-3 w-8 h-8 bg-brutYellow brut-border flex items-center justify-center font-mono font-black text-sm shadow-brut-sm">01</div>
+      <div class="font-mono font-bold text-xs bg-brutBlue text-white px-2 py-1 inline-block">LEARNED</div>
+      <h3 class="font-mono font-black text-lg uppercase">Detect</h3>
+      <p class="text-sm font-medium text-gray-700">YOLO11s, COCO-pretrained, not fine-tuned. 8 frames per second, 960 px input, FP16 on GPU, batches of 16.</p>
+    </div>
+    <div class="bg-white brut-border p-6 shadow-brut space-y-3 relative">
+      <div class="absolute -top-3 -left-3 w-8 h-8 bg-brutLime brut-border flex items-center justify-center font-mono font-black text-sm shadow-brut-sm">02</div>
+      <div class="font-mono font-bold text-xs bg-black text-white px-2 py-1 inline-block">ALGORITHM</div>
+      <h3 class="font-mono font-black text-lg uppercase">Track</h3>
+      <p class="text-sm font-medium text-gray-700">ByteTrack links boxes into tracks. Speed is measured in box sizes per second at the ground point, so one threshold works near and far.</p>
+    </div>
+    <div class="bg-white brut-border p-6 shadow-brut space-y-3 relative">
+      <div class="absolute -top-3 -left-3 w-8 h-8 bg-brutCoral text-white brut-border flex items-center justify-center font-mono font-black text-sm shadow-brut-sm">03</div>
+      <div class="font-mono font-bold text-xs bg-black text-white px-2 py-1 inline-block">STATISTICS + ZONES</div>
+      <h3 class="font-mono font-black text-lg uppercase">Understand the scene</h3>
+      <p class="text-sm font-medium text-gray-700">Carriageway and lane directions learned from trajectories, plus the crossings, stop line, signal lamp and solid lines we drew.</p>
+    </div>
+    <div class="bg-white brut-border p-6 shadow-brut space-y-3 relative">
+      <div class="absolute -top-3 -left-3 w-8 h-8 bg-brutPink brut-border flex items-center justify-center font-mono font-black text-sm shadow-brut-sm">04</div>
+      <div class="font-mono font-bold text-xs bg-black text-white px-2 py-1 inline-block">RULES</div>
+      <h3 class="font-mono font-black text-lg uppercase">Events</h3>
+      <p class="text-sm font-medium text-gray-700">One rule per event type, then one clean-up for all: merge fragments under 1 s apart, drop blips under 0.5 s, clip to the video.</p>
+    </div>
+  </div>
+
+  <div class="bg-white brut-border p-6 shadow-brut pipeline">
+    <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2 mb-4"><i class="fa-solid fa-diagram-project text-brutCoral"></i> The whole pipeline</h3>
+    <div class="svg-scroll"><svg viewBox="0 0 1100 300" role="img" aria-label="Pipeline diagram: Part A offline and Part B causal">
+      <defs><marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#000"/></marker></defs>
+      <text x="10" y="22" class="sm">PART A · OFFLINE, WHOLE VIDEO</text>
+      <rect class="box" x="10" y="36" width="120" height="56"/><text x="70" y="60" text-anchor="middle">video .mp4</text><text x="70" y="78" text-anchor="middle" class="sm">8 fps sampled</text>
+      <rect class="box learned" x="160" y="36" width="140" height="56"/><text x="230" y="60" text-anchor="middle">YOLO11s</text><text x="230" y="78" text-anchor="middle" class="sm">learned (COCO)</text>
+      <rect class="box" x="330" y="36" width="120" height="56"/><text x="390" y="60" text-anchor="middle">ByteTrack</text><text x="390" y="78" text-anchor="middle" class="sm">ids over time</text>
+      <rect class="box" x="480" y="36" width="150" height="56"/><text x="555" y="60" text-anchor="middle">kinematics</text><text x="555" y="78" text-anchor="middle" class="sm">speed in box sizes/s</text>
+      <rect class="box" x="660" y="36" width="160" height="56"/><text x="740" y="60" text-anchor="middle">event rules</text><text x="740" y="78" text-anchor="middle" class="sm">src/events/*.py</text>
+      <rect class="box" x="850" y="36" width="140" height="56"/><text x="920" y="60" text-anchor="middle">clean-up</text><text x="920" y="78" text-anchor="middle" class="sm">merge, drop blips</text>
+      <text x="1002" y="68" class="sm">events</text>
+      <path class="arrow" d="M130,64 H158"/><path class="arrow" d="M300,64 H328"/><path class="arrow" d="M450,64 H478"/><path class="arrow" d="M630,64 H658"/><path class="arrow" d="M820,64 H848"/><path class="arrow" d="M990,64 H1000"/>
+      <rect class="box" x="480" y="120" width="340" height="50"/><text x="650" y="141" text-anchor="middle">scene: flow field learned from trajectories</text><text x="650" y="159" text-anchor="middle" class="sm">+ crossings, stop line, lamp area, solid lines we drew</text>
+      <path class="arrow" d="M740,120 V94"/>
+      <text x="10" y="210" class="sm">PART B · CAUSAL, FRAME BY FRAME</text>
+      <rect class="box" x="10" y="224" width="120" height="56"/><text x="70" y="248" text-anchor="middle">past frames</text><text x="70" y="266" text-anchor="middle" class="sm">5 fps</text>
+      <rect class="box learned" x="160" y="224" width="140" height="56"/><text x="230" y="248" text-anchor="middle">YOLO11s + ByteTrack</text><text x="230" y="266" text-anchor="middle" class="sm">own instance</text>
+      <rect class="box" x="330" y="224" width="300" height="56"/><text x="480" y="248" text-anchor="middle">pairwise time-to-collision + braking</text><text x="480" y="266" text-anchor="middle" class="sm">lane-offset, closing-speed filters, persistence</text>
+      <rect class="box" x="660" y="224" width="160" height="56"/><text x="740" y="248" text-anchor="middle">logistic + EMA</text><text x="740" y="266" text-anchor="middle" class="sm">0.5 at TTC 1.5 s</text>
+      <text x="850" y="256" class="sm">risk in [0, 1]</text>
+      <path class="arrow" d="M130,252 H158"/><path class="arrow" d="M300,252 H328"/><path class="arrow" d="M630,252 H658"/><path class="arrow" d="M820,252 H846"/>
+    </svg></div>
+    <p class="text-xs font-mono font-bold mt-2"><span class="inline-block w-3 h-3 bg-brutLime brut-border-2 align-middle"></span> green box = learned model. Everything else is algorithmic or rule-based.</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="bg-white brut-border p-6 shadow-brut space-y-4">
+      <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-microchip text-brutCoral"></i> Models and data</h3>
+      <div class="table-wrap"><table class="brut-table text">
+        <thead><tr><th>Item</th><th>Learned or rules</th><th>Licence</th></tr></thead>
+        <tbody>
+          <tr><td>YOLO11s detector (COCO-pretrained, not fine-tuned)</td><td>learned</td><td>AGPL-3.0</td></tr>
+          <tr><td>ByteTrack (supervision)</td><td>algorithm</td><td>MIT</td></tr>
+          <tr><td>Carriageway + lane directions</td><td>statistics from trajectories</td><td>ours</td></tr>
+          <tr><td>Event rules, signal colour</td><td>rules</td><td>ours</td></tr>
+          <tr><td>Accident risk</td><td>rules (TTC + braking)</td><td>ours</td></tr>
+          <tr><td>Our labels: 93 detections on the samples judged by the team</td><td>tuning only</td><td>ours</td></tr>
+          <tr><td>TU-DAT (public roadside crash clips)</td><td>testing only, one clip</td><td>public research dataset</td></tr>
+        </tbody>
+      </table></div>
+      <p class="text-sm text-gray-700">No external training data. We had no labels for this camera, four days, and a hidden test set with events that are not in the samples.
+        Rules on trajectories carry over to unseen events of a known type; a model trained on other cameras' crashes would not have matched this view in that time.</p>
+    </div>
+    <div class="bg-white brut-border p-6 shadow-brut space-y-4">
+      <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-scale-balanced text-brutBlue"></i> Why these choices</h3>
+      <ul class="space-y-3 text-sm">
+        <li class="bg-brutBg p-3 brut-border-2"><b>YOLO11s at 960 px:</b> small, distant pedestrians need the resolution; it is the largest model that keeps 4K inside the time budget with margin.</li>
+        <li class="bg-brutBg p-3 brut-border-2"><b>Speed in box sizes per second:</b> no camera calibration, and one threshold works across the frame.</li>
+        <li class="bg-brutBg p-3 brut-border-2"><b>Precision over recall:</b> the score averages F1 over event types, and a type we predict that is not in the test set adds a zero. <code>road_obstacle</code>, <code>fire_smoke</code> and <code>wrong_way</code> stay off.</li>
+        <li class="bg-brutBg p-3 brut-border-2"><b>Boundaries follow the annotation rules:</b> e.g. <code>stopped_vehicle</code> starts when the car stops, not 10 s later when the rule is confirmed. Events are matched by temporal IoU up to 0.7.</li>
+        <li class="bg-brutBg p-3 brut-border-2"><b>Time safety valves:</b> each part caps its own time, so a slow machine loses a few events instead of scoring zero for the video.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="bg-white brut-border p-6 shadow-brut space-y-4">
+    <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-list-check text-brutCoral"></i> One rule per event type</h3>
+    <div class="table-wrap"><table class="brut-table text">
+      <thead><tr><th>Class</th><th>Fires when</th><th>Segment</th></tr></thead>
+      <tbody>
+        <tr><td><code>stopped_vehicle</code></td><td>vehicle on the carriageway below 0.12 sizes/s for 10 s or more, while traffic around it keeps moving (not a queue)</td><td>stops → moves</td></tr>
+        <tr><td><code>congestion</code></td><td>3+ vehicles in one direction all crawling (under 0.4 sizes/s) for 20 s or more</td><td>queue stops → clears</td></tr>
+        <tr><td><code>wrong_way</code> (off)</td><td>moving against the learned lane direction for 1.5 s, outside the junction box. Switched off: 0 true and 1 false detection on our labels</td><td>enters → leaves the lane</td></tr>
+        <tr><td><code>jaywalking</code></td><td>pedestrian on the learned carriageway, outside every crossing and traffic island, for 1 s or more</td><td>steps on → leaves</td></tr>
+        <tr><td><code>failure_to_yield</code></td><td>vehicle moving through a crossing while a pedestrian walks on it (not just waits) within 2.5 car sizes of its path. A zebra split by a traffic island counts as one crossing</td><td>enters → leaves the crossing</td></tr>
+        <tr><td><code>red_light</code> / <code>stop_line</code></td><td>moving along the approach, past the stop line while the lamp reads red, then into the junction within 3 s / stopped clearly past the line on red, outside the junction</td><td>crosses → leaves junction / stops → green</td></tr>
+        <tr><td><code>solid_line_crossing</code></td><td>ground point crosses a solid lane line we drew</td><td>crosses → fully across</td></tr>
+        <tr><td><code>illegal_turn</code> / <code>illegal_u_turn</code></td><td>heading turns 60° / 150° inside a prohibited zone. None drawn yet (we had no <code>camera.md</code> listing prohibited turns), so these stay silent</td><td>starts → ends turning</td></tr>
+        <tr><td><code>accident</code></td><td>boxes touch while the striking vehicle still moves at 1 size/s or more, its speed then drops 60% within 1 s, and both stay stopped 2 s</td><td>contact → all stop</td></tr>
+        <tr><td><code>near_miss</code></td><td>time-to-collision under 2 s, then sharp braking (50% speed drop), no contact, and neither vehicle turning more than 30° (turning past each other is normal)</td><td>evasive action → clear</td></tr>
+      </tbody>
+    </table></div>
+    <p class="text-xs text-gray-600">Every number lives in <code>configs/pipeline.yaml</code>; the values tuned on our labels are in <code>configs/tuned.yaml</code>.</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="bg-brutYellow brut-border p-6 shadow-brut space-y-3">
+      <h3 class="font-mono font-black text-lg uppercase"><i class="fa-solid fa-car-burst"></i> Part B: warning before a crash</h3>
+      <p class="text-sm font-medium">Every 0.2 s: detect and track (own instance), then for every pair of road users solve when two discs at their ground points would touch.
+        Pairs are dropped if they are not closing fast (under 1 size/s), are parallel in neighbouring lanes, or one is a stopped car being brushed past.
+        A pair must stay threatening for 3 samples. The earliest time-to-collision maps to risk with a logistic (0.5 at 1.5 s), sharp braking raises it,
+        and a moving average smooths it. Detection runs in a worker thread with a fixed one-sample lag, so the curve is identical run to run.</p>
+    </div>
+    <div class="bg-white brut-border p-6 shadow-brut space-y-3">
+      <h3 class="font-mono font-black text-lg uppercase"><i class="fa-solid fa-gauge-high text-brutBlue"></i> Engineering</h3>
+      <ul class="space-y-2 text-sm list-disc pl-5">
+        <li>The model loads when <code>solution.py</code> is imported, before the harness starts its per-video clock.</li>
+        <li>Measured: 460 s for a 318 s 4K video on 8 CPU cores (1.45×, limit 3×); 36 s for a 38 s 1080p clip on a laptop RTX 3050.</li>
+        <li>Decoding in a background thread, skipped frames only grabbed, exact halvings to 960 px: 787 s → 460 s.</li>
+        <li>Seeds fixed, cuDNN deterministic, fixed frame stride: two runs give the same file.</li>
+        <li>Detections cached during development, so a rule change is re-scored in seconds.</li>
+        <li>12 unit tests on synthetic trajectories cover each rule and the risk filters.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ EDA ============================ -->
+<div id="page-eda" class="page-view space-y-8 hidden">
+  <div class="border-b-4 border-black pb-4">
+    <span class="font-mono text-xs font-black bg-brutLime px-2 py-1 brut-border uppercase">Data analysis</span>
+    <h2 class="text-4xl font-black font-mono mt-2 uppercase">What the sample videos look like</h2>
+    <p class="text-gray-700 font-medium max-w-3xl">Computed from our own detector and tracker output on every sample video (<code>scripts/build_site.py</code>).
+      The findings at the bottom are the ones that changed how we built the system.</p>
+  </div>
+
+  <div class="bg-white brut-border p-6 shadow-brut space-y-3">
+    <h3 class="font-mono font-black text-lg uppercase">The videos</h3>
+    <div class="table-wrap" id="eda-meta"></div>
+  </div>
+
+  <div class="flex flex-wrap gap-2" id="eda-tabs" role="tablist"></div>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div class="bg-white brut-border p-6 shadow-brut space-y-2">
+      <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-car text-brutBlue"></i> Road users in view</h3>
+      <p class="text-xs font-medium text-gray-600">Mean number tracked per analysed frame, per second.</p>
+      <div class="legend" id="eda-legend"></div>
+      <div class="chart" id="eda-objects"></div>
+    </div>
+    <div class="bg-white brut-border p-6 shadow-brut space-y-2">
+      <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-traffic-light text-brutCoral"></i> Vehicles standing still</h3>
+      <p class="text-xs font-medium text-gray-600">Share of vehicles on the carriageway that are stopped, per 5 s. The saw-tooth is the signal cycle: queues build on red and clear on green.</p>
+      <div class="chart" id="eda-stopped"></div>
+    </div>
+    <div class="bg-white brut-border p-6 shadow-brut space-y-2">
+      <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-gauge text-brutPink"></i> How fast things move</h3>
+      <p class="text-xs font-medium text-gray-600">Speed in box sizes per second (one car-length per second = 1), moving samples only.</p>
+      <div class="legend" id="eda-speed-legend"></div>
+      <div class="chart" id="eda-speed"></div>
+    </div>
+    <div class="bg-white brut-border p-6 shadow-brut space-y-2">
+      <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-sun text-yellow-500"></i> Lighting</h3>
+      <p class="text-xs font-medium text-gray-600">Mean frame brightness (0 to 255), every 5 s.</p>
+      <div class="chart" id="eda-light"></div>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <figure class="bg-white brut-border p-4 shadow-brut"><img id="img-heat-veh" alt="Motion heatmap of vehicles" loading="lazy" class="brut-border-2 w-full"><figcaption>Motion heatmap, vehicles: where moving vehicles were. Brighter = more traffic.</figcaption></figure>
+    <figure class="bg-white brut-border p-4 shadow-brut"><img id="img-heat-ppl" alt="Motion heatmap of pedestrians" loading="lazy" class="brut-border-2 w-full"><figcaption>Motion heatmap, pedestrians: the crossings, and where people cross without one.</figcaption></figure>
+    <figure class="bg-white brut-border p-4 shadow-brut"><img id="img-tracks" alt="Trajectories" loading="lazy" class="brut-border-2 w-full"><figcaption>Every trajectory: vehicles in blue, pedestrians in orange.</figcaption></figure>
+    <figure class="bg-white brut-border p-4 shadow-brut"><img id="img-lanes" alt="Learned lane directions" loading="lazy" class="brut-border-2 w-full"><figcaption>Lane directions learned from traffic (no hand drawing): the two carriageways in blue and orange. <code>wrong_way</code> checks against this map.</figcaption></figure>
+  </div>
+
+  <div class="bg-brutLime brut-border p-6 shadow-brut space-y-3">
+    <h3 class="font-mono font-black text-lg uppercase"><i class="fa-solid fa-lightbulb"></i> Findings that shaped the solution</h3>
+    <ul class="space-y-2 text-sm font-medium list-disc pl-5">
+      <li><b>4K at 29.97 fps, 5.8 GB for 5 minutes.</b> Decoding alone ate most of the time budget: decoding moved to a background thread, skipped frames are only grabbed, and the detector sees 960 px made by exact halvings (787 s → 460 s on 8 cores).</li>
+      <li><b>Cars at the bottom of the frame are 4× the size of cars at the top</b> (median box 424 px vs 107 px on C3897). Speeds in pixels meant nothing across the frame, so every speed is in box sizes per second.</li>
+      <li><b>The signal cycle dominates the scene</b> (the saw-tooth above). A stopped car only counts as <code>stopped_vehicle</code> if traffic around it keeps moving; otherwise it is a queue.</li>
+      <li><b>Cars park along the left kerb and never move.</b> The carriageway is learned only from moving vehicles, so parked cars fall outside it.</li>
+      <li><b>Two carriageways, opposite directions.</b> A grid of dominant directions learned from trajectories splits congestion by direction. We also built <code>wrong_way</code> on it, but on our labels it found 0 real cases and 1 false one, so it is switched off.</li>
+      <li><b>Pedestrians cross wide crossings in groups, often diagonally.</b> "Anyone on the crossing" fired on almost every car; <code>failure_to_yield</code> now needs a pedestrian near the car's path.</li>
+      <li><b>The gantry lights face sideways and are unreadable; the left-pole lamp is readable at 4K.</b> Red-light detection reads that lamp and corrects for its measured offset from the boulevard's own phase.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================ RESULTS ============================ -->
+<div id="page-results" class="page-view space-y-8 hidden">
+  <div class="border-b-4 border-black pb-4">
+    <span class="font-mono text-xs font-black bg-brutCoral text-white px-2 py-1 brut-border uppercase">Evaluation</span>
+    <h2 class="text-4xl font-black font-mono mt-2 uppercase">Results on the sample videos</h2>
+    <p class="text-gray-700 font-medium max-w-3xl">Each sample annotated by our own renderer (<code>src/annotate.py</code>), with the events and the risk curve exactly as
+      <code>run_submission.py</code> wrote them to <code>predictions_samples.json</code>. Charts follow the video; click a bar, a row or a peak to jump there.</p>
+  </div>
+  <div class="flex flex-wrap gap-2" id="video-tabs" role="tablist"></div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <div class="lg:col-span-7 bg-black brut-border p-4 shadow-brut space-y-3">
+      <div class="flex items-center justify-between gap-2">
+        <span class="font-mono font-black text-white" id="res-title">…</span>
+        <span class="font-mono text-xs text-brutLime" id="res-sub"></span>
+      </div>
+      <video id="res-video" controls playsinline preload="metadata" class="w-full brut-border-2 bg-gray-900 aspect-video"></video>
+      <p class="font-mono text-[11px] text-gray-300 box-key"></p>
+    </div>
+    <div class="lg:col-span-5 bg-white brut-border p-6 shadow-brut space-y-3">
+      <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-clock text-brutBlue"></i> Events</h3>
+      <p class="text-xs font-medium text-gray-600" id="res-events-sub"></p>
+      <div class="table-wrap tall" id="res-table"></div>
+    </div>
+  </div>
+
+  <div class="bg-white brut-border p-6 shadow-brut space-y-3">
+    <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-timeline text-brutCoral"></i> Event timeline</h3>
+    <div class="chart" id="res-timeline"></div>
+    <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2 pt-4"><i class="fa-solid fa-wave-square text-brutPink"></i> Accident risk (Part B)</h3>
+    <p class="text-xs font-medium text-gray-600" id="res-risk-sub"></p>
+    <div class="chart" id="res-risk"></div>
+  </div>
+
+  <div class="bg-white brut-border p-6 shadow-brut space-y-3">
+    <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-images text-brutBlue"></i> Examples of each class we detect</h3>
+    <p class="text-xs font-medium text-gray-600">A frame from the middle of each event, up to three per class. Click one to play it.</p>
+    <div class="examples" id="res-examples"></div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="bg-white brut-border p-6 shadow-brut space-y-3">
+      <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-chart-bar text-brutBlue"></i> Operator view: events per hour</h3>
+      <p class="text-xs font-medium text-gray-600" id="dash-sub"></p>
+      <div class="chart" id="dash-classes"></div>
+    </div>
+    <div class="bg-white brut-border p-6 shadow-brut space-y-3">
+      <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-calendar-minus text-brutCoral"></i> Operator view: events per minute</h3>
+      <p class="text-xs font-medium text-gray-600">All sample videos, by minute from the start of each clip.</p>
+      <div class="chart" id="dash-minutes"></div>
+    </div>
+  </div>
+
+  <div class="bg-white brut-border p-6 shadow-brut space-y-4">
+    <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-shield-halved text-brutCoral"></i> Honest failure cases</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-medium">
+      <div class="p-3 bg-brutYellow/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Small, reused labels</div>The team judged 93 detections on the samples (37 real). Tuning on them raised Score A on those samples from 0.53 to 0.74, but it was tuned and scored on the same labels: expect less on the hidden set.</div>
+      <div class="p-3 bg-brutPink/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">failure_to_yield is the loudest class</div>Pedestrians waiting at the kerb of a 7-lane crossing were its main false alarm; the rule now needs a walking pedestrian near the car's path. F1 on our labels went from 0.56 to 0.67.</div>
+      <div class="p-3 bg-brutPink/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Near misses in dense turning traffic</div>9 of 13 rejected near misses were cars turning past each other. The rule now ignores vehicles turning more than 30°: F1 0.31 → 0.57 on our labels, still the weakest class.</div>
+      <div class="p-3 bg-brutCoral/30 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Missed a real crash</div>No sample video contains a crash. On a public roadside crash clip (TU-DAT), both the accident rule and Part B missed a side-swipe: the tracker lost the car that spun and gave it a new id, and Part B treats side-by-side cars as normal lane-keeping, the filter that removed most false alarms on our camera.</div>
+      <div class="p-3 bg-brutYellow/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Long merged segments</div>Several jaywalking and stopped_vehicle segments on C3897 run over a minute, because overlapping events of one type merge into one. If the annotators split them, these will not match.</div>
+      <div class="p-3 bg-brutPink/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Tracker id switches</div>In dense queues a stationary car can split into two tracks. <code>stopped_vehicle</code> re-joins gaps under 3 s, but a long occlusion by a bus still splits the event.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ LIVE DEMO ============================ -->
+<div id="page-demo" class="page-view space-y-8 hidden">
+  <div class="border-b-4 border-black pb-4">
+    <span class="font-mono text-xs font-black bg-brutCoral text-white px-2 py-1 brut-border uppercase">Interactive</span>
+    <h2 class="text-4xl font-black font-mono mt-2 uppercase">Live demo</h2>
+    <p class="text-gray-700 font-medium max-w-3xl">Upload an <b>.mp4</b> from a fixed road camera, up to <b><span class="lim-sec">120</span> seconds</b> and <b><span class="lim-mb">200</span> MB</b>.
+      The server runs our real pipeline on a CPU with a lighter detector (YOLO11n at 640 px, 4 frames per second), so a 1-minute clip takes about 1 to 3 minutes.
+      You get the events, a timeline, the risk curve and an annotated video.</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <div class="lg:col-span-7 space-y-4">
+      <label id="drop" class="drop block bg-white brut-border p-8 shadow-brut text-center cursor-pointer">
+        <input type="file" id="file" accept="video/mp4,video/*" class="hidden">
+        <span class="w-16 h-16 bg-brutLime brut-border rounded-full inline-flex items-center justify-center text-2xl mb-3"><i class="fa-solid fa-cloud-arrow-up"></i></span>
+        <span class="block font-mono font-black text-lg uppercase">Drop a video here or click to choose</span>
+        <span class="block font-mono text-xs text-gray-600 mt-1">.mp4 · up to <span class="lim-sec">120</span> s · up to <span class="lim-mb">200</span> MB · best on footage of this intersection</span>
+      </label>
+      <div id="job" class="hidden bg-white brut-border p-5 shadow-brut space-y-2">
+        <div class="w-full bg-brutBg h-6 brut-border p-0.5"><div id="job-bar" class="bg-brutCoral h-full transition-all duration-300" style="width:0"></div></div>
+        <div class="font-mono text-xs font-bold" id="job-status">Uploading…</div>
+      </div>
+      <div id="job-error" class="hidden bg-brutCoral text-white brut-border p-4 font-mono text-sm font-bold" role="alert"></div>
+    </div>
+    <div class="lg:col-span-5 bg-white brut-border p-6 shadow-brut space-y-3">
+      <div class="flex items-center justify-between border-b-2 border-black pb-3">
+        <h3 class="font-mono font-black text-sm uppercase"><i class="fa-solid fa-terminal text-brutCoral"></i> Job log</h3>
+      </div>
+      <div id="terminal-logs" class="bg-black text-brutLime p-4 font-mono text-xs h-56 overflow-y-auto brut-border space-y-1.5">
+        <div>[sys] waiting for a video…</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="demo-result" class="hidden space-y-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div class="lg:col-span-7 bg-black brut-border p-4 shadow-brut space-y-3">
+        <div class="flex items-center justify-between gap-2">
+          <span class="font-mono font-black text-white truncate" id="demo-title">Annotated result</span>
+          <span class="font-mono text-xs text-brutLime" id="demo-sub"></span>
+        </div>
+        <video id="demo-video" controls playsinline preload="metadata" class="w-full brut-border-2 bg-gray-900 aspect-video"></video>
+        <p class="font-mono text-[11px] text-gray-300 box-key"></p>
+      </div>
+      <div class="lg:col-span-5 bg-white brut-border p-6 shadow-brut space-y-3">
+        <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-list text-brutBlue"></i> Events found</h3>
+        <p class="text-xs font-medium text-gray-600">Click a row or a bar to jump the video there.</p>
+        <div class="table-wrap tall" id="demo-table"></div>
+        <button type="button" id="demo-json" class="px-4 py-2 bg-brutYellow font-mono font-black text-xs uppercase brut-border brut-btn"><i class="fa-solid fa-download"></i> Events + risk (JSON)</button>
+      </div>
+    </div>
+    <div class="bg-white brut-border p-6 shadow-brut space-y-3">
+      <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2">Event timeline</h3>
+      <div class="chart" id="demo-timeline"></div>
+      <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2 pt-4">Accident risk (next 5 s)</h3>
+      <p class="text-xs font-medium text-gray-600">Scored from past frames only. At or above 0.5 counts as an alarm.</p>
+      <div class="chart" id="demo-risk"></div>
+      <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2 pt-4">Road users in view</h3>
+      <div class="legend" id="demo-legend"></div>
+      <div class="chart" id="demo-objects"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ REPORT ============================ -->
+<div id="page-report" class="page-view space-y-8 hidden">
+  <div class="border-b-4 border-black pb-4">
+    <span class="font-mono text-xs font-black bg-brutYellow px-2 py-1 brut-border uppercase">One page</span>
+    <h2 class="text-4xl font-black font-mono mt-2 uppercase">Technical report</h2>
+    <p class="text-gray-700 font-medium">What we built, what worked, what did not, and what we would do next.</p>
+  </div>
+  <div class="bg-white brut-border p-8 shadow-brut space-y-6 font-medium leading-relaxed">
+    <section class="space-y-2">
+      <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">1. What we built</h3>
+      <p>A fixed-camera traffic analyser that reports 9 of the 14 official event types as time segments (Part A) and a per-frame accident risk from past frames only (Part B).
+        It is a pretrained YOLO11s detector with ByteTrack, a scene model learned from the traffic itself, and one rule per event type. No model was trained.
+        It runs inside the organizers' unchanged harness at 1.45× video length on 8 CPU cores, against a 3× limit.</p>
+    </section>
+    <section class="space-y-2">
+      <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">2. What worked</h3>
+      <ul class="list-disc pl-6 space-y-1">
+        <li>Trajectory rules cover 9 of 14 classes with no training data, and every event can be traced to a track and a rule.</li>
+        <li>Tuning on 93 detections the team judged raised Score A on the labelled samples from 0.53 to 0.74 (same labels, so optimistic).</li>
+        <li>Learning the road and lane directions from traffic removed most hand drawing and kept parked cars out.</li>
+        <li>Speed in box sizes per second made one set of thresholds work across the whole frame.</li>
+        <li>Filtering Part B by closing speed and lane offset cut false alarms from 35 to 7 in 5 minutes.</li>
+        <li>Threaded decoding and 960 px input cut runtime by 42%.</li>
+      </ul>
+    </section>
+    <section class="space-y-2">
+      <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">3. What did not</h3>
+      <ul class="list-disc pl-6 space-y-1">
+        <li>Box overlap as a crash signal: crossing traffic overlaps in the image constantly (22 to 26% of the time in alarm). Replaced by discs at the ground points.</li>
+        <li>"Anyone on the crossing" for failure_to_yield fired on nearly every car.</li>
+        <li>Counting every red-light queue as a stopped vehicle.</li>
+        <li>Reading the gantry signal heads: they face sideways.</li>
+        <li><code>wrong_way</code>: 0 real and 1 false detection on our labels, so it is off.</li>
+        <li>A real side-swipe on a public crash clip: the tracker lost the car that spun, so the accident rule and Part B both missed it.</li>
+      </ul>
+    </section>
+    <section class="space-y-2">
+      <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">4. What we would do next</h3>
+      <ul class="list-disc pl-6 space-y-1">
+        <li>Re-link a track lost near a contact point, so a spinning car keeps its identity through a crash.</li>
+        <li>More labels, so thresholds are tuned on events they are not scored on.</li>
+        <li>Test Part B on public crash footage (CCD, DoTA) and calibrate it so 0.5 means "probably within 5 s".</li>
+        <li>A small clip classifier to confirm accident and near-miss candidates.</li>
+        <li>Fine-tune the detector on frames from this camera for small, distant pedestrians.</li>
+        <li>Run Part B on a live stream, with alerts to an operator.</li>
+      </ul>
+    </section>
+  </div>
+</div>
+
+<!-- ============================ LINKS ============================ -->
+<div id="page-links" class="page-view space-y-8 hidden">
+  <div class="border-b-4 border-black pb-4">
+    <span class="font-mono text-xs font-black bg-brutPink px-2 py-1 brut-border uppercase">Resources</span>
+    <h2 class="text-4xl font-black font-mono mt-2 uppercase">Repository &amp; submission</h2>
+    <p class="text-gray-700 font-medium">Source code, weights and our predictions on the sample videos.</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <a id="link-repo" href="#" target="_blank" rel="noopener" class="bg-white brut-border p-6 shadow-brut brut-btn block space-y-4 group">
+      <span class="w-12 h-12 bg-black text-white brut-border flex items-center justify-center text-xl"><i class="fa-brands fa-github"></i></span>
+      <span class="block"><span class="block font-mono font-black text-lg group-hover:underline">GitHub repository</span>
+        <span class="block text-xs text-gray-600 mt-1">Code, one-command entry point, tests, README with every licence.</span></span>
+      <span class="inline-block font-mono text-xs font-bold bg-brutYellow px-2 py-1 brut-border-2" id="link-repo-label">github.com</span>
+    </a>
+    <a id="link-weights" href="#" target="_blank" rel="noopener" class="bg-white brut-border p-6 shadow-brut brut-btn block space-y-4 group">
+      <span class="w-12 h-12 bg-brutCoral text-white brut-border flex items-center justify-center text-xl"><i class="fa-solid fa-weight-hanging"></i></span>
+      <span class="block"><span class="block font-mono font-black text-lg group-hover:underline">Model weights</span>
+        <span class="block text-xs text-gray-600 mt-1">YOLO11s (the submission) and YOLO11n (this demo), both pretrained by Ultralytics, in <code>weights/</code>.</span></span>
+      <span class="inline-block font-mono text-xs font-bold bg-brutLime px-2 py-1 brut-border-2">weights/</span>
+    </a>
+    <a href="predictions_samples.json" target="_blank" class="bg-white brut-border p-6 shadow-brut brut-btn block space-y-4 group">
+      <span class="w-12 h-12 bg-brutBlue text-white brut-border flex items-center justify-center text-xl"><i class="fa-solid fa-file-code"></i></span>
+      <span class="block"><span class="block font-mono font-black text-lg group-hover:underline">predictions_samples.json</span>
+        <span class="block text-xs text-gray-600 mt-1">The harness output on the sample videos, exactly as submitted.</span></span>
+      <span class="inline-block font-mono text-xs font-bold bg-brutPink px-2 py-1 brut-border-2">download</span>
+    </a>
+  </div>
+</div>
+
+</main>
+
+<footer class="bg-white brut-border border-b-0 border-x-0 mt-12 py-6 px-4">
+  <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs font-bold text-center">
+    <div>NEXVISION // WIUT HACKATHON 2026 · CV TRACK</div>
+    <div>Footage: sample videos from the organizers · Detector: Ultralytics YOLO11 (AGPL-3.0)</div>
+  </div>
+</footer>
+</body>
+</html>

@@ -11,7 +11,7 @@ from .events.signal import signal_colours
 from .kinematics import add_kinematics
 from .scene import FlowField, Scene, grid_for, load_approaches, load_manual
 from .segments import finalize
-from .tracking import track_video
+from .tracking import Progress, track_video
 from .video import VideoInfo, probe
 
 
@@ -38,15 +38,15 @@ def shift_boundaries(events: list[list], cfg) -> list[list]:
     return [[s + shifts.get(c, (0, 0))[0], e + shifts.get(c, (0, 0))[1], c] for s, e, c in events]
 
 
-def analyse(path: str) -> tuple[Context, list[list]]:
-    """Run Part A and return the context too (scripts reuse it for rendering and EDA)."""
+def analyse(path: str, progress: Progress | None = None) -> tuple[Context, list[list]]:
+    """Run Part A and return the context too (scripts and the web demo reuse it)."""
     cfg = load_config()
     info = probe(path)
     t0 = time.perf_counter()
 
     approaches = load_approaches(load_manual(resolve(cfg.scene.manual)), info.width, info.height)
     hook = (lambda frame: signal_colours(frame, approaches)) if approaches else None
-    tracks, frames = track_video(info, hook)
+    tracks, frames = track_video(info, hook, progress)
     t_track = time.perf_counter() - t0
 
     tracks = add_kinematics(tracks, cfg.kinematics.smooth_window_sec, centered=True)

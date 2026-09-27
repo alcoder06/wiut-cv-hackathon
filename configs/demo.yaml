@@ -1,0 +1,14 @@
+# Live-demo profile, merged over pipeline.yaml when TRAFFIC_PROFILE=demo (web/server.py sets it).
+# Same pipeline and rules, lighter detection, so a 1-minute upload finishes in about three
+# minutes on a 2-vCPU host with no GPU. The submission never loads this file.
+
+detector:
+  weights: weights/yolo11n.pt   # ~3x cheaper than yolo11s on CPU (0.32 vs 0.71 s per frame on 2 threads)
+  imgsz: 640
+  max_input_width: 640
+  batch: 4
+  half: false
+
+sampling:
+  part_a_fps: 4
+  part_a_max_x: 1000            # no time cap: the demo limits clip length instead

@@ -33,13 +33,17 @@ def deep_merge(base: dict, over: dict) -> dict:
 @lru_cache(maxsize=None)
 def load_config(path: str | None = None) -> Cfg:
     """configs/pipeline.yaml, with configs/tuned.yaml (written by scripts/tune.py) on top.
-    Delete tuned.yaml to go back to the hand-set values."""
+    Delete tuned.yaml to go back to the hand-set values.
+    TRAFFIC_PROFILE=<name> adds configs/<name>.yaml last (the web demo uses "demo")."""
     path = Path(path) if path else ROOT / "configs" / "pipeline.yaml"
     with open(path, encoding="utf-8") as f:
         cfg = yaml.safe_load(f)
-    tuned = path.parent / "tuned.yaml"
-    if tuned.exists():
-        cfg = deep_merge(cfg, yaml.safe_load(tuned.read_text(encoding="utf-8")) or {})
+    overlays = [path.parent / "tuned.yaml"]
+    if profile := os.environ.get("TRAFFIC_PROFILE"):
+        overlays.append(path.parent / f"{profile}.yaml")
+    for overlay in overlays:
+        if overlay.exists():
+            cfg = deep_merge(cfg, yaml.safe_load(overlay.read_text(encoding="utf-8")) or {})
     return Cfg(cfg)
 
 

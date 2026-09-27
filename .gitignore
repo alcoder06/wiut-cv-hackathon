@@ -20,3 +20,8 @@ dev/*.jpg
 
 # harness output from ad-hoc runs (predictions_samples.json is the tracked one)
 predictions.json
+
+# website build output (frames and videos from the footage; rebuilt by scripts/build_site.py)
+web/static/data/
+web/static/media/
+web/static/predictions_samples.json

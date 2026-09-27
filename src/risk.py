@@ -200,3 +200,20 @@ class CausalRisk:
             return True
         h, w = self.road.shape
         return bool(self.road[min(int(p[1]), h - 1), min(int(p[0]), w - 1)])
+
+
+def replay_tracks(tracks, info, video_id: str) -> list[list[float]]:
+    """Risk curve [[t, score], ...] from already-tracked boxes, detector-free.
+
+    Feeds each sampled frame's boxes, in time order, through the same causal scorer
+    the harness runs (CausalRisk.observe). Used to tune Part B in seconds
+    (scripts/replay_risk.py) and by the web demo, which can't afford a second detector
+    pass on a CPU. The submission itself runs Part B's own detector and tracker."""
+    est = CausalRisk()
+    est.reset({"video_id": video_id, "fps": info.fps, "width": info.width,
+               "height": info.height, "n_frames": info.n_frames})
+    curve = []
+    for (_, t), g in tracks.groupby(["frame", "t"], sort=True):
+        s = est.observe(g[["x1", "y1", "x2", "y2"]].to_numpy(), g["cls"].tolist(), g["tid"].to_numpy(), t)
+        curve.append([round(float(t), 4), round(s, 4)])
+    return curve

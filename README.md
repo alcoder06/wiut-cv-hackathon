@@ -26,6 +26,29 @@ python scripts/render.py samples/<video>.mp4 --start 0 --end 120   # annotated v
 pytest -q                                   # rules on synthetic trajectories
 ```
 
+## Website and live demo
+
+`web/` is the team website: static pages (`web/static/`) plus a FastAPI upload API
+(`web/server.py`) that runs this same pipeline on a visitor's video. The demo uses
+`configs/demo.yaml` (YOLO11n at 640 px, 4 fps, `weights/yolo11n.pt`) so a CPU host keeps up;
+the submission never loads that profile.
+
+```bash
+python scripts/build_site.py --videos samples --pred predictions_samples.json   # EDA, results, annotated videos
+python -m uvicorn web.server:app --port 7860                                   # http://localhost:7860
+modal deploy web/modal_app.py                                                  # demo API on Modal (prints its URL)
+python scripts/deploy_space.py <hf-user>/<space-name> --api <modal-url>        # pages on a free static HF Space
+```
+
+Live: pages at https://laziz28-nexvision.static.hf.space, demo API on Modal (scales to zero, so
+the first upload after a quiet spell waits ~15 s for the server to start). Without `--api`,
+`deploy_space.py` builds one Docker Space serving pages and API together (needs HF PRO).
+
+Extra dependencies for the site only: `pip install -r web/requirements.txt` (the Space image
+installs CPU-only torch first, see `web/Dockerfile`). The page's CSS is Tailwind, compiled once
+into `web/static/tw.css`; after changing classes in `web/static/`, rebuild it with
+`npx tailwindcss@3 -c web/tailwind.config.js -i web/tailwind.input.css -o web/static/tw.css --minify`.
+
 ## Approach
 
 ```
@@ -147,4 +170,12 @@ easily). `configs/tuned.yaml` is loaded on top of `configs/pipeline.yaml`; delet
 
 ## Team
 
-TODO: members, roles, who did what.
+**NexVision**
+
+| Member | Role | Who did what |
+|---|---|---|
+| Lutfullo Akhmedov ([GitHub](https://github.com/alcoder06)) | Model deployment & improvements | Detection, tracking and event-rule pipeline inside the organizers' harness, kept inside the time budget |
+| Lazizbek Raimqulov ([GitHub](https://github.com/Lazizbek-web1)) | Model deployment & improvements | Running the pipeline on the sample videos and improving event detection, with Lutfullo |
+| Tegina Pardayeva | Web development & labelling | The team website and the labelled events on the sample videos that the rules are tuned against |
+
+Website: https://laziz28-nexvision.static.hf.space

@@ -20,7 +20,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 os.environ.setdefault("TRAFFIC_CACHE", str(Path(__file__).resolve().parent.parent / "cache"))
 
 from evaluate import THETA, alarm_starts, evaluate_part_b  # noqa: E402
-from src.risk import CausalRisk  # noqa: E402
+from src.risk import replay_tracks  # noqa: E402
 from src.tracking import track_video  # noqa: E402
 from src.video import probe  # noqa: E402
 
@@ -28,14 +28,7 @@ from src.video import probe  # noqa: E402
 def replay(video: str) -> list[list[float]]:
     info = probe(video)
     tracks, _ = track_video(info)
-    est = CausalRisk()
-    est.reset({"video_id": Path(video).name, "fps": info.fps, "width": info.width,
-               "height": info.height, "n_frames": info.n_frames})
-    curve = []
-    for (_, t), g in tracks.groupby(["frame", "t"], sort=True):
-        s = est.observe(g[["x1", "y1", "x2", "y2"]].to_numpy(), g["cls"].tolist(), g["tid"].to_numpy(), t)
-        curve.append([round(float(t), 4), round(s, 4)])
-    return curve
+    return replay_tracks(tracks, info, Path(video).name)
 
 
 def main() -> None:

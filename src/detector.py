@@ -26,7 +26,8 @@ class Detector:
         from ultralytics import YOLO
 
         self.cfg = cfg
-        self.device = "cuda:0" if torch.cuda.is_available() else "cpu"
+        # device_count() too: with CUDA_VISIBLE_DEVICES="" is_available() can still say True
+        self.device = "cuda:0" if torch.cuda.is_available() and torch.cuda.device_count() else "cpu"
         self.half = bool(cfg.half) and self.device != "cpu"
         self.class_ids = sorted(int(k) for k in cfg.classes)
         self.model = YOLO(str(resolve(cfg.weights)))

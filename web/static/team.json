@@ -1,0 +1,35 @@
+[
+  {
+    "name": "Lutfullo Akhmedov",
+    "role": "Model deployment & improvements",
+    "did": "Deploying and improving the model: the detection, tracking and event-rule pipeline inside the organizers' harness, kept inside the time budget.",
+    "proud": "",
+    "links": {
+      "GitHub": "https://github.com/alcoder06",
+      "LinkedIn": "",
+      "Portfolio": ""
+    }
+  },
+  {
+    "name": "Lazizbek Raimqulov",
+    "role": "Model deployment & improvements",
+    "did": "Deploying and improving the model with Lutfullo: running the pipeline on the sample videos and improving how events are detected.",
+    "proud": "",
+    "links": {
+      "GitHub": "https://github.com/Lazizbek-web1",
+      "LinkedIn": "",
+      "Portfolio": ""
+    }
+  },
+  {
+    "name": "Tegina Pardayeva",
+    "role": "Web development & labelling",
+    "did": "Built this website and labelled events in the sample videos: the dev set we check and tune the rules against.",
+    "proud": "",
+    "links": {
+      "GitHub": "",
+      "LinkedIn": "",
+      "Portfolio": ""
+    }
+  }
+]
