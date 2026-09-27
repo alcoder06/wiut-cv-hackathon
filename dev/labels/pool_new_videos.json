@@ -1,0 +1,1473 @@
+{
+ "C3896.MP4": {
+  "duration": 340.34,
+  "fps": 29.97002997002997,
+  "width": 3840,
+  "height": 2160,
+  "candidates": [
+   {
+    "label": "congestion",
+    "start": 0.0,
+    "end": 33.0,
+    "current": true,
+    "grid_hits": 28,
+    "rep": [
+     0.0,
+     33.0
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "jaywalking",
+    "start": 0.0,
+    "end": 2.8,
+    "current": true,
+    "grid_hits": 10,
+    "rep": [
+     0.0,
+     2.803
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 0.53,
+    "end": 3.2,
+    "current": true,
+    "grid_hits": 37,
+    "rep": [
+     0.534,
+     3.203
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "stopped_vehicle",
+    "start": 3.67,
+    "end": 48.68,
+    "current": true,
+    "grid_hits": 16,
+    "rep": [
+     3.671,
+     48.683
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "jaywalking",
+    "start": 10.14,
+    "end": 11.48,
+    "current": true,
+    "grid_hits": 7,
+    "rep": [
+     10.143,
+     11.478
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "jaywalking",
+    "start": 13.88,
+    "end": 14.95,
+    "current": true,
+    "grid_hits": 7,
+    "rep": [
+     13.881,
+     14.948
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 14.01,
+    "end": 15.35,
+    "current": true,
+    "grid_hits": 37,
+    "rep": [
+     14.014,
+     15.349
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "jaywalking",
+    "start": 16.02,
+    "end": 17.35,
+    "current": true,
+    "grid_hits": 7,
+    "rep": [
+     16.016,
+     17.351
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 16.42,
+    "end": 17.35,
+    "current": true,
+    "grid_hits": 37,
+    "rep": [
+     16.416,
+     17.351
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 18.95,
+    "end": 19.89,
+    "current": true,
+    "grid_hits": 37,
+    "rep": [
+     18.952,
+     19.887
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "jaywalking",
+    "start": 36.44,
+    "end": 40.44,
+    "current": true,
+    "grid_hits": 10,
+    "rep": [
+     36.436,
+     40.44
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "near_miss",
+    "start": 37.64,
+    "end": 40.31,
+    "current": true,
+    "grid_hits": 1,
+    "rep": [
+     37.638,
+     40.307
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "congestion",
+    "start": 43.0,
+    "end": 110.0,
+    "current": true,
+    "grid_hits": 34,
+    "rep": [
+     43.0,
+     110.0
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 46.58,
+    "end": 47.11,
+    "current": true,
+    "grid_hits": 25,
+    "rep": [
+     46.58,
+     47.114
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "jaywalking",
+    "start": 49.65,
+    "end": 51.65,
+    "current": true,
+    "grid_hits": 10,
+    "rep": [
+     49.65,
+     51.652
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "jaywalking",
+    "start": 64.33,
+    "end": 65.67,
+    "current": true,
+    "grid_hits": 7,
+    "rep": [
+     64.331,
+     65.666
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 68.2,
+    "end": 70.47,
+    "current": false,
+    "grid_hits": 8,
+    "rep": [
+     68.201,
+     69.002
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 20,
+     "rules.failure_to_yield.ped_min_speed": 0.5
+    }
+   },
+   {
+    "label": "jaywalking",
+    "start": 68.6,
+    "end": 70.34,
+    "current": true,
+    "grid_hits": 7,
+    "rep": [
+     68.602,
+     70.337
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 72.07,
+    "end": 73.01,
+    "current": false,
+    "grid_hits": 3,
+    "rep": [
+     72.072,
+     73.006
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 0,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "jaywalking",
+    "start": 77.14,
+    "end": 78.48,
+    "current": true,
+    "grid_hits": 7,
+    "rep": [
+     77.144,
+     78.478
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "red_light",
+    "start": 78.75,
+    "end": 111.04,
+    "current": true,
+    "grid_hits": 1,
+    "rep": [
+     78.745,
+     111.044
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 81.28,
+    "end": 81.81,
+    "current": true,
+    "grid_hits": 25,
+    "rep": [
+     81.281,
+     81.815
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "jaywalking",
+    "start": 81.68,
+    "end": 86.62,
+    "current": true,
+    "grid_hits": 7,
+    "rep": [
+     81.682,
+     86.62
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "jaywalking",
+    "start": 89.02,
+    "end": 152.42,
+    "current": true,
+    "grid_hits": 10,
+    "rep": [
+     89.022,
+     152.419
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 94.09,
+    "end": 97.7,
+    "current": true,
+    "grid_hits": 37,
+    "rep": [
+     94.094,
+     97.698
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 99.3,
+    "end": 100.23,
+    "current": true,
+    "grid_hits": 21,
+    "rep": [
+     99.299,
+     100.233
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 101.3,
+    "end": 103.44,
+    "current": false,
+    "grid_hits": 6,
+    "rep": [
+     101.301,
+     101.835
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 50,
+     "rules.failure_to_yield.ped_min_speed": 0.3
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 102.64,
+    "end": 103.44,
+    "current": false,
+    "grid_hits": 2,
+    "rep": [
+     102.636,
+     103.437
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 2.5,
+     "rules.failure_to_yield.ped_margin_px": 20,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 104.5,
+    "end": 105.17,
+    "current": true,
+    "grid_hits": 19,
+    "rep": [
+     104.504,
+     105.172
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 106.24,
+    "end": 106.91,
+    "current": false,
+    "grid_hits": 12,
+    "rep": [
+     106.239,
+     106.907
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 1.5,
+     "rules.failure_to_yield.ped_margin_px": 20,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 107.97,
+    "end": 108.64,
+    "current": false,
+    "grid_hits": 2,
+    "rep": [
+     107.975,
+     108.642
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 20,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 109.98,
+    "end": 111.71,
+    "current": false,
+    "grid_hits": 8,
+    "rep": [
+     109.977,
+     111.712
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 20,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 109.98,
+    "end": 126.79,
+    "current": false,
+    "grid_hits": 6,
+    "rep": [
+     109.977,
+     126.793
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 50,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "stopped_vehicle",
+    "start": 110.31,
+    "end": 127.03,
+    "current": true,
+    "grid_hits": 28,
+    "rep": [
+     110.311,
+     127.028
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 113.85,
+    "end": 116.25,
+    "current": false,
+    "grid_hits": 1,
+    "rep": [
+     113.847,
+     116.249
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 20,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 117.45,
+    "end": 118.12,
+    "current": false,
+    "grid_hits": 1,
+    "rep": [
+     117.451,
+     118.118
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 20,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "near_miss",
+    "start": 119.72,
+    "end": 121.05,
+    "current": true,
+    "grid_hits": 1,
+    "rep": [
+     119.72,
+     121.054
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 120.52,
+    "end": 121.99,
+    "current": false,
+    "grid_hits": 3,
+    "rep": [
+     120.52,
+     121.989
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 2.5,
+     "rules.failure_to_yield.ped_margin_px": 0,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "congestion",
+    "start": 123.0,
+    "end": 183.0,
+    "current": true,
+    "grid_hits": 28,
+    "rep": [
+     123.0,
+     183.0
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 123.72,
+    "end": 126.79,
+    "current": false,
+    "grid_hits": 7,
+    "rep": [
+     123.724,
+     126.526
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 50,
+     "rules.failure_to_yield.ped_min_speed": 0.2
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 135.34,
+    "end": 137.74,
+    "current": false,
+    "grid_hits": 9,
+    "rep": [
+     135.335,
+     136.937
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 1.5,
+     "rules.failure_to_yield.ped_margin_px": 0,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 156.56,
+    "end": 158.96,
+    "current": true,
+    "grid_hits": 37,
+    "rep": [
+     156.556,
+     158.959
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "jaywalking",
+    "start": 158.69,
+    "end": 224.89,
+    "current": true,
+    "grid_hits": 10,
+    "rep": [
+     158.692,
+     224.891
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 160.43,
+    "end": 165.63,
+    "current": true,
+    "grid_hits": 49,
+    "rep": [
+     160.427,
+     165.632
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 167.1,
+    "end": 172.04,
+    "current": false,
+    "grid_hits": 12,
+    "rep": [
+     167.1,
+     168.301
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 20,
+     "rules.failure_to_yield.ped_min_speed": 0.2
+    }
+   },
+   {
+    "label": "stopped_vehicle",
+    "start": 168.1,
+    "end": 321.22,
+    "current": true,
+    "grid_hits": 43,
+    "rep": [
+     168.102,
+     321.222
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 171.5,
+    "end": 172.04,
+    "current": false,
+    "grid_hits": 4,
+    "rep": [
+     171.505,
+     172.039
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 20,
+     "rules.failure_to_yield.ped_min_speed": 0.2
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 175.11,
+    "end": 176.31,
+    "current": true,
+    "grid_hits": 25,
+    "rep": [
+     175.108,
+     176.309
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 178.44,
+    "end": 180.05,
+    "current": true,
+    "grid_hits": 25,
+    "rep": [
+     178.445,
+     180.047
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 183.78,
+    "end": 199.8,
+    "current": true,
+    "grid_hits": 25,
+    "rep": [
+     183.784,
+     199.8
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 202.74,
+    "end": 203.27,
+    "current": false,
+    "grid_hits": 6,
+    "rep": [
+     202.736,
+     203.27
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 2.5,
+     "rules.failure_to_yield.ped_margin_px": 20,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 207.01,
+    "end": 210.21,
+    "current": false,
+    "grid_hits": 11,
+    "rep": [
+     207.007,
+     210.21
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 50,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "stop_line",
+    "start": 215.68,
+    "end": 218.49,
+    "current": true,
+    "grid_hits": 1,
+    "rep": [
+     215.682,
+     218.485
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 220.62,
+    "end": 221.42,
+    "current": true,
+    "grid_hits": 37,
+    "rep": [
+     220.62,
+     221.421
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "congestion",
+    "start": 223.0,
+    "end": 256.0,
+    "current": true,
+    "grid_hits": 25,
+    "rep": [
+     223.0,
+     256.0
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "jaywalking",
+    "start": 232.5,
+    "end": 234.5,
+    "current": true,
+    "grid_hits": 10,
+    "rep": [
+     232.499,
+     234.501
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "jaywalking",
+    "start": 235.97,
+    "end": 249.05,
+    "current": true,
+    "grid_hits": 10,
+    "rep": [
+     235.969,
+     249.049
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 243.31,
+    "end": 243.98,
+    "current": false,
+    "grid_hits": 12,
+    "rep": [
+     243.31,
+     243.977
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 0,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "jaywalking",
+    "start": 251.18,
+    "end": 262.26,
+    "current": true,
+    "grid_hits": 10,
+    "rep": [
+     251.184,
+     262.262
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 255.06,
+    "end": 255.72,
+    "current": false,
+    "grid_hits": 7,
+    "rep": [
+     255.055,
+     255.722
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 2.5,
+     "rules.failure_to_yield.ped_margin_px": 50,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 261.86,
+    "end": 262.39,
+    "current": false,
+    "grid_hits": 4,
+    "rep": [
+     261.862,
+     262.395
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 50,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "jaywalking",
+    "start": 265.46,
+    "end": 272.94,
+    "current": true,
+    "grid_hits": 10,
+    "rep": [
+     265.465,
+     272.939
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 267.73,
+    "end": 329.93,
+    "current": true,
+    "grid_hits": 37,
+    "rep": [
+     267.734,
+     329.93
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "congestion",
+    "start": 275.0,
+    "end": 329.0,
+    "current": true,
+    "grid_hits": 28,
+    "rep": [
+     275.0,
+     329.0
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "jaywalking",
+    "start": 275.21,
+    "end": 277.34,
+    "current": true,
+    "grid_hits": 10,
+    "rep": [
+     275.208,
+     277.344
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "jaywalking",
+    "start": 287.09,
+    "end": 296.96,
+    "current": true,
+    "grid_hits": 10,
+    "rep": [
+     287.087,
+     296.963
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "jaywalking",
+    "start": 322.72,
+    "end": 323.66,
+    "current": false,
+    "grid_hits": 1,
+    "rep": [
+     322.722,
+     323.657
+    ],
+    "rep_overrides": {
+     "rules.jaywalking.min_len_sec": 0.5,
+     "rules.jaywalking.road_erode_px": 1
+    }
+   },
+   {
+    "label": "stopped_vehicle",
+    "start": 324.79,
+    "end": 338.71,
+    "current": true,
+    "grid_hits": 25,
+    "rep": [
+     324.792,
+     338.707
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "jaywalking",
+    "start": 325.52,
+    "end": 340.21,
+    "current": true,
+    "grid_hits": 10,
+    "rep": [
+     325.525,
+     340.207
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "near_miss",
+    "start": 337.14,
+    "end": 338.17,
+    "current": true,
+    "grid_hits": 1,
+    "rep": [
+     337.137,
+     338.171
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 337.54,
+    "end": 339.54,
+    "current": false,
+    "grid_hits": 4,
+    "rep": [
+     337.537,
+     338.872
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 2.5,
+     "rules.failure_to_yield.ped_margin_px": 20,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   }
+  ]
+ },
+ "C3905.MP4": {
+  "duration": 127.627,
+  "fps": 29.97002997002997,
+  "width": 3840,
+  "height": 2160,
+  "candidates": [
+   {
+    "label": "jaywalking",
+    "start": 0.0,
+    "end": 51.25,
+    "current": true,
+    "grid_hits": 10,
+    "rep": [
+     0.0,
+     51.251
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "stopped_vehicle",
+    "start": 0.47,
+    "end": 12.65,
+    "current": true,
+    "grid_hits": 9,
+    "rep": [
+     0.468,
+     12.647
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "congestion",
+    "start": 8.0,
+    "end": 19.0,
+    "current": false,
+    "grid_hits": 3,
+    "rep": [
+     8.0,
+     19.0
+    ],
+    "rep_overrides": {
+     "rules.congestion.min_vehicles": 3,
+     "rules.congestion.crawl_speed": 0.4,
+     "rules.congestion.min_len_sec": 10.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 8.94,
+    "end": 22.02,
+    "current": true,
+    "grid_hits": 57,
+    "rep": [
+     8.942,
+     22.022
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "near_miss",
+    "start": 17.35,
+    "end": 17.85,
+    "current": true,
+    "grid_hits": 1,
+    "rep": [
+     17.351,
+     17.851
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "congestion",
+    "start": 22.0,
+    "end": 36.0,
+    "current": false,
+    "grid_hits": 6,
+    "rep": [
+     22.0,
+     36.0
+    ],
+    "rep_overrides": {
+     "rules.congestion.min_vehicles": 3,
+     "rules.congestion.crawl_speed": 0.4,
+     "rules.congestion.min_len_sec": 10.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 24.02,
+    "end": 24.96,
+    "current": true,
+    "grid_hits": 37,
+    "rep": [
+     24.024,
+     24.958
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 26.43,
+    "end": 27.09,
+    "current": true,
+    "grid_hits": 37,
+    "rep": [
+     26.426,
+     27.094
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 30.83,
+    "end": 34.43,
+    "current": false,
+    "grid_hits": 1,
+    "rep": [
+     30.831,
+     34.434
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 50,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 32.57,
+    "end": 33.1,
+    "current": false,
+    "grid_hits": 1,
+    "rep": [
+     32.566,
+     33.1
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 2.5,
+     "rules.failure_to_yield.ped_margin_px": 50,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "stopped_vehicle",
+    "start": 35.04,
+    "end": 62.83,
+    "current": true,
+    "grid_hits": 28,
+    "rep": [
+     35.036,
+     62.831
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 36.84,
+    "end": 44.31,
+    "current": true,
+    "grid_hits": 45,
+    "rep": [
+     36.837,
+     44.311
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 48.98,
+    "end": 50.72,
+    "current": false,
+    "grid_hits": 4,
+    "rep": [
+     48.982,
+     50.717
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 50,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 53.52,
+    "end": 55.52,
+    "current": false,
+    "grid_hits": 10,
+    "rep": [
+     53.52,
+     55.522
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 50,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "jaywalking",
+    "start": 53.79,
+    "end": 91.02,
+    "current": true,
+    "grid_hits": 13,
+    "rep": [
+     53.787,
+     91.024
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "near_miss",
+    "start": 57.66,
+    "end": 59.63,
+    "current": true,
+    "grid_hits": 1,
+    "rep": [
+     57.658,
+     59.626
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 58.33,
+    "end": 61.4,
+    "current": true,
+    "grid_hits": 27,
+    "rep": [
+     58.325,
+     61.395
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 62.06,
+    "end": 63.93,
+    "current": false,
+    "grid_hits": 5,
+    "rep": [
+     62.062,
+     62.596
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 2.5,
+     "rules.failure_to_yield.ped_margin_px": 50,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 62.46,
+    "end": 63.93,
+    "current": false,
+    "grid_hits": 1,
+    "rep": [
+     62.462,
+     63.931
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 20,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 65.4,
+    "end": 73.14,
+    "current": false,
+    "grid_hits": 5,
+    "rep": [
+     65.399,
+     73.14
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 50,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "stopped_vehicle",
+    "start": 65.6,
+    "end": 76.04,
+    "current": true,
+    "grid_hits": 16,
+    "rep": [
+     65.6,
+     76.044
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 68.33,
+    "end": 69.4,
+    "current": false,
+    "grid_hits": 3,
+    "rep": [
+     68.335,
+     68.869
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 50,
+     "rules.failure_to_yield.ped_min_speed": 0.3
+    }
+   },
+   {
+    "label": "congestion",
+    "start": 73.0,
+    "end": 118.0,
+    "current": true,
+    "grid_hits": 28,
+    "rep": [
+     73.0,
+     118.0
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "stop_line",
+    "start": 76.88,
+    "end": 94.49,
+    "current": true,
+    "grid_hits": 1,
+    "rep": [
+     76.877,
+     94.494
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 77.14,
+    "end": 78.61,
+    "current": false,
+    "grid_hits": 8,
+    "rep": [
+     77.144,
+     78.478
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 0,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 81.15,
+    "end": 84.22,
+    "current": true,
+    "grid_hits": 37,
+    "rep": [
+     81.148,
+     84.217
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "jaywalking",
+    "start": 97.56,
+    "end": 127.59,
+    "current": true,
+    "grid_hits": 14,
+    "rep": [
+     97.564,
+     127.594
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 99.3,
+    "end": 100.77,
+    "current": true,
+    "grid_hits": 37,
+    "rep": [
+     99.299,
+     100.767
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "stopped_vehicle",
+    "start": 99.43,
+    "end": 111.18,
+    "current": false,
+    "grid_hits": 3,
+    "rep": [
+     99.433,
+     111.178
+    ],
+    "rep_overrides": {
+     "rules.stopped_vehicle.queue_share": 0.7,
+     "rules.stopped_vehicle.neighbour_radius": 3.0,
+     "kinematics.stopped_speed": 0.2
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 101.83,
+    "end": 103.04,
+    "current": true,
+    "grid_hits": 37,
+    "rep": [
+     101.835,
+     103.036
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 104.77,
+    "end": 105.44,
+    "current": false,
+    "grid_hits": 6,
+    "rep": [
+     104.771,
+     105.439
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 0,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 109.04,
+    "end": 110.78,
+    "current": true,
+    "grid_hits": 37,
+    "rep": [
+     109.042,
+     110.777
+    ],
+    "rep_overrides": {}
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 111.84,
+    "end": 113.85,
+    "current": false,
+    "grid_hits": 6,
+    "rep": [
+     111.845,
+     112.779
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 0,
+     "rules.failure_to_yield.ped_min_speed": 0.5
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 112.51,
+    "end": 113.85,
+    "current": false,
+    "grid_hits": 8,
+    "rep": [
+     112.512,
+     113.847
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 2.5,
+     "rules.failure_to_yield.ped_margin_px": 50,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 114.92,
+    "end": 115.58,
+    "current": false,
+    "grid_hits": 8,
+    "rep": [
+     114.915,
+     115.582
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 2.5,
+     "rules.failure_to_yield.ped_margin_px": 50,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 116.65,
+    "end": 119.72,
+    "current": false,
+    "grid_hits": 17,
+    "rep": [
+     116.65,
+     117.451
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 1.5,
+     "rules.failure_to_yield.ped_margin_px": 50,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   },
+   {
+    "label": "failure_to_yield",
+    "start": 123.86,
+    "end": 126.79,
+    "current": false,
+    "grid_hits": 12,
+    "rep": [
+     123.857,
+     126.793
+    ],
+    "rep_overrides": {
+     "rules.failure_to_yield.near_sizes": 4.0,
+     "rules.failure_to_yield.ped_margin_px": 50,
+     "rules.failure_to_yield.ped_min_speed": 0.0
+    }
+   }
+  ]
+ }
+}

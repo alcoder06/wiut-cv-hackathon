@@ -1,0 +1,5883 @@
+[
+ {
+  "id": "0924-01",
+  "video": "0924.mp4",
+  "label": "stopped_vehicle",
+  "verdict": "unsure",
+  "votes": {
+   "labeller 1": "unsure"
+  },
+  "proposed": [
+   0.0,
+   24.4
+  ],
+  "times": [
+   0.0,
+   24.4
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "0924-02",
+  "video": "0924.mp4",
+  "label": "near_miss",
+  "verdict": "unsure",
+  "votes": {
+   "labeller 1": "unsure"
+  },
+  "proposed": [
+   11.87,
+   14.0
+  ],
+  "times": [
+   11.87,
+   14.0
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "0924-03",
+  "video": "0924.mp4",
+  "label": "congestion",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   17.0,
+   38.43
+  ],
+  "times": [
+   17.0,
+   38.43
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "0924-04",
+  "video": "0924.mp4",
+  "label": "near_miss",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   17.2,
+   18.8
+  ],
+  "times": [
+   17.2,
+   18.8
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "0924-05",
+  "video": "0924.mp4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   20.93,
+   24.53
+  ],
+  "times": [
+   20.93,
+   24.53
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "0924-06",
+  "video": "0924.mp4",
+  "label": "near_miss",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   21.87,
+   24.8
+  ],
+  "times": [
+   21.87,
+   24.8
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Turning past each other"
+  ],
+  "notes": []
+ },
+ {
+  "id": "0924-07",
+  "video": "0924.mp4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   28.13,
+   28.8
+  ],
+  "times": [
+   28.13,
+   28.8
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-01",
+  "video": "C3897.MP4",
+  "label": "congestion",
+  "verdict": "unsure",
+  "votes": {
+   "labeller 1": "unsure"
+  },
+  "proposed": [
+   0.0,
+   23.0
+  ],
+  "times": [
+   0.0,
+   23.0
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-02",
+  "video": "C3897.MP4",
+  "label": "jaywalking",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   0.0,
+   16.95
+  ],
+  "times": [
+   0.0,
+   16.95
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "Carried over from the first review page (marked real there on 25 Sep)."
+  ]
+ },
+ {
+  "id": "C3897-03",
+  "video": "C3897.MP4",
+  "label": "stopped_vehicle",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   0.0,
+   17.35
+  ],
+  "times": [
+   0.0,
+   17.35
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-04",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   6.94,
+   8.41
+  ],
+  "times": [
+   6.94,
+   8.41
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-05",
+  "video": "C3897.MP4",
+  "label": "jaywalking",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   22.56,
+   40.17
+  ],
+  "times": [
+   22.56,
+   40.17
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "On the pavement or kerb"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-06",
+  "video": "C3897.MP4",
+  "label": "near_miss",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   24.02,
+   25.76
+  ],
+  "times": [
+   24.02,
+   25.76
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-07",
+  "video": "C3897.MP4",
+  "label": "near_miss",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   33.1,
+   34.53
+  ],
+  "times": [
+   33.1,
+   34.53
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-08",
+  "video": "C3897.MP4",
+  "label": "near_miss",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   37.37,
+   39.34
+  ],
+  "times": [
+   37.37,
+   39.34
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-09",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "unsure",
+  "votes": {
+   "labeller 1": "unsure"
+  },
+  "proposed": [
+   39.24,
+   40.71
+  ],
+  "times": [
+   39.24,
+   40.71
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "i don't think it is true becuase that person was getting to the other side and probably it was not pedestrian to cross at that itme it was red for pedestrians"
+  ]
+ },
+ {
+  "id": "C3897-10",
+  "video": "C3897.MP4",
+  "label": "stopped_vehicle",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   39.24,
+   65.0
+  ],
+  "times": [
+   39.24,
+   65.0
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-11",
+  "video": "C3897.MP4",
+  "label": "jaywalking",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   41.24,
+   88.22
+  ],
+  "times": [
+   41.24,
+   88.22
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "On the pavement or kerb"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-12",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   42.17,
+   43.78
+  ],
+  "times": [
+   42.17,
+   43.78
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-13",
+  "video": "C3897.MP4",
+  "label": "near_miss",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   42.44,
+   47.78
+  ],
+  "times": [
+   42.44,
+   47.78
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Turning past each other"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-14",
+  "video": "C3897.MP4",
+  "label": "near_miss",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   45.65,
+   47.78
+  ],
+  "times": [
+   45.65,
+   47.78
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-15",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   47.78,
+   48.85
+  ],
+  "times": [
+   47.78,
+   48.85
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-16",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   50.45,
+   58.46
+  ],
+  "times": [
+   50.45,
+   58.46
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "the guy is not crossing he is just waiting on zebra path"
+  ]
+ },
+ {
+  "id": "C3897-17",
+  "video": "C3897.MP4",
+  "label": "near_miss",
+  "verdict": "unsure",
+  "votes": {
+   "labeller 1": "unsure"
+  },
+  "proposed": [
+   52.19,
+   53.22
+  ],
+  "times": [
+   52.19,
+   53.22
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-18",
+  "video": "C3897.MP4",
+  "label": "congestion",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   56.0,
+   97.0
+  ],
+  "times": [
+   56.0,
+   97.0
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-19",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   66.73,
+   67.4
+  ],
+  "times": [
+   66.73,
+   67.4
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-20",
+  "video": "C3897.MP4",
+  "label": "stopped_vehicle",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   66.87,
+   83.68
+  ],
+  "times": [
+   66.87,
+   83.68
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-21",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   81.28,
+   87.02
+  ],
+  "times": [
+   81.28,
+   87.02
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": true,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-22",
+  "video": "C3897.MP4",
+  "label": "stopped_vehicle",
+  "verdict": "unsure",
+  "votes": {
+   "labeller 1": "unsure"
+  },
+  "proposed": [
+   91.16,
+   123.59
+  ],
+  "times": [
+   91.16,
+   123.59
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "Carried over from the first review page (marked real there on 25 Sep)."
+  ]
+ },
+ {
+  "id": "C3897-23",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   91.96,
+   93.83
+  ],
+  "times": [
+   91.96,
+   93.83
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "person was waiting on the zebra path not crossing the path"
+  ]
+ },
+ {
+  "id": "C3897-24",
+  "video": "C3897.MP4",
+  "label": "near_miss",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   103.57,
+   105.44
+  ],
+  "times": [
+   103.57,
+   105.44
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Turning past each other"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-25",
+  "video": "C3897.MP4",
+  "label": "jaywalking",
+  "verdict": "unsure",
+  "votes": {
+   "labeller 1": "unsure"
+  },
+  "proposed": [
+   103.84,
+   104.77
+  ],
+  "times": [
+   103.84,
+   104.77
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-26",
+  "video": "C3897.MP4",
+  "label": "near_miss",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   110.11,
+   111.28
+  ],
+  "times": [
+   110.11,
+   111.28
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Turning past each other"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-27",
+  "video": "C3897.MP4",
+  "label": "accident",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   112.91,
+   116.12
+  ],
+  "times": [
+   112.91,
+   116.12
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "No contact"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-28",
+  "video": "C3897.MP4",
+  "label": "jaywalking",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   115.05,
+   117.32
+  ],
+  "times": [
+   115.05,
+   117.32
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-29",
+  "video": "C3897.MP4",
+  "label": "near_miss",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   115.98,
+   119.55
+  ],
+  "times": [
+   115.98,
+   119.55
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Turning past each other"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-30",
+  "video": "C3897.MP4",
+  "label": "near_miss",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   121.32,
+   123.29
+  ],
+  "times": [
+   121.32,
+   123.29
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Turning past each other"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-31",
+  "video": "C3897.MP4",
+  "label": "jaywalking",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   121.59,
+   122.12
+  ],
+  "times": [
+   121.59,
+   122.12
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-32",
+  "video": "C3897.MP4",
+  "label": "solid_line_crossing",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   122.12,
+   129.33
+  ],
+  "times": [
+   122.12,
+   129.33
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-33",
+  "video": "C3897.MP4",
+  "label": "stopped_vehicle",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   124.52,
+   135.87
+  ],
+  "times": [
+   124.52,
+   135.87
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-34",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   124.79,
+   125.33
+  ],
+  "times": [
+   124.79,
+   125.33
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "person was waiting on the zebra path not crossing the path"
+  ]
+ },
+ {
+  "id": "C3897-35",
+  "video": "C3897.MP4",
+  "label": "near_miss",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   124.79,
+   126.66
+  ],
+  "times": [
+   124.79,
+   126.66
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-36",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   126.79,
+   127.33
+  ],
+  "times": [
+   126.79,
+   127.33
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "person was waiting on the zebra path not crossing the path"
+  ]
+ },
+ {
+  "id": "C3897-37",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   129.86,
+   138.0
+  ],
+  "times": [
+   129.86,
+   138.0
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-38",
+  "video": "C3897.MP4",
+  "label": "solid_line_crossing",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   130.53,
+   133.33
+  ],
+  "times": [
+   130.53,
+   133.33
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-39",
+  "video": "C3897.MP4",
+  "label": "congestion",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   134.0,
+   174.0
+  ],
+  "times": [
+   134.0,
+   174.0
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-40",
+  "video": "C3897.MP4",
+  "label": "jaywalking",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   134.4,
+   136.67
+  ],
+  "times": [
+   134.4,
+   136.67
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "On the zebra crossing"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-41",
+  "video": "C3897.MP4",
+  "label": "near_miss",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   135.34,
+   137.04
+  ],
+  "times": [
+   135.34,
+   137.04
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-42",
+  "video": "C3897.MP4",
+  "label": "stopped_vehicle",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   136.94,
+   177.24
+  ],
+  "times": [
+   136.94,
+   177.24
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-43",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   139.61,
+   140.41
+  ],
+  "times": [
+   139.61,
+   140.41
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "person was waiting on the zebra path not crossing the path"
+  ]
+ },
+ {
+  "id": "C3897-44",
+  "video": "C3897.MP4",
+  "label": "jaywalking",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   140.27,
+   142.94
+  ],
+  "times": [
+   140.27,
+   142.94
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Box on the wrong thing"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-45",
+  "video": "C3897.MP4",
+  "label": "jaywalking",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   144.01,
+   209.68
+  ],
+  "times": [
+   144.01,
+   209.68
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-46",
+  "video": "C3897.MP4",
+  "label": "near_miss",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   150.82,
+   151.85
+  ],
+  "times": [
+   150.82,
+   151.85
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Turning past each other"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-47",
+  "video": "C3897.MP4",
+  "label": "wrong_way",
+  "verdict": "unsure",
+  "votes": {
+   "labeller 1": "unsure"
+  },
+  "proposed": [
+   154.82,
+   156.29
+  ],
+  "times": [
+   154.82,
+   156.29
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-48",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   157.49,
+   158.16
+  ],
+  "times": [
+   157.49,
+   158.16
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-49",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   159.49,
+   160.03
+  ],
+  "times": [
+   159.49,
+   160.03
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-50",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   174.04,
+   175.11
+  ],
+  "times": [
+   174.04,
+   175.11
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "person was waiting on the zebra path not crossing the path"
+  ]
+ },
+ {
+  "id": "C3897-51",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   178.58,
+   179.65
+  ],
+  "times": [
+   178.58,
+   179.65
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "person was waiting on the zebra path not crossing the path she was in safe area in the middle"
+  ]
+ },
+ {
+  "id": "C3897-52",
+  "video": "C3897.MP4",
+  "label": "stopped_vehicle",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   180.85,
+   203.54
+  ],
+  "times": [
+   180.85,
+   203.54
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-53",
+  "video": "C3897.MP4",
+  "label": "near_miss",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   181.38,
+   183.08
+  ],
+  "times": [
+   181.38,
+   183.08
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Turning past each other"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-54",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   187.92,
+   189.39
+  ],
+  "times": [
+   187.92,
+   189.39
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Nobody on or near the crossing"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-55",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   191.12,
+   193.26
+  ],
+  "times": [
+   191.12,
+   193.26
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "here the zerba path is not drawn correctly"
+  ]
+ },
+ {
+  "id": "C3897-56",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   194.59,
+   197.53
+  ],
+  "times": [
+   194.59,
+   197.53
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "zebra is not drawn correctly"
+  ]
+ },
+ {
+  "id": "C3897-57",
+  "video": "C3897.MP4",
+  "label": "stopped_vehicle",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   209.54,
+   247.85
+  ],
+  "times": [
+   213.814,
+   227.694
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "Carried over from the first review page: the stop at 213.8-227.7 s was marked real there on 25 Sep. The current rules no longer report it; this wider candidate covers it. Please re-check the times."
+  ]
+ },
+ {
+  "id": "C3897-58",
+  "video": "C3897.MP4",
+  "label": "wrong_way",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   210.34,
+   214.35
+  ],
+  "times": [
+   210.34,
+   214.35
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-59",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   212.48,
+   213.01
+  ],
+  "times": [
+   212.48,
+   213.01
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "Zebra is not drawn correctly"
+  ]
+ },
+ {
+  "id": "C3897-60",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   214.21,
+   216.35
+  ],
+  "times": [
+   214.21,
+   216.35
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-61",
+  "video": "C3897.MP4",
+  "label": "jaywalking",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   217.95,
+   222.49
+  ],
+  "times": [
+   217.95,
+   222.49
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-62",
+  "video": "C3897.MP4",
+  "label": "congestion",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   222.0,
+   247.0
+  ],
+  "times": [
+   222.0,
+   247.0
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-63",
+  "video": "C3897.MP4",
+  "label": "jaywalking",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   225.56,
+   288.56
+  ],
+  "times": [
+   225.56,
+   288.56
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-64",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   236.24,
+   236.9
+  ],
+  "times": [
+   236.24,
+   236.9
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-65",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   239.04,
+   241.31
+  ],
+  "times": [
+   239.04,
+   241.31
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "Zebra is not drawn correctly"
+  ]
+ },
+ {
+  "id": "C3897-66",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   242.38,
+   242.91
+  ],
+  "times": [
+   242.38,
+   242.91
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "Zebra is not drawn correctly"
+  ]
+ },
+ {
+  "id": "C3897-67",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   244.78,
+   246.78
+  ],
+  "times": [
+   244.78,
+   246.78
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "Zebra is not drawn correctly"
+  ]
+ },
+ {
+  "id": "C3897-68",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   248.65,
+   249.45
+  ],
+  "times": [
+   248.65,
+   249.45
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "Zebra is not drawn correctly"
+  ]
+ },
+ {
+  "id": "C3897-69",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   248.65,
+   253.85
+  ],
+  "times": [
+   248.65,
+   253.85
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "Zebra is not drawn correctly"
+  ]
+ },
+ {
+  "id": "C3897-70",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   250.65,
+   251.32
+  ],
+  "times": [
+   250.65,
+   251.32
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "here person is not on the zebra path they are in safe area in the middle"
+  ]
+ },
+ {
+  "id": "C3897-71",
+  "video": "C3897.MP4",
+  "label": "stopped_vehicle",
+  "verdict": "unsure",
+  "votes": {
+   "labeller 1": "unsure"
+  },
+  "proposed": [
+   252.12,
+   316.58
+  ],
+  "times": [
+   252.12,
+   316.58
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-72",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   257.06,
+   257.99
+  ],
+  "times": [
+   257.06,
+   257.99
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "Zebra is not drawn correctly"
+  ]
+ },
+ {
+  "id": "C3897-73",
+  "video": "C3897.MP4",
+  "label": "near_miss",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   257.06,
+   257.56
+  ],
+  "times": [
+   257.06,
+   257.56
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Turning past each other"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-74",
+  "video": "C3897.MP4",
+  "label": "near_miss",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   259.99,
+   261.06
+  ],
+  "times": [
+   259.99,
+   261.06
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Turning past each other"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-75",
+  "video": "C3897.MP4",
+  "label": "congestion",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   270.0,
+   284.0
+  ],
+  "times": [
+   270.0,
+   284.0
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Only some lanes stuck"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-76",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   272.67,
+   273.74
+  ],
+  "times": [
+   272.67,
+   273.74
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "Zebra is not drawn correctly"
+  ]
+ },
+ {
+  "id": "C3897-77",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   279.08,
+   280.15
+  ],
+  "times": [
+   279.08,
+   280.15
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "person is not on the zebra path"
+  ]
+ },
+ {
+  "id": "C3897-78",
+  "video": "C3897.MP4",
+  "label": "congestion",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   290.0,
+   317.82
+  ],
+  "times": [
+   290.0,
+   317.82
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-79",
+  "video": "C3897.MP4",
+  "label": "near_miss",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   290.02,
+   291.76
+  ],
+  "times": [
+   290.02,
+   291.76
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Normal slowing"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-80",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 1": "not_real"
+  },
+  "proposed": [
+   290.16,
+   290.69
+  ],
+  "times": [
+   290.16,
+   290.69
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "Zebra is not drawn correctly"
+  ]
+ },
+ {
+  "id": "C3897-81",
+  "video": "C3897.MP4",
+  "label": "jaywalking",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   290.16,
+   317.25
+  ],
+  "times": [
+   290.16,
+   317.25
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-82",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   306.17,
+   306.71
+  ],
+  "times": [
+   306.17,
+   306.71
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-83",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "unsure",
+  "votes": {
+   "labeller 1": "unsure"
+  },
+  "proposed": [
+   307.91,
+   309.64
+  ],
+  "times": [
+   307.91,
+   309.64
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-84",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "unsure",
+  "votes": {
+   "labeller 1": "unsure"
+  },
+  "proposed": [
+   311.51,
+   312.31
+  ],
+  "times": [
+   311.51,
+   312.31
+  ],
+  "current": true,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-85",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "unsure",
+  "votes": {
+   "labeller 1": "unsure"
+  },
+  "proposed": [
+   313.91,
+   317.25
+  ],
+  "times": [
+   313.91,
+   317.25
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-86",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 1": "real"
+  },
+  "proposed": [
+   316.32,
+   317.25
+  ],
+  "times": [
+   316.32,
+   317.25
+  ],
+  "current": false,
+  "round": 1,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-87",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   4.8,
+   8.68
+  ],
+  "times": [
+   4.8,
+   8.68
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": "C3897-04",
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-88",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   9.08,
+   9.74
+  ],
+  "times": [
+   9.08,
+   9.74
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": [
+   "person had already crossed the raod. So there is no need to yield."
+  ]
+ },
+ {
+  "id": "C3897-89",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   22.82,
+   23.76
+  ],
+  "times": [
+   22.82,
+   23.76
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": [
+   "People are in the different side of the road (cars are going from top to bottom, people are on the left side). So there is no need for yield."
+  ]
+ },
+ {
+  "id": "C3897-90",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   28.7,
+   32.57
+  ],
+  "times": [
+   28.7,
+   32.57
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": [
+   "People are in the different side of the road (cars are going from top to bottom, people are on the left side). So there is no need for yield."
+  ]
+ },
+ {
+  "id": "C3897-91",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   33.9,
+   36.97
+  ],
+  "times": [
+   33.9,
+   36.97
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": [
+   "People are in the different side of the road (cars are going from top to bottom, people are on the left side). So there is no need for yield."
+  ]
+ },
+ {
+  "id": "C3897-92",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 2": "real"
+  },
+  "proposed": [
+   65.4,
+   66.07
+  ],
+  "times": [
+   65.4,
+   66.07
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-93",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   66.73,
+   67.4
+  ],
+  "times": [
+   66.73,
+   67.4
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": "C3897-19",
+  "superseded": false,
+  "reasons": [
+   "Car stopped or crawling"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-94",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 2": "real"
+  },
+  "proposed": [
+   74.74,
+   76.21
+  ],
+  "times": [
+   74.74,
+   76.21
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-95",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 2": "real"
+  },
+  "proposed": [
+   81.28,
+   83.55
+  ],
+  "times": [
+   81.28,
+   83.55
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": "C3897-21",
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-96",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   99.03,
+   100.1
+  ],
+  "times": [
+   99.03,
+   100.1
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": [
+   "people were on the next half of the zebra. So the path was open for that car."
+  ]
+ },
+ {
+  "id": "C3897-97",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   107.57,
+   109.44
+  ],
+  "times": [
+   107.57,
+   109.44
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": [
+   "People are in the different side of the road (cars are going from top to bottom, people are on the left side). So there is no need for yield."
+  ]
+ },
+ {
+  "id": "C3897-98",
+  "video": "C3897.MP4",
+  "label": "jaywalking",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   108.64,
+   110.91
+  ],
+  "times": [
+   108.64,
+   110.91
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "On the zebra crossing"
+  ],
+  "notes": [
+   "He did not brake any rull. He is actualy on zebra"
+  ]
+ },
+ {
+  "id": "C3897-99",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 2": "real"
+  },
+  "proposed": [
+   109.31,
+   109.98
+  ],
+  "times": [
+   109.31,
+   109.98
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-100",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   110.64,
+   111.18
+  ],
+  "times": [
+   110.64,
+   111.18
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": [
+   "People are in the different side of the road (cars are going from top to bottom, people are on the left side). So there is no need for yield."
+  ]
+ },
+ {
+  "id": "C3897-101",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   112.78,
+   114.11
+  ],
+  "times": [
+   112.78,
+   114.11
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": [
+   "People are in the different side of the road (cars are going from top to bottom, people are on the left side). So there is no need for yield."
+  ]
+ },
+ {
+  "id": "C3897-102",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   115.58,
+   116.25
+  ],
+  "times": [
+   115.58,
+   116.25
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": [
+   "People are in the different side of the road (cars are going from top to bottom, people are on the left side). So there is no need for yield."
+  ]
+ },
+ {
+  "id": "C3897-103",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   117.32,
+   117.98
+  ],
+  "times": [
+   117.32,
+   117.98
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": [
+   "People are in the different side of the road (cars are going from top to bottom, people are on the left side). So there is no need for yield."
+  ]
+ },
+ {
+  "id": "C3897-104",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   119.99,
+   120.65
+  ],
+  "times": [
+   119.99,
+   120.65
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": [
+   "No. Green light was on for car. So there was no need for yield. Person is waiting near zebra. So no rules are broken."
+  ]
+ },
+ {
+  "id": "C3897-105",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   129.73,
+   138.27
+  ],
+  "times": [
+   129.73,
+   138.27
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": "C3897-37",
+  "superseded": false,
+  "reasons": [
+   "Nobody on or near the crossing"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-106",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   157.49,
+   162.29
+  ],
+  "times": [
+   157.49,
+   162.29
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": "C3897-48",
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-107",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   157.49,
+   162.29
+  ],
+  "times": [
+   157.49,
+   162.29
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": "C3897-49",
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-108",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   164.83,
+   165.37
+  ],
+  "times": [
+   164.83,
+   165.37
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Nobody on or near the crossing"
+  ],
+  "notes": [
+   "No. Green light was on for car. So there was no need for yield. Person is waiting near zebra. So no rules are broken."
+  ]
+ },
+ {
+  "id": "C3897-109",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   170.84,
+   171.37
+  ],
+  "times": [
+   170.84,
+   171.37
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Wrong event type"
+  ],
+  "notes": [
+   "No. Green light was on for car. So there was no need for yield. Person is waiting near zebra. So no rules are broken."
+  ]
+ },
+ {
+  "id": "C3897-110",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   176.18,
+   176.98
+  ],
+  "times": [
+   176.18,
+   176.98
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Wrong event type"
+  ],
+  "notes": [
+   "No. Green light was on for car. So there was no need for yield. Person is waiting near zebra. So no rules are broken."
+  ]
+ },
+ {
+  "id": "C3897-111",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   180.05,
+   181.11
+  ],
+  "times": [
+   180.05,
+   181.11
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Wrong event type"
+  ],
+  "notes": [
+   "car 458 failure to yield. but car 460 was on different direction."
+  ]
+ },
+ {
+  "id": "C3897-112",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   204.2,
+   204.74
+  ],
+  "times": [
+   204.2,
+   204.74
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Wrong event type"
+  ],
+  "notes": [
+   "No. Green light was on for car. So there was no need for yield. Person is waiting near zebra. So no rules are broken."
+  ]
+ },
+ {
+  "id": "C3897-113",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 2": "real"
+  },
+  "proposed": [
+   206.47,
+   208.61
+  ],
+  "times": [
+   206.47,
+   208.61
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-114",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "unsure",
+  "votes": {
+   "labeller 2": "unsure"
+  },
+  "proposed": [
+   207.94,
+   208.61
+  ],
+  "times": [
+   207.94,
+   208.61
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "the car was not even marked"
+  ]
+ },
+ {
+  "id": "C3897-115",
+  "video": "C3897.MP4",
+  "label": "jaywalking",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   210.74,
+   212.34
+  ],
+  "times": [
+   210.74,
+   212.34
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "On the zebra crossing"
+  ],
+  "notes": [
+   "He did not brake any rull. He is actualy on zebra"
+  ]
+ },
+ {
+  "id": "C3897-116",
+  "video": "C3897.MP4",
+  "label": "jaywalking",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   215.01,
+   216.22
+  ],
+  "times": [
+   215.01,
+   216.22
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "On the zebra crossing"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-117",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   215.55,
+   216.35
+  ],
+  "times": [
+   215.55,
+   216.35
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": "C3897-60",
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-118",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "unsure",
+  "votes": {
+   "labeller 2": "unsure"
+  },
+  "proposed": [
+   222.35,
+   224.36
+  ],
+  "times": [
+   222.35,
+   224.36
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-119",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   236.1,
+   237.44
+  ],
+  "times": [
+   236.1,
+   237.44
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": "C3897-64",
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-120",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   253.85,
+   255.72
+  ],
+  "times": [
+   253.85,
+   255.72
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Wrong event type"
+  ],
+  "notes": [
+   "No. Green light was on for car. So there was no need for yield. Person is waiting near zebra. So no rules are broken."
+  ]
+ },
+ {
+  "id": "C3897-121",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "unsure",
+  "votes": {
+   "labeller 2": "unsure"
+  },
+  "proposed": [
+   261.33,
+   263.2
+  ],
+  "times": [
+   261.33,
+   263.2
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "the car was not even marked"
+  ]
+ },
+ {
+  "id": "C3897-122",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   264.26,
+   266.27
+  ],
+  "times": [
+   264.26,
+   266.27
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Wrong event type"
+  ],
+  "notes": [
+   "No. Green light was on for car. So there was no need for yield. Person is waiting near zebra. So no rules are broken."
+  ]
+ },
+ {
+  "id": "C3897-123",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   267.47,
+   268.94
+  ],
+  "times": [
+   267.47,
+   268.94
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Wrong event type"
+  ],
+  "notes": [
+   "No. Green light was on for car. So there was no need for yield. Person is waiting near zebra. So no rules are broken."
+  ]
+ },
+ {
+  "id": "C3897-124",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   286.02,
+   286.55
+  ],
+  "times": [
+   286.02,
+   286.55
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Wrong event type"
+  ],
+  "notes": [
+   "No. Green light was still on for car (even if it was the last seconds). So there was no need for yield. Person is waiting near zebra. So no rules are broken."
+  ]
+ },
+ {
+  "id": "C3897-125",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 2": "real"
+  },
+  "proposed": [
+   298.56,
+   299.1
+  ],
+  "times": [
+   298.56,
+   299.1
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3897-126",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   306.04,
+   310.04
+  ],
+  "times": [
+   306.04,
+   310.04
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": "C3897-82",
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3897-127",
+  "video": "C3897.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   313.91,
+   317.25
+  ],
+  "times": [
+   313.91,
+   317.25
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": "C3897-86",
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": []
+ },
+ {
+  "id": "0924-08",
+  "video": "0924.mp4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   6.93,
+   8.8
+  ],
+  "times": [
+   6.93,
+   8.8
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Nobody on or near the crossing"
+  ],
+  "notes": [
+   "No. Green light was on for car. So there was no need for yield. Person is waiting near zebra. So no rules are broken."
+  ]
+ },
+ {
+  "id": "0924-09",
+  "video": "0924.mp4",
+  "label": "jaywalking",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   11.6,
+   14.67
+  ],
+  "times": [
+   11.6,
+   14.67
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "On the zebra crossing"
+  ],
+  "notes": [
+   "they are actualy on zebra"
+  ]
+ },
+ {
+  "id": "0924-10",
+  "video": "0924.mp4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   11.87,
+   12.53
+  ],
+  "times": [
+   11.87,
+   12.53
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Nobody on or near the crossing"
+  ],
+  "notes": [
+   "No. Green light was on for car. So there was no need for yield. Person is waiting near zebra. So no rules are broken."
+  ]
+ },
+ {
+  "id": "0924-11",
+  "video": "0924.mp4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   14.0,
+   15.07
+  ],
+  "times": [
+   14.0,
+   15.07
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Nobody on or near the crossing"
+  ],
+  "notes": [
+   "No. Green light was on for car. So there was no need for yield. Person is waiting near zebra. So no rules are broken."
+  ]
+ },
+ {
+  "id": "0924-12",
+  "video": "0924.mp4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   20.0,
+   21.2
+  ],
+  "times": [
+   20.0,
+   21.2
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": "0924-05",
+  "superseded": false,
+  "reasons": [
+   "Box on the wrong thing"
+  ],
+  "notes": []
+ },
+ {
+  "id": "0924-13",
+  "video": "0924.mp4",
+  "label": "jaywalking",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   25.33,
+   26.0
+  ],
+  "times": [
+   25.33,
+   26.0
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "On the zebra crossing"
+  ],
+  "notes": [
+   "He did not brake any rull. He is actualy on zebra"
+  ]
+ },
+ {
+  "id": "0924-14",
+  "video": "0924.mp4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   28.13,
+   28.8
+  ],
+  "times": [
+   28.13,
+   28.8
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": "0924-07",
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "there is no marked car"
+  ]
+ },
+ {
+  "id": "C3896-01",
+  "video": "C3896.MP4",
+  "label": "congestion",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   0.0,
+   33.0
+  ],
+  "times": [
+   0.0,
+   33.0
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-02",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   0.0,
+   2.8
+  ],
+  "times": [
+   0.0,
+   2.8
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-03",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   0.53,
+   3.2
+  ],
+  "times": [
+   0.53,
+   3.2
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-04",
+  "video": "C3896.MP4",
+  "label": "stopped_vehicle",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   3.67,
+   48.68
+  ],
+  "times": [
+   3.67,
+   48.68
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-05",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   10.14,
+   11.48
+  ],
+  "times": [
+   10.14,
+   11.48
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-06",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   13.88,
+   14.95
+  ],
+  "times": [
+   13.88,
+   14.95
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-07",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   14.01,
+   15.35
+  ],
+  "times": [
+   14.01,
+   15.35
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-08",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   16.02,
+   17.35
+  ],
+  "times": [
+   16.02,
+   17.35
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-09",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   16.42,
+   17.35
+  ],
+  "times": [
+   16.42,
+   17.35
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-10",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   18.95,
+   19.89
+  ],
+  "times": [
+   18.95,
+   19.89
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-11",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   36.44,
+   40.44
+  ],
+  "times": [
+   36.44,
+   40.44
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-12",
+  "video": "C3896.MP4",
+  "label": "near_miss",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   37.64,
+   40.31
+  ],
+  "times": [
+   37.64,
+   40.31
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-13",
+  "video": "C3896.MP4",
+  "label": "congestion",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   43.0,
+   110.0
+  ],
+  "times": [
+   43.0,
+   110.0
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-14",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   46.58,
+   47.11
+  ],
+  "times": [
+   46.58,
+   47.11
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-15",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   49.65,
+   51.65
+  ],
+  "times": [
+   49.65,
+   51.65
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-16",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   64.33,
+   65.67
+  ],
+  "times": [
+   64.33,
+   65.67
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-17",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   68.2,
+   70.47
+  ],
+  "times": [
+   68.2,
+   70.47
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-18",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   68.6,
+   70.34
+  ],
+  "times": [
+   68.6,
+   70.34
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-19",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   72.07,
+   73.01
+  ],
+  "times": [
+   72.07,
+   73.01
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-20",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   77.14,
+   78.48
+  ],
+  "times": [
+   77.14,
+   78.48
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-21",
+  "video": "C3896.MP4",
+  "label": "red_light",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   78.75,
+   111.04
+  ],
+  "times": [
+   78.75,
+   111.04
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-22",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   81.28,
+   81.81
+  ],
+  "times": [
+   81.28,
+   81.81
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-23",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   81.68,
+   86.62
+  ],
+  "times": [
+   81.68,
+   86.62
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-24",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   89.02,
+   152.42
+  ],
+  "times": [
+   89.02,
+   152.42
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-25",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   94.09,
+   97.7
+  ],
+  "times": [
+   94.09,
+   97.7
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-26",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   99.3,
+   100.23
+  ],
+  "times": [
+   99.3,
+   100.23
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-27",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   101.3,
+   103.44
+  ],
+  "times": [
+   101.3,
+   103.44
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-28",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   102.64,
+   103.44
+  ],
+  "times": [
+   102.64,
+   103.44
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-29",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   104.5,
+   105.17
+  ],
+  "times": [
+   104.5,
+   105.17
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-30",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   106.24,
+   106.91
+  ],
+  "times": [
+   106.24,
+   106.91
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-31",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   107.97,
+   108.64
+  ],
+  "times": [
+   107.97,
+   108.64
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-32",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   109.98,
+   111.71
+  ],
+  "times": [
+   109.98,
+   111.71
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-33",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   109.98,
+   126.79
+  ],
+  "times": [
+   109.98,
+   126.79
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-34",
+  "video": "C3896.MP4",
+  "label": "stopped_vehicle",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   110.31,
+   127.03
+  ],
+  "times": [
+   110.31,
+   127.03
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-35",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   113.85,
+   116.25
+  ],
+  "times": [
+   113.85,
+   116.25
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-36",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   117.45,
+   118.12
+  ],
+  "times": [
+   117.45,
+   118.12
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-37",
+  "video": "C3896.MP4",
+  "label": "near_miss",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   119.72,
+   121.05
+  ],
+  "times": [
+   119.72,
+   121.05
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-38",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   120.52,
+   121.99
+  ],
+  "times": [
+   120.52,
+   121.99
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-39",
+  "video": "C3896.MP4",
+  "label": "congestion",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   123.0,
+   183.0
+  ],
+  "times": [
+   123.0,
+   183.0
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-40",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   123.72,
+   126.79
+  ],
+  "times": [
+   123.72,
+   126.79
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-41",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   135.34,
+   137.74
+  ],
+  "times": [
+   135.34,
+   137.74
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-42",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   156.56,
+   158.96
+  ],
+  "times": [
+   156.56,
+   158.96
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-43",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   158.69,
+   224.89
+  ],
+  "times": [
+   158.69,
+   224.89
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-44",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   160.43,
+   165.63
+  ],
+  "times": [
+   160.43,
+   165.63
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-45",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   167.1,
+   172.04
+  ],
+  "times": [
+   167.1,
+   172.04
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-46",
+  "video": "C3896.MP4",
+  "label": "stopped_vehicle",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   168.1,
+   321.22
+  ],
+  "times": [
+   168.1,
+   321.22
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-47",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   171.5,
+   172.04
+  ],
+  "times": [
+   171.5,
+   172.04
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-48",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   175.11,
+   176.31
+  ],
+  "times": [
+   175.11,
+   176.31
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-49",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   178.44,
+   180.05
+  ],
+  "times": [
+   178.44,
+   180.05
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-50",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   183.78,
+   199.8
+  ],
+  "times": [
+   183.78,
+   199.8
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-51",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   202.74,
+   203.27
+  ],
+  "times": [
+   202.74,
+   203.27
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-52",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   207.01,
+   210.21
+  ],
+  "times": [
+   207.01,
+   210.21
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-53",
+  "video": "C3896.MP4",
+  "label": "stop_line",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   215.68,
+   218.49
+  ],
+  "times": [
+   215.68,
+   218.49
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-54",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   220.62,
+   221.42
+  ],
+  "times": [
+   220.62,
+   221.42
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-55",
+  "video": "C3896.MP4",
+  "label": "congestion",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   223.0,
+   256.0
+  ],
+  "times": [
+   223.0,
+   256.0
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-56",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   232.5,
+   234.5
+  ],
+  "times": [
+   232.5,
+   234.5
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-57",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   235.97,
+   249.05
+  ],
+  "times": [
+   235.97,
+   249.05
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-58",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   243.31,
+   243.98
+  ],
+  "times": [
+   243.31,
+   243.98
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-59",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   251.18,
+   262.26
+  ],
+  "times": [
+   251.18,
+   262.26
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-60",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   255.06,
+   255.72
+  ],
+  "times": [
+   255.06,
+   255.72
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-61",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   261.86,
+   262.39
+  ],
+  "times": [
+   261.86,
+   262.39
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-62",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   265.46,
+   272.94
+  ],
+  "times": [
+   265.46,
+   272.94
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-63",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   267.73,
+   329.93
+  ],
+  "times": [
+   267.73,
+   329.93
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-64",
+  "video": "C3896.MP4",
+  "label": "congestion",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   275.0,
+   329.0
+  ],
+  "times": [
+   275.0,
+   329.0
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-65",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   275.21,
+   277.34
+  ],
+  "times": [
+   275.21,
+   277.34
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-66",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   287.09,
+   296.96
+  ],
+  "times": [
+   287.09,
+   296.96
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-67",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   322.72,
+   323.66
+  ],
+  "times": [
+   322.72,
+   323.66
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-68",
+  "video": "C3896.MP4",
+  "label": "stopped_vehicle",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   324.79,
+   338.71
+  ],
+  "times": [
+   324.79,
+   338.71
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-69",
+  "video": "C3896.MP4",
+  "label": "jaywalking",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   325.52,
+   340.21
+  ],
+  "times": [
+   325.52,
+   340.21
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-70",
+  "video": "C3896.MP4",
+  "label": "near_miss",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   337.14,
+   338.17
+  ],
+  "times": [
+   337.14,
+   338.17
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3896-71",
+  "video": "C3896.MP4",
+  "label": "failure_to_yield",
+  "verdict": "todo",
+  "votes": {},
+  "proposed": [
+   337.54,
+   339.54
+  ],
+  "times": [
+   337.54,
+   339.54
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3905-01",
+  "video": "C3905.MP4",
+  "label": "jaywalking",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   0.0,
+   51.25
+  ],
+  "times": [
+   0.0,
+   51.25
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "only person 13 did it not others"
+  ]
+ },
+ {
+  "id": "C3905-02",
+  "video": "C3905.MP4",
+  "label": "stopped_vehicle",
+  "verdict": "real",
+  "votes": {
+   "labeller 2": "real"
+  },
+  "proposed": [
+   0.47,
+   12.65
+  ],
+  "times": [
+   0.47,
+   12.65
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "actualy he stoped on zebra"
+  ]
+ },
+ {
+  "id": "C3905-03",
+  "video": "C3905.MP4",
+  "label": "congestion",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   8.0,
+   19.0
+  ],
+  "times": [
+   8.0,
+   19.0
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Normal red-light queue"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3905-04",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 2": "real"
+  },
+  "proposed": [
+   8.94,
+   22.02
+  ],
+  "times": [
+   8.94,
+   22.02
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3905-05",
+  "video": "C3905.MP4",
+  "label": "near_miss",
+  "verdict": "unsure",
+  "votes": {
+   "labeller 2": "unsure"
+  },
+  "proposed": [
+   17.35,
+   17.85
+  ],
+  "times": [
+   17.35,
+   17.85
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3905-06",
+  "video": "C3905.MP4",
+  "label": "congestion",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   22.0,
+   36.0
+  ],
+  "times": [
+   22.0,
+   36.0
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Clears at green"
+  ],
+  "notes": [
+   "camera was slightly rotated so the areas that we marked is not perfectly fitting to real video."
+  ]
+ },
+ {
+  "id": "C3905-07",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 2": "real"
+  },
+  "proposed": [
+   24.02,
+   24.96
+  ],
+  "times": [
+   24.02,
+   24.96
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3905-08",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 2": "real"
+  },
+  "proposed": [
+   26.43,
+   27.09
+  ],
+  "times": [
+   26.43,
+   27.09
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3905-09",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   30.83,
+   34.43
+  ],
+  "times": [
+   30.83,
+   34.43
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Wrong event type"
+  ],
+  "notes": [
+   "No. Green light was on for car. So there was no need for yield. Person is waiting near zebra. So no rules are broken."
+  ]
+ },
+ {
+  "id": "C3905-10",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   32.57,
+   33.1
+  ],
+  "times": [
+   32.57,
+   33.1
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Wrong event type"
+  ],
+  "notes": [
+   "No. Green light was on for car. So the Person was breaking the rull."
+  ]
+ },
+ {
+  "id": "C3905-11",
+  "video": "C3905.MP4",
+  "label": "stopped_vehicle",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   35.04,
+   62.83
+  ],
+  "times": [
+   35.04,
+   62.83
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Bus at its stop"
+  ],
+  "notes": [
+   "bus stoped on bus stop area"
+  ]
+ },
+ {
+  "id": "C3905-12",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   36.84,
+   44.31
+  ],
+  "times": [
+   36.84,
+   44.31
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "bicyicle must be seen as pedestrian."
+  ]
+ },
+ {
+  "id": "C3905-13",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   48.98,
+   50.72
+  ],
+  "times": [
+   48.98,
+   50.72
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "People are in the different side of the road (cars are going from top to bottom, people are on the left side). So there is no need for yield."
+  ]
+ },
+ {
+  "id": "C3905-14",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   53.52,
+   55.52
+  ],
+  "times": [
+   53.52,
+   55.52
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3905-15",
+  "video": "C3905.MP4",
+  "label": "jaywalking",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   53.79,
+   91.02
+  ],
+  "times": [
+   53.79,
+   91.02
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "On the zebra crossing"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3905-16",
+  "video": "C3905.MP4",
+  "label": "near_miss",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   57.66,
+   59.63
+  ],
+  "times": [
+   57.66,
+   59.63
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Normal slowing"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3905-17",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   58.33,
+   61.4
+  ],
+  "times": [
+   58.33,
+   61.4
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Car stopped or crawling"
+  ],
+  "notes": [
+   "acctualy Car 239 stoped"
+  ]
+ },
+ {
+  "id": "C3905-18",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   62.06,
+   63.93
+  ],
+  "times": [
+   62.06,
+   63.93
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": [
+   "No. Green light was on for car. So there was no need for yield. Person is waiting near zebra. So no rules are broken."
+  ]
+ },
+ {
+  "id": "C3905-19",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   62.46,
+   63.93
+  ],
+  "times": [
+   62.46,
+   63.93
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "No. Green light was on for car. So there was no need for yield. Person is waiting near zebra. So no rules are broken."
+  ]
+ },
+ {
+  "id": "C3905-20",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   65.4,
+   73.14
+  ],
+  "times": [
+   65.4,
+   73.14
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "No. Green light was on for car. So there was no need for yield. Person is waiting near zebra. So no rules are broken."
+  ]
+ },
+ {
+  "id": "C3905-21",
+  "video": "C3905.MP4",
+  "label": "stopped_vehicle",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   65.6,
+   76.04
+  ],
+  "times": [
+   65.6,
+   76.04
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "it is trying to do U turn. So it is waiting for other cars to pass."
+  ]
+ },
+ {
+  "id": "C3905-22",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   68.33,
+   69.4
+  ],
+  "times": [
+   68.33,
+   69.4
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": [
+   "People are in the different side of the road (cars are going from top to bottom, people are on the left side). So there is no need for yield."
+  ]
+ },
+ {
+  "id": "C3905-23",
+  "video": "C3905.MP4",
+  "label": "congestion",
+  "verdict": "real",
+  "votes": {
+   "labeller 2": "real"
+  },
+  "proposed": [
+   73.0,
+   118.0
+  ],
+  "times": [
+   73.0,
+   118.0
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3905-24",
+  "video": "C3905.MP4",
+  "label": "stop_line",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   76.88,
+   94.49
+  ],
+  "times": [
+   76.88,
+   94.49
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "it is just"
+  ]
+ },
+ {
+  "id": "C3905-25",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   77.14,
+   78.61
+  ],
+  "times": [
+   77.14,
+   78.61
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "No. Green light was on for car. So there was no need for yield. Person is waiting near zebra. So no rules are broken."
+  ]
+ },
+ {
+  "id": "C3905-26",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "real",
+  "votes": {
+   "labeller 2": "real"
+  },
+  "proposed": [
+   81.15,
+   84.22
+  ],
+  "times": [
+   81.15,
+   84.22
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": []
+ },
+ {
+  "id": "C3905-27",
+  "video": "C3905.MP4",
+  "label": "jaywalking",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   97.56,
+   127.59
+  ],
+  "times": [
+   97.56,
+   127.59
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "On the zebra crossing"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3905-28",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   99.3,
+   100.77
+  ],
+  "times": [
+   99.3,
+   100.77
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3905-29",
+  "video": "C3905.MP4",
+  "label": "stopped_vehicle",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   99.43,
+   111.18
+  ],
+  "times": [
+   99.43,
+   111.18
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "they were actualy waiting for people on zebra"
+  ]
+ },
+ {
+  "id": "C3905-30",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   101.83,
+   103.04
+  ],
+  "times": [
+   101.83,
+   103.04
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Box on the wrong thing"
+  ],
+  "notes": [
+   "Yes car failed to yield but not because of that person."
+  ]
+ },
+ {
+  "id": "C3905-31",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   104.77,
+   105.44
+  ],
+  "times": [
+   104.77,
+   105.44
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3905-32",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   109.04,
+   110.78
+  ],
+  "times": [
+   109.04,
+   110.78
+  ],
+  "current": true,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3905-33",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   111.84,
+   113.85
+  ],
+  "times": [
+   111.84,
+   113.85
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3905-34",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   112.51,
+   113.85
+  ],
+  "times": [
+   112.51,
+   113.85
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3905-35",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   114.92,
+   115.58
+  ],
+  "times": [
+   114.92,
+   115.58
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [
+   "Person far from the car's path"
+  ],
+  "notes": []
+ },
+ {
+  "id": "C3905-36",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   116.65,
+   119.72
+  ],
+  "times": [
+   116.65,
+   119.72
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "Green light is on for cars"
+  ]
+ },
+ {
+  "id": "C3905-37",
+  "video": "C3905.MP4",
+  "label": "failure_to_yield",
+  "verdict": "not_real",
+  "votes": {
+   "labeller 2": "not_real"
+  },
+  "proposed": [
+   123.86,
+   126.79
+  ],
+  "times": [
+   123.86,
+   126.79
+  ],
+  "current": false,
+  "round": 2,
+  "retime_of": null,
+  "superseded": false,
+  "reasons": [],
+  "notes": [
+   "Green light is on for cars"
+  ]
+ }
+]
