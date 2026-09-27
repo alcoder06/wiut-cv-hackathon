@@ -119,7 +119,12 @@ risk:
   horizon_sec: 5.0
   ttc_mid_sec: 1.5        # TTC giving risk 0.5
   ttc_scale_sec: 0.4      # logistic width around the midpoint
-  min_closing: 1.0        # sizes/s: slower approaches (queues, turning past people) are not threats
+  min_closing: 2.5        # sizes/s: slower approaches are not threats. Traffic bunching up at
+                          # the lights closes at 1.1-1.8 (30 false alarms on the 4 samples at
+                          # 1.0, 0 at 2.5); the TU-DAT crashes close at 3.3-3.6 and still warn
+  crossing_cos: 0.5       # two movers whose headings differ by more than ~60 deg are crossing ...
+  min_closing_crossing: 1.0  # ... and keep a low floor: slow side impacts (tests/test_risk.py) must
+                             # still warn, and none of the 30 sample false alarms was such a pair
   persist_samples: 3      # consecutive samples a pair must stay threatening
   radius_factor: 0.15     # contact radius when one party is stopped (two movers use
                           # rules.collision.radius_factor): brushing past a queue is no threat

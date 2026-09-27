@@ -170,7 +170,12 @@ class CausalRisk:
         # closing speed in box sizes per second: how fast the gap shrinks
         dist = np.linalg.norm(p, axis=-1) + 1e-9
         closing = -(p * v).sum(-1) / dist / mean_size
-        valid = (closing >= r.min_closing) & (vehicle[:, None] | vehicle[None, :])
+        # Traffic bunching up in a lane, or arriving at a stopped queue, closes slowly and
+        # constantly; two movers crossing each other's path at a wide angle rarely close at
+        # all unless one is about to hit the other, so they get a lower floor (side impacts)
+        crossing = both_moving & (np.abs(cos) < r.crossing_cos)
+        floor = np.where(crossing, r.min_closing_crossing, r.min_closing)
+        valid = (closing >= floor) & (vehicle[:, None] | vehicle[None, :])
         threat = np.triu(valid & (ttc < r.ttc_mid_sec + 2 * r.ttc_scale_sec), 1)
 
         # persistence: a pair must stay threatening for consecutive samples
