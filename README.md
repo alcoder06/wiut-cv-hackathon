@@ -67,7 +67,7 @@ Part B (causal): own YOLO + ByteTrack at 5 fps ──► pairwise time-to-collis
 | Road-user detection | learned (COCO-pretrained YOLO11s, not fine-tuned) | `src/detector.py` |
 | Tracking | algorithmic (ByteTrack) | `src/tracking.py` |
 | Carriageway + lane directions | learned from trajectories (statistics, no training) | `src/scene.py` |
-| All 12 enabled event classes | rules on trajectories + scene | `src/events/*.py` |
+| All 10 enabled event classes | rules on trajectories + scene | `src/events/*.py` |
 | Signal colour | rule (lit red/green share in the lamp ROI, majority vote, per-approach timing offset) | `src/events/signal.py` |
 | Accident risk | rule (time-to-collision + braking, logistic) | `src/risk.py` |
 
@@ -88,7 +88,17 @@ earlier version capped total wall time, which on a loaded machine froze the risk
 rest of the video, because the harness's own decoding kept it behind.) Each rule runs in its own `try` so one failure can't empty a video.
 
 `road_obstacle` and `fire_smoke` are disabled: predicting a class that never occurs adds a
-zero to the macro-F1, and we have no reliable detector for them.
+zero to the macro-F1, and we have no reliable detector for them. `wrong_way` and `stop_line` are
+off for the same reason: on the labelled samples each fired once and was judged not real, with no
+true event to show the rule works.
+
+**Part B false alarms.** A pair only counts as a threat while the gap between them shrinks fast
+enough. Traffic bunching up at the lights (a car catching up with the one ahead, or pulling up
+behind a stopped queue) closes at 1.1-1.8 box sizes/s, and at a 1.0 floor that was nearly every
+false alarm: 30 on the four official samples, replayed. Same-direction and stopped pairs now need
+2.5 (0 false alarms); the crash in a public clip that Part B can see closes at 3.6 and still warns.
+Two movers crossing at a wide angle keep the 1.0 floor, so slow side impacts still warn
+(`tests/test_risk.py`).
 
 ## Models and datasets
 
@@ -106,8 +116,8 @@ No external training data is used.
 Seeds are fixed in `configs/pipeline.yaml` (`seed`) and applied by `src/config.seed_everything`
 (Python, NumPy, PyTorch; cuDNN deterministic, benchmark off). Frame sampling is by fixed
 stride. Part B runs detection in a worker thread with a fixed one-sample lag, so its curve
-does not depend on timing. Checked: two full harness runs on `0924.mp4` gave identical events
-and an identical risk curve (1,153 samples, max difference 0). Remaining non-determinism: GPU
+does not depend on timing. Checked: two full harness runs on `C3905.MP4` (4K, 127.6 s) gave
+identical events and an identical risk curve (3,825 samples, max difference 0). Remaining non-determinism: GPU
 floating-point differences across hardware can move a box by a fraction of a pixel.
 
 ## Runtime
@@ -120,9 +130,13 @@ Measured with the official harness on an RTX 3050 laptop GPU, plugged in (budget
 
 | Video | CPU threads | Part A | Part B | Total | x video length |
 |---|---|---|---|---|---|
-| C3897, 4K, 317.8 s | 8 (like the evaluation machine) | 197 s | 263 s | 460 s | **1.45x** |
-| C3897, 4K, 317.8 s | 16 | 175 s | 223 s | 398 s | 1.25x |
-| 0924, 1080p, 38.4 s | 16 | 6 s | 5 s | 11 s | 0.30x |
+| C3896, 4K, 340.3 s | 16 | 157 s | 230 s | 387 s | 1.14x |
+| C3897, 4K, 317.8 s | 16 | 171 s | 254 s | 425 s | 1.34x |
+| C3902, 4K, 317.8 s | 16 | 221 s | 230 s | 451 s | 1.42x |
+| C3905, 4K, 127.6 s (dusk) | 16 | 58 s | 92 s | 150 s | 1.18x |
+| C3897, 4K, 317.8 s (earlier build) | 8 (like the evaluation machine) | 197 s | 263 s | 460 s | **1.45x** |
+
+The four official samples are from the final `predictions_samples.json` run.
 
 About half of Part B is the harness's own 4K decoding (0.8x on 8 threads), which no solution
 avoids. Not yet measured on a T4.
@@ -142,6 +156,12 @@ python scripts/tune.py --gt dev/labels.json --videos <dir> --apply   # writes co
 A change is kept only if it beats the current setting by 0.02 F1 (one short video over-fits
 easily). `configs/tuned.yaml` is loaded on top of `configs/pipeline.yaml`; delete it to undo.
 
+The key covers the official samples that are fully reviewed: C3897 (38 events) and C3905 (6).
+Round 2 (after the team redrew the crossings) moved Score A on it from 0.502 to 0.576:
+jaywalking 0.105 -> 0.528, failure_to_yield 0.367 -> 0.423, near_miss 0.571 -> 0.615. Its
+congestion result (4 labels, far from round 1's optimum) was left out. Turning `stop_line` off
+takes it to 0.672. These are scores on the data we tuned on, so they overstate the hidden set.
+
 ## Known limitations
 
 - **Real crashes are untested on this camera.** None of the sample videos contains one. On a
@@ -154,11 +174,11 @@ easily). `configs/tuned.yaml` is loaded on top of `configs/pipeline.yaml`; delet
 - **The traffic light is read indirectly.** The boulevard's own lamps are side-on to the
   camera; we read a lamp on the same 75 s cycle and correct for its measured 4.5 s / 0.6 s
   offset. A retimed signal plan would need re-measuring.
-- **Labels are small.** Rules were tuned on ~40 real events judged by the team on the
-  samples, then checked by eye on two more videos (one at dusk). Expect lower scores on
-  the hidden set than on our dev key.
-- `road_obstacle`, `fire_smoke`, `wrong_way`, `illegal_turn` and `illegal_u_turn` are not
-  emitted (no reliable rule, or no zones for them).
+- **Labels are small.** Rules were tuned on 44 real events in two official samples (C3897,
+  and C3905 at dusk), judged by the team. C3896 was still under review at the deadline and
+  C3902 was not labelled. Expect lower scores on the hidden set than on our dev key.
+- `road_obstacle`, `fire_smoke`, `wrong_way`, `stop_line`, `illegal_turn` and `illegal_u_turn`
+  are not emitted (no reliable rule, no confirmed true event, or no zones for them).
 
 ## Prior work we learned from
 

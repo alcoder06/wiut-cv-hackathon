@@ -215,8 +215,8 @@ class Scene:
     def crossing_group_at(self, x, y, grow_px: int = 0) -> np.ndarray:
         """Id (>0) of the whole crossing under each point, 0 = none. Crosswalk polygons and
         refuges that touch form one crossing: a zebra interrupted by an island is still one
-        crossing for yielding (0924: a scooter on the lower half while people walk the upper
-        half was a real failure_to_yield that per-polygon ids missed)."""
+        crossing for yielding (a scooter crossing the lower half while people walk the upper half
+        is a real failure_to_yield that per-polygon ids missed)."""
         key = ("crossing_groups", grow_px)
         if key not in self._cache:
             union = np.zeros((self.height, self.width), np.uint8)

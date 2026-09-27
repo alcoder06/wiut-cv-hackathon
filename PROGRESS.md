@@ -28,9 +28,9 @@ Never commit videos, `predictions.json`, `cache/` or `out/` (already in `.gitign
 | Area | Status |
 |---|---|
 | Submission package runs end to end | ✅ The organizers' `run_submission.py` works with our `solution.py`; `evaluate.py --validate-only` says VALID |
-| Part A: event detection | ✅ 12 event types enabled; C3897 → 47 events, 0924 → 4 events; ⏳ not yet tuned against labels |
-| Part B: accident warning | ✅ Few false alarms (7 alarms in 5 min); ⚠️ not yet tested on a real crash |
-| Time budget | ✅ 1.45× video length on an 8-core machine (limit 3×), measured plugged in |
+| Part A: event detection | ✅ 10 event types enabled; tuned in two rounds on the team's answers for C3897 and C3905 (Score A on that key 0.672) |
+| Part B: accident warning | ✅ 3 alarms across the 4 official samples (19 min), all on C3902, which nothing was tuned on; ⚠️ only one real crash (public clip) to check against |
+| Time budget | ✅ 1.14–1.42× video length on the 4 official samples, 1.45× on 8 cores (limit 3×), measured plugged in |
 | Resolutions | ✅ 4K and 1080p of this camera both work (zones and lane map rescale) |
 | Scene zones | ✅ 4 zebra crossings drawn · ❌ stop lines / traffic lights not yet |
 | Dev labels | ⏳ Review site ready, **review not done yet** |
