@@ -1,8 +1,16 @@
-# written by scripts/tune.py against dev/labels.json (93 candidates judged by the team, 27 Sep); delete to undo
+# written by scripts/tune.py against dev/labels.json; delete to undo
+# round 1 (27 Sep, 93 candidates judged by the team): congestion, near_miss, stopped_vehicle
+# round 2 (27 Sep, + 85 answers on C3897/C3905; official sample videos only): jaywalking and the
+#   failure_to_yield / jaywalking / near_miss boundaries. Its congestion result (crawl_speed 0.15,
+#   min_len_sec 30) was left out: 4 labels, and it swung far from round 1's optimum
 rules:
   congestion:
     crawl_speed: 0.4
     min_vehicles: 3
+  jaywalking:
+    crosswalk_margin_frac: 0.0
+    min_len_sec: 0.5
+    road_erode_px: 1
   near_miss:
     max_turn_deg: 30
     ttc_sec: 2.0
@@ -10,6 +18,15 @@ rules:
     queue_share: 0.7
 segments:
   boundary_shift:
+    failure_to_yield:
+    - 0.0
+    - -0.5
+    jaywalking:
+    - -0.5
+    - 0.0
+    near_miss:
+    - 0.0
+    - -0.5
     stopped_vehicle:
     - -1.0
     - -1.5

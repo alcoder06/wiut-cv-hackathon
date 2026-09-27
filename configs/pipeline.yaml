@@ -60,7 +60,8 @@ enabled_classes:
   - jaywalking
   - failure_to_yield
   - red_light
-  - stop_line
+  # - stop_line   off for the same reason: 0 true / 1 false on the labelled official samples
+  #               (C3905, judged not real in round 2)
   - solid_line_crossing
   - illegal_turn
   - illegal_u_turn
