@@ -1,38 +1,70 @@
 [
   {
     "name": "Lutfullo Akhmedov",
-    "role": "Model deployment & improvements",
-    "did": "Deploying and improving the model: the detection, tracking and event-rule pipeline inside the organizers' harness, kept inside the time budget.",
-    "proud": "",
+    "role": "Team captain · Model deployment & improvements",
+    "did": "Led the team and the model work: the detector, tracker and event-rule pipeline inside the organizers' harness, the speed work that keeps 4K video inside the time budget, tuning against the team's labels, and the final submission runs.",
     "links": {
       "GitHub": "https://github.com/alcoder06",
       "LinkedIn": "https://www.linkedin.com/in/alcoder/",
       "Portfolio": ""
     },
     "photo": "team/lutfullo.jpg",
-    "captain": true
+    "captain": true,
+    "study": "WIUT · Economics with Data Science, Level 5",
+    "bio": "Data analytics engineer working in Python, SQL, pandas and Power BI, who builds data warehouses and the reports on top of them. Currently in EPAM's training programme.",
+    "projects": [
+      {
+        "name": "StarQuery",
+        "url": "https://starquery.vercel.app",
+        "note": "a gamified SQL trainer that runs SQLite in the browser: 9 modules, 67 exercises, in English, Russian and Uzbek"
+      },
+      {
+        "name": "Olist marketplace analytics",
+        "url": "https://github.com/alcoder06/olist-marketplace-analytics",
+        "note": "a Power BI report on a PostgreSQL warehouse he designed and loaded himself (583,250 order items)"
+      },
+      {
+        "name": "SQL correctness benchmark",
+        "url": "https://github.com/alcoder06/sql-correctness-benchmark",
+        "note": "twelve SQL queries that look right and are wrong, each with a proof and an explanation"
+      }
+    ]
   },
   {
     "name": "Lazizbek Raimqulov",
     "role": "Model deployment & improvements",
     "did": "Deploying and improving the model with Lutfullo: running the pipeline on the sample videos and improving how events are detected.",
-    "proud": "",
     "links": {
       "GitHub": "https://github.com/Lazizbek-web1",
       "LinkedIn": "https://linkedin.com/in/laziz-raimkulov-83611643b",
       "Portfolio": ""
     },
-    "photo": "team/lazizbek.jpg"
+    "photo": "team/lazizbek.jpg",
+    "study": "WIUT · Computer Science, Level 4",
+    "bio": "Backend developer working in JavaScript and Python (Django). He built the web platform for WIUT's Finance Club.",
+    "projects": [
+      {
+        "name": "Finance Club WIUT",
+        "url": "https://github.com/Lazizbek-web1/Finance-Club-WIUT",
+        "note": "the web platform of the university's Finance Club"
+      },
+      {
+        "name": "WIUT 3D",
+        "url": "https://github.com/Lazizbek-web1/wiut-3d",
+        "note": "a 3D tour of the WIUT campus in Three.js"
+      }
+    ]
   },
   {
     "name": "Tegina Pardayeva",
     "role": "Web development & labelling",
-    "did": "Built this website and labelled events in the sample videos: the dev set we check and tune the rules against.",
-    "proud": "",
+    "did": "Built the team website and labelled events in the sample videos: the ground truth the rules were tuned and scored against.",
     "links": {
       "GitHub": "",
       "LinkedIn": "",
       "Portfolio": ""
-    }
+    },
+    "study": "WIUT · Economics with Data Science, Level 5",
+    "bio": "Studies economics with data science, and brought that side of the work to the team: the website that presents the results, and the labels they are measured against."
   }
 ]

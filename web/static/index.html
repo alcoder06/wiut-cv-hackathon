@@ -6,14 +6,14 @@
 <title>NexVision · Traffic Event Watch</title>
 <meta name="description" content="NexVision, WIUT Hackathon 2026 CV track: traffic events as time segments and a warning before a crash, from one fixed CCTV camera.">
 <meta name="demo-api" content="">
-<link rel="stylesheet" href="tw.css?v=20260927g">
+<link rel="stylesheet" href="tw.css?v=20260927h">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="style.css?v=20260927g">
+<link rel="stylesheet" href="style.css?v=20260927h">
 <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js" defer></script>
-<script src="app.js?v=20260927g" defer></script>
+<script src="app.js?v=20260927h" defer></script>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-brutLime selection:text-black">
 
@@ -72,7 +72,7 @@
           <div class="font-mono text-xs font-bold text-gray-600 uppercase">event types we report</div>
         </div>
         <div class="bg-white p-4 brut-border shadow-brut-sm">
-          <div class="font-mono text-3xl font-black text-brutCoral">≤1.42×</div>
+          <div class="font-mono text-3xl font-black text-brutCoral">≤1.5×</div>
           <div class="font-mono text-xs font-bold text-gray-600 uppercase">video length, official harness, 4K (limit 3×)</div>
         </div>
         <div class="bg-white p-4 brut-border shadow-brut-sm">
@@ -93,9 +93,9 @@
           <div class="bg-black text-brutLime p-4 font-mono text-xs brut-border space-y-2 overflow-x-auto">
             <div class="text-gray-400">$ python run_submission.py --videos samples --team NexVision</div>
             <div>[C3905.MP4] 127.6s @ 29.97 fps, budget 383s</div>
-            <div class="text-brutYellow">[C3905.MP4] 15 events, 3825 risk samples, 150.1s — OK</div>
+            <div class="text-brutYellow">[C3905.MP4] 15 events, 3825 risk samples, 179.3s — OK</div>
             <div class="text-gray-400">$ python evaluate.py --pred predictions_samples.json --validate-only</div>
-            <div class="text-white">format: 4 video(s), 135 event(s), 0 error(s), 0 warning(s) -> VALID</div>
+            <div class="text-white">format: 4 video(s), 138 event(s), 0 error(s), 0 warning(s) -> VALID</div>
           </div>
           <p class="text-xs text-gray-600">The same commands the organizers run on the hidden test set, on our 4K samples.</p>
           <div class="grid grid-cols-2 gap-3">
@@ -131,7 +131,7 @@
   <div class="border-b-4 border-black pb-4">
     <span class="font-mono text-xs font-black bg-brutYellow px-2 py-1 brut-border uppercase">The team</span>
     <h2 class="text-4xl font-black font-mono mt-2 uppercase">NexVision</h2>
-    <p class="text-gray-700 font-medium">Three people, four days, one camera.</p>
+    <p class="text-gray-700 font-medium">Three students of Westminster International University in Tashkent (WIUT): four days, one camera.</p>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="team-cards"></div>
 </div>
@@ -260,7 +260,7 @@
       <h3 class="font-mono font-black text-lg uppercase"><i class="fa-solid fa-gauge-high text-brutBlue"></i> Engineering</h3>
       <ul class="space-y-2 text-sm list-disc pl-5">
         <li>The model loads when <code>solution.py</code> is imported, before the harness starts its per-video clock.</li>
-        <li>Measured with the official harness on a laptop RTX 3050: 1.14× to 1.42× of video length on the four 4K samples, against a 3× limit. Without a GPU, on 8 CPU cores: 1.45×.</li>
+        <li>Measured with the official harness on a laptop RTX 3050: 1.37× to 1.50× of video length on the four 4K samples in the final run (1.14× to 1.42× when nothing else was running), against a 3× limit. Without a GPU, on 8 CPU cores: 1.45×.</li>
         <li>Decoding in a background thread, skipped frames only grabbed, exact halvings to 960 px: 787 s → 460 s.</li>
         <li>Seeds fixed, cuDNN deterministic, fixed frame stride: two runs give the same file.</li>
         <li>Detections cached during development, so a rule change is re-scored in seconds.</li>
@@ -320,7 +320,7 @@
     <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-magnifying-glass text-brutCoral"></i> Found by looking at the data: the camera moved</h3>
     <p class="text-sm font-medium">Between recordings the camera is not quite in the same place. C3902 is shifted by (-126, +77) px and turned -0.9° from the
       view we drew our zones on, C3905 by (-35, +43) px and -1.1°. With the zones as drawn (red), crossings and the stop line sat off the real paint, and
-      two segments covered almost the whole of C3902. Each video is now registered to the reference view automatically (ORB features + RANSAC on a
+      two segments covered almost the whole of C3902. After alignment those whole-video segments are gone. Each video is now registered to the reference view automatically (ORB features + RANSAC on a
       median background frame, about 5 s per video), and the zones, lamp window and learned lanes move with it (green).</p>
     <figure><img src="data/zones_shift.jpg" alt="Crossing zones as drawn (red) and after automatic alignment (green) on C3902 (top) and C3905 (bottom)" loading="lazy" class="brut-border-2 w-full">
       <figcaption>Top: C3902. Bottom: C3905 at dusk. Red: zones as drawn on the reference view. Green: after automatic alignment.</figcaption></figure>
@@ -421,14 +421,15 @@
           <tbody>
             <tr><td>Hand-set thresholds (round 1)</td><td class="num">0.502</td></tr>
             <tr><td>+ round-2 tuning on the team's review</td><td class="num">0.576</td></tr>
-            <tr><td>+ <code>stop_line</code> switched off (0 true, 1 false)</td><td class="num"><b>0.672</b></td></tr>
+            <tr><td>+ <code>stop_line</code> switched off (0 true, 1 false)</td><td class="num">0.672</td></tr>
+            <tr><td>+ camera alignment (final)</td><td class="num"><b>0.666</b></td></tr>
           </tbody>
         </table></div>
         <div class="table-wrap"><table class="brut-table">
-          <thead><tr><th>Class, at IoU 0.5</th><th class="num">TP / FP / FN before</th><th class="num">after round 2</th></tr></thead>
+          <thead><tr><th>Class, at IoU 0.5</th><th class="num">TP / FP / FN before</th><th class="num">final</th></tr></thead>
           <tbody>
-            <tr><td><code>jaywalking</code></td><td class="num">1 / 30 / 6</td><td class="num">7 / 10 / 0</td></tr>
-            <tr><td><code>failure_to_yield</code></td><td class="num">8 / 22 / 11</td><td class="num">9 / 13 / 10</td></tr>
+            <tr><td><code>jaywalking</code></td><td class="num">1 / 30 / 6</td><td class="num">7 / 9 / 0</td></tr>
+            <tr><td><code>failure_to_yield</code></td><td class="num">8 / 22 / 11</td><td class="num">8 / 15 / 11</td></tr>
             <tr><td><code>near_miss</code></td><td class="num">4 / 6 / 0</td><td class="num">4 / 5 / 0</td></tr>
             <tr><td><code>congestion</code></td><td class="num">4 / 2 / 0</td><td class="num">4 / 2 / 0</td></tr>
             <tr><td><code>stopped_vehicle</code></td><td class="num">7 / 5 / 1</td><td class="num">7 / 5 / 1</td></tr>
@@ -436,7 +437,7 @@
           </tbody>
         </table></div>
         <p class="text-xs font-medium">Errors are mostly false positives: jaywalking at the ragged edges of hand-drawn crossings (fixed by a margin around
-          them) and failure_to_yield with pedestrians who were waiting, not crossing. failure_to_yield also misses 10 events, which is why it is our weakest class.</p>
+          them) and failure_to_yield with pedestrians who were waiting, not crossing. failure_to_yield also misses 11 events, which is why it is our weakest class. Aligning the camera cost 0.006 on this key: the team judged C3905 on clips cut with the misplaced zones, so the key slightly favours them.</p>
       </div>
     </div>
   </div>
@@ -445,10 +446,10 @@
     <h3 class="font-mono font-black text-lg uppercase border-b-2 border-black pb-2"><i class="fa-solid fa-shield-halved text-brutCoral"></i> Honest failure cases</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-medium">
       <div class="p-3 bg-brutYellow/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Small, reused labels</div>The team fully reviewed two official samples (C3897: 38 events, C3905: 6). Two rounds of tuning raised Score A on that key from 0.50 to 0.67, but it was tuned and scored on the same labels: expect less on the hidden set.</div>
-      <div class="p-3 bg-brutPink/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">failure_to_yield is our weakest class</div>It fires most often, and pedestrians waiting at the kerb of a 7-lane crossing were its main false alarm. It now needs a walking pedestrian near the car's path, but its score on our key is still only 0.42 (from 0.37).</div>
+      <div class="p-3 bg-brutPink/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">failure_to_yield is our weakest class</div>It fires most often, and pedestrians waiting at the kerb of a 7-lane crossing were its main false alarm. It now needs a walking pedestrian near the car's path, but its score on our key stays at 0.37: tuning did not move it.</div>
       <div class="p-3 bg-brutPink/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Near misses in dense turning traffic</div>9 of 13 rejected near misses were cars turning past each other. The rule now ignores vehicles turning more than 30°; its score on our key is 0.62.</div>
       <div class="p-3 bg-brutCoral/30 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Missed a real crash</div>No sample video contains a crash. On a public roadside crash clip (TU-DAT), both the accident rule and Part B missed a side-swipe: the tracker lost the car that spun and gave it a new id, and Part B treats side-by-side cars as normal lane-keeping, the filter that removed most false alarms on our camera.</div>
-      <div class="p-3 bg-brutYellow/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Near-whole-video segments</div>On C3902, which nothing was tuned on, one stopped_vehicle and one jaywalking segment each cover almost the whole video (316 s and 318 s); on C3896 a stopped_vehicle runs 153 s. A road user that never leaves the carriageway keeps one segment open, and overlapping events of one type merge. If these are not single real events, they will not match.</div>
+      <div class="p-3 bg-brutYellow/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Very long segments</div>On C3902, which nothing was tuned on, a jaywalking segment runs 46–281 s and a stopped_vehicle 125–308 s; on C3896 a stopped_vehicle runs 153 s. We could not verify them before the deadline: they may be a person or a car standing in the road for minutes, or several events merged into one. If the annotators split them, they will not match.</div>
       <div class="p-3 bg-brutPink/40 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">Tracker id switches</div>In dense queues a stationary car can split into two tracks. <code>stopped_vehicle</code> re-joins gaps under 3 s, but a long occlusion by a bus still splits the event.</div>
     </div>
   </div>
@@ -521,49 +522,144 @@
 <!-- ============================ REPORT ============================ -->
 <div id="page-report" class="page-view space-y-8 hidden">
   <div class="border-b-4 border-black pb-4">
-    <span class="font-mono text-xs font-black bg-brutYellow px-2 py-1 brut-border uppercase">One page</span>
+    <span class="font-mono text-xs font-black bg-brutYellow px-2 py-1 brut-border uppercase">Technical report</span>
     <h2 class="text-4xl font-black font-mono mt-2 uppercase">Technical report</h2>
-    <p class="text-gray-700 font-medium">What we built, what worked, what did not, and what we would do next.</p>
+    <p class="text-gray-700 font-medium max-w-3xl">What we built, how we measured it, what worked, what did not, and what we would do next.
+      Every number here comes from the final submission run (<code>predictions_samples.json</code>, 4 official sample videos).</p>
   </div>
-  <div class="bg-white brut-border p-8 shadow-brut space-y-6 font-medium leading-relaxed">
-    <section class="space-y-2">
-      <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">1. What we built</h3>
-      <p>A fixed-camera traffic analyser that reports 8 of the 14 official event types as time segments (Part A) and a per-frame accident risk from past frames only (Part B).
-        It is a pretrained YOLO11s detector with ByteTrack, a scene model learned from the traffic itself, and one rule per event type. No model was trained.
-        It runs inside the organizers' unchanged harness at up to 1.42× video length on a laptop GPU (1.45× on 8 CPU cores alone), against a 3× limit.</p>
+  <div class="bg-white brut-border p-8 shadow-brut space-y-8 font-medium leading-relaxed">
+
+    <section class="space-y-3">
+      <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">1. Summary</h3>
+      <p>The task: watch one fixed road camera and report every traffic event as <code>[start, end, class]</code> (Part A), and at every frame
+        give the probability that a crash starts within 5 seconds, using past frames only (Part B). The hidden test set comes from the same camera.</p>
+      <p>We built a pretrained YOLO11s detector with ByteTrack tracking, a scene model learned from the traffic itself, and one rule per event
+        type. No model was trained: we had no labels for this camera, four days, and a test set containing events that are not in the samples.
+        Rules on trajectories carry over to unseen events of a known type, and every event they report can be traced back to a track and a rule.</p>
+      <div class="table-wrap"><table class="brut-table">
+        <thead><tr><th>Final run</th><th class="num">Events</th><th class="num">Crash alarms</th><th class="num">Part A</th><th class="num">Total</th><th class="num">× video length</th></tr></thead>
+        <tbody>
+          <tr><td>C3896 (4K, 5:40)</td><td class="num">40</td><td class="num">0</td><td class="num">217.9 s</td><td class="num">467.0 s</td><td class="num">1.37×</td></tr>
+          <tr><td>C3897 (4K, 5:18)</td><td class="num">53</td><td class="num">0</td><td class="num">212.5 s</td><td class="num">462.3 s</td><td class="num">1.45×</td></tr>
+          <tr><td>C3902 (4K, 5:18)</td><td class="num">30</td><td class="num">3</td><td class="num">227.4 s</td><td class="num">475.1 s</td><td class="num">1.50×</td></tr>
+          <tr><td>C3905 (4K, 2:08, dusk)</td><td class="num">15</td><td class="num">0</td><td class="num">74.1 s</td><td class="num">179.3 s</td><td class="num">1.41×</td></tr>
+          <tr><td><b>All four</b></td><td class="num"><b>138</b></td><td class="num"><b>3</b></td><td class="num"></td><td class="num"></td><td class="num"><b>≤ 1.5× (limit 3×)</b></td></tr>
+        </tbody>
+      </table></div>
+      <p class="text-sm text-gray-600">Measured with the organizers' unchanged <code>run_submission.py</code> on a laptop RTX 3050 while another job shared the
+        machine; the same videos alone took 1.14× to 1.42×. <code>evaluate.py --validate-only</code>: 4 videos, 138 events, VALID.</p>
     </section>
-    <section class="space-y-2">
-      <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">2. What worked</h3>
+
+    <section class="space-y-3">
+      <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">2. Data</h3>
       <ul class="list-disc pl-6 space-y-1">
-        <li>Trajectory rules cover 8 of 14 classes with no training data, and every event can be traced to a track and a rule.</li>
-        <li>Two rounds of tuning on the team's review of the official samples raised Score A on that key from 0.50 to 0.67 (same labels, so optimistic); jaywalking gained most, 0.11 → 0.53.</li>
-        <li>Learning the road and lane directions from traffic removed most hand drawing and kept parked cars out.</li>
-        <li>Speed in box sizes per second made one set of thresholds work across the whole frame.</li>
-        <li>Filtering Part B by closing speed and lane offset cut false alarms from 35 to 7 in 5 minutes; a last rule for same-direction and stopped pairs brought alarms across all four samples (19 minutes) from 14 to 3.</li>
-        <li>Threaded decoding and 960 px input cut runtime by 42%.</li>
+        <li><b>Four official sample videos</b> (C3896, C3897, C3902, C3905): 4K at 29.97 fps, 18 minutes in all, one of them at dusk. A signalised
+          intersection filmed from above: a divided boulevard, four zebra crossings, two traffic islands, buses and heavy pedestrian traffic.
+          No crash happens in any of them.</li>
+        <li><b>Our labels:</b> the team reviewed what the system detected, clip by clip, and marked each one real or not, fixing start and end
+          times. Two videos are fully reviewed (C3897: 38 events, C3905: 6). They are the only ground truth we have, and we tuned on them too.</li>
+        <li><b>Scene layout we drew ourselves:</b> no <code>camera.md</code> came with the samples, so the team drew the crossings, islands,
+          boulevard stop line, the signal-lamp window and three solid lane lines on a reference frame.</li>
+        <li><b>Public data, for testing only:</b> TU-DAT roadside crash clips, to check whether the crash rule and Part B react to a real crash.</li>
       </ul>
     </section>
+
+    <section class="space-y-3">
+      <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">3. Method</h3>
+      <ol class="list-decimal pl-6 space-y-2">
+        <li><b>Align the view.</b> The camera shifts between recordings (up to 126 px and 1.1° at 4K). Each video is registered to the reference frame
+          (ORB features + RANSAC on a median background, about 5 s), and every drawn zone moves with it.</li>
+        <li><b>Detect.</b> YOLO11s, COCO-pretrained, on 8 frames per second at 960 px input, FP16 on the GPU, in batches of 16. Decoding runs in a
+          background thread; skipped frames are only grabbed, not converted.</li>
+        <li><b>Track.</b> ByteTrack links boxes into tracks; tracks shorter than 0.8 s are dropped as detector noise.</li>
+        <li><b>Measure motion.</b> Position is the bottom centre of the box (where the vehicle touches the road). Speed is in box sizes per second,
+          so one threshold works near and far without calibrating the camera. Part A may use the whole video, so tracks are smoothed in both
+          directions.</li>
+        <li><b>Learn the road.</b> A grid over the image records where moving vehicles drive and which way: that gives the carriageway (parked cars
+          stay off it) and the lane directions, without drawing lanes by hand.</li>
+        <li><b>Read the signal.</b> The boulevard's own lamps face sideways; a lamp on the left pole shares its 75 s cycle. We read its colour and
+          correct for its measured offset (red about 4.5 s early, green about 0.6 s late, from 126 stop-line crossings).</li>
+        <li><b>Apply one rule per event type</b> (table on the Pipeline page), then one clean-up for all: merge fragments less than 1 s apart, drop
+          blips under 0.5 s, join overlapping segments of one type, clip to the video.</li>
+        <li><b>Part B, separately and causally:</b> its own detector and tracker at 5 fps on past frames only. For every pair of road users, the time
+          until they would touch; a logistic turns the earliest time-to-collision into risk (0.5 at 1.5 s), sharp braking raises it, and a
+          moving average smooths it. Pairs that are not closing fast, drive side by side in neighbouring lanes, or brush past a stopped car
+          are ignored.</li>
+      </ol>
+    </section>
+
+    <section class="space-y-3">
+      <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">4. Evaluation</h3>
+      <p>Score A on our labels of C3897 and C3905 (the official metric: F1 per class, averaged over time-overlap thresholds 0.3, 0.5 and 0.7):
+        <b>0.502</b> with hand-set thresholds, <b>0.576</b> after tuning on the team's review, <b>0.672</b> with <code>stop_line</code> switched off, and
+        <b>0.666</b> in the final version with camera alignment. The labels are small and we tuned on them, so expect less on the hidden set.</p>
+      <p>By class: <code>solid_line_crossing</code> 1.00, <code>congestion</code> 0.80, <code>stopped_vehicle</code> 0.67, <code>near_miss</code> 0.62,
+        <code>jaywalking</code> 0.55, <code>failure_to_yield</code> 0.37. <code>red_light</code> fires once, on C3896, which is not in our labels, so it is
+        not scored here. Details and the ablations are on the Results page.</p>
+      <p>Part B: 3 alarms in 18 minutes of normal traffic, all on C3902, down from 14 before the last closing-speed rule and 35 in the first version.
+        On a public crash clip where the crash is fully in view, it warns before the impact at every setting we tried.</p>
+      <p>Determinism: seeds are fixed and frames are sampled at a fixed stride. A second full run on C3905 gave identical events and risk curve.</p>
+    </section>
+
     <section class="space-y-2">
-      <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">3. What did not</h3>
+      <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">5. What worked</h3>
+      <ul class="list-disc pl-6 space-y-1">
+        <li>Trajectory rules cover 8 of the 14 classes with no training data, and every event can be explained.</li>
+        <li>Learning the road and the lane directions from traffic removed most hand drawing and kept parked cars out.</li>
+        <li>Speed in box sizes per second made one set of thresholds work across the whole frame (cars at the bottom are 4× larger than at the top).</li>
+        <li>Reviewing detections as a team, then tuning on the answers: Score A 0.50 → 0.67 on that key; jaywalking gained most, 0.11 → 0.55.</li>
+        <li>Part B filters (closing speed, lane offset, stopped pairs): false alarms 35 → 7 in 5 minutes, then 14 → 3 across all four samples.</li>
+        <li>Threaded decoding and 960 px input cut runtime by 42%, so 4K fits the budget with room to spare.</li>
+        <li>Looking at the data: the camera moved between recordings. Aligning each video fixed zones that were off the paint, and removed two
+          segments that covered all of C3902.</li>
+      </ul>
+    </section>
+
+    <section class="space-y-2">
+      <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">6. What did not</h3>
       <ul class="list-disc pl-6 space-y-1">
         <li>Box overlap as a crash signal: crossing traffic overlaps in the image constantly (22 to 26% of the time in alarm). Replaced by discs at the ground points.</li>
-        <li>"Anyone on the crossing" for failure_to_yield fired on nearly every car.</li>
+        <li>"Anyone on the crossing" for failure_to_yield fired on nearly every car. Even now it is our weakest class (0.37): pedestrians waiting at the kerb still trigger it.</li>
         <li>Counting every red-light queue as a stopped vehicle.</li>
-        <li>Reading the gantry signal heads: they face sideways.</li>
         <li><code>wrong_way</code> and <code>stop_line</code>: 0 real and 1 false detection each on our labels, so both are off.</li>
-        <li>A real side-swipe on a public crash clip: the tracker lost the car that spun, so the accident rule and Part B both missed it.</li>
+        <li>A real side-swipe on a public crash clip: the tracker lost the car that spun and gave it a new id, so the accident rule and Part B both missed it.</li>
+        <li>We found the camera drift only on the last day, after the labels had been cut from clips with misplaced zones.</li>
       </ul>
     </section>
+
     <section class="space-y-2">
-      <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">4. What we would do next</h3>
+      <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">7. Limitations and risks</h3>
+      <ul class="list-disc pl-6 space-y-1">
+        <li>Two labelled videos and 44 real events: the thresholds may not hold on the hidden set.</li>
+        <li>Real crashes are untested on this camera: the samples contain none.</li>
+        <li>The traffic light is read indirectly; a retimed signal plan would need the offset measured again.</li>
+        <li>Some segments run for minutes (C3902: jaywalking 46–281 s, stopped vehicle 125–308 s). We could not check them before the deadline.</li>
+        <li><code>road_obstacle</code>, <code>fire_smoke</code>, <code>wrong_way</code>, <code>stop_line</code> and the two illegal-turn classes are not reported.</li>
+        <li>The live demo runs a lighter detector (YOLO11n at 640 px, on a CPU), so it finds fewer small, distant pedestrians than the submission.</li>
+      </ul>
+    </section>
+
+    <section class="space-y-2">
+      <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">8. What we would do next</h3>
       <ul class="list-disc pl-6 space-y-1">
         <li>Re-link a track lost near a contact point, so a spinning car keeps its identity through a crash.</li>
-        <li>More labels, so thresholds are tuned on events they are not scored on.</li>
-        <li>Test Part B on public crash footage (CCD, DoTA) and calibrate it so 0.5 means "probably within 5 s".</li>
+        <li>More labels on more videos, so thresholds are tuned on events they are not scored on.</li>
+        <li>Test Part B on more public crash footage (CCD, DoTA) and calibrate it so 0.5 means "probably within 5 s".</li>
         <li>A small clip classifier to confirm accident and near-miss candidates.</li>
         <li>Fine-tune the detector on frames from this camera for small, distant pedestrians.</li>
-        <li>Run Part B on a live stream, with alerts to an operator.</li>
+        <li>Run Part B on a live stream, with alerts to an operator (see the Future page).</li>
       </ul>
+    </section>
+
+    <section class="space-y-2">
+      <h3 class="font-mono font-black text-2xl uppercase border-b-2 border-black pb-2">9. Reproduce it</h3>
+      <div class="bg-black text-brutLime p-4 font-mono text-xs brut-border space-y-1 overflow-x-auto">
+        <div>pip install -r requirements.txt</div>
+        <div>python run_submission.py --videos samples --out predictions_samples.json --team NexVision</div>
+        <div>python evaluate.py --pred predictions_samples.json --validate-only</div>
+        <div>python scripts/build_site.py --videos samples --pred predictions_samples.json   # this website's data</div>
+      </div>
+      <p class="text-sm text-gray-600">Weights are in <code>weights/</code>; every threshold is in <code>configs/pipeline.yaml</code> and <code>configs/tuned.yaml</code>.</p>
     </section>
   </div>
 </div>

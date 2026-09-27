@@ -457,9 +457,14 @@ async function initTeam() {
     return `<div class="bg-white brut-border p-6 shadow-brut space-y-4">
       <div class="relative w-20 h-20 mx-auto">${face}${captain}</div>
       <div class="text-center"><h3 class="font-mono font-black text-lg">${esc(p.name)}</h3>
-        <span class="text-xs font-mono font-bold bg-brutYellow px-2 py-0.5 brut-border-2 inline-block mt-1">${esc(p.role)}</span></div>
-      <p class="text-sm font-medium text-gray-700">${esc(p.did)}</p>
-      ${p.proud ? `<p class="text-xs font-medium bg-brutBg p-2 brut-border-2"><b class="font-mono uppercase">Proud of:</b> ${esc(p.proud)}</p>` : ""}
+        <span class="text-xs font-mono font-bold bg-brutYellow px-2 py-0.5 brut-border-2 inline-block mt-1">${esc(p.role)}</span>
+        ${p.study ? `<div class="font-mono text-xs text-gray-600 mt-2">${esc(p.study)}</div>` : ""}</div>
+      ${p.bio ? `<p class="text-sm font-medium text-gray-700">${esc(p.bio)}</p>` : ""}
+      <div class="bg-brutBg p-3 brut-border-2"><div class="font-mono font-black uppercase text-xs mb-1">In this project</div>
+        <p class="text-sm font-medium">${esc(p.did)}</p></div>
+      ${(p.projects || []).length ? `<div><div class="font-mono font-black uppercase text-xs mb-1">Previous projects</div>
+        <ul class="text-sm font-medium list-disc pl-5 space-y-1">${p.projects.map((x) =>
+          `<li><a href="${esc(x.url)}" target="_blank" rel="noopener" class="font-bold underline">${esc(x.name)}</a>: ${esc(x.note)}</li>`).join("")}</ul></div>` : ""}
       ${links ? `<div class="flex justify-center gap-3">${links}</div>` : ""}
     </div>`;
   }).join("");
