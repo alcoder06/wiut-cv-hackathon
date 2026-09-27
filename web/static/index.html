@@ -186,12 +186,12 @@
       <rect class="box" x="850" y="36" width="140" height="56"/><text x="920" y="60" text-anchor="middle">clean-up</text><text x="920" y="78" text-anchor="middle" class="sm">merge, drop blips</text>
       <text x="1002" y="68" class="sm">events</text>
       <path class="arrow" d="M130,64 H158"/><path class="arrow" d="M300,64 H328"/><path class="arrow" d="M450,64 H478"/><path class="arrow" d="M630,64 H658"/><path class="arrow" d="M820,64 H848"/><path class="arrow" d="M990,64 H1000"/>
-      <rect class="box" x="480" y="120" width="340" height="50"/><text x="650" y="141" text-anchor="middle">scene: flow field learned from trajectories</text><text x="650" y="159" text-anchor="middle" class="sm">+ crossings, stop line, lamp area, solid lines we drew</text>
+      <rect class="box" x="480" y="120" width="340" height="50"/><text x="650" y="141" text-anchor="middle">scene: flow field learned from trajectories</text><text x="650" y="159" text-anchor="middle" class="sm">+ crossings, stop line, lamp, solid lines</text>
       <path class="arrow" d="M740,120 V94"/>
       <text x="10" y="210" class="sm">PART B · CAUSAL, FRAME BY FRAME</text>
       <rect class="box" x="10" y="224" width="120" height="56"/><text x="70" y="248" text-anchor="middle">past frames</text><text x="70" y="266" text-anchor="middle" class="sm">5 fps</text>
-      <rect class="box learned" x="160" y="224" width="140" height="56"/><text x="230" y="248" text-anchor="middle">YOLO11s + ByteTrack</text><text x="230" y="266" text-anchor="middle" class="sm">own instance</text>
-      <rect class="box" x="330" y="224" width="300" height="56"/><text x="480" y="248" text-anchor="middle">pairwise time-to-collision + braking</text><text x="480" y="266" text-anchor="middle" class="sm">lane-offset, closing-speed filters, persistence</text>
+      <rect class="box learned" x="160" y="224" width="140" height="56"/><text x="230" y="248" text-anchor="middle">YOLO11s</text><text x="230" y="266" text-anchor="middle" class="sm">+ ByteTrack, own copy</text>
+      <rect class="box" x="330" y="224" width="300" height="56"/><text x="480" y="248" text-anchor="middle">pairwise time-to-collision + braking</text><text x="480" y="266" text-anchor="middle" class="sm">lane + closing-speed filters</text>
       <rect class="box" x="660" y="224" width="160" height="56"/><text x="740" y="248" text-anchor="middle">logistic + EMA</text><text x="740" y="266" text-anchor="middle" class="sm">0.5 at TTC 1.5 s</text>
       <text x="850" y="256" class="sm">risk in [0, 1]</text>
       <path class="arrow" d="M130,252 H158"/><path class="arrow" d="M300,252 H328"/><path class="arrow" d="M630,252 H658"/><path class="arrow" d="M820,252 H846"/>
@@ -533,7 +533,7 @@
     </a>
     <a href="predictions_samples.json" target="_blank" class="bg-white brut-border p-6 shadow-brut brut-btn block space-y-4 group">
       <span class="w-12 h-12 bg-brutBlue text-white brut-border flex items-center justify-center text-xl"><i class="fa-solid fa-file-code"></i></span>
-      <span class="block"><span class="block font-mono font-black text-lg group-hover:underline">predictions_samples.json</span>
+      <span class="block"><span class="block font-mono font-black text-lg group-hover:underline" style="overflow-wrap:anywhere">predictions_samples.json</span>
         <span class="block text-xs text-gray-600 mt-1">The harness output on the sample videos, exactly as submitted.</span></span>
       <span class="inline-block font-mono text-xs font-bold bg-brutPink px-2 py-1 brut-border-2">download</span>
     </a>

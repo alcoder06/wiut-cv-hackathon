@@ -90,7 +90,14 @@ function fresh(el) {
   el.innerHTML = "";
 }
 
-function note(el, text) { fresh(el); el.innerHTML = `<p class="font-mono text-xs text-gray-600">${esc(text)}</p>`; }
+/** Plotly.react with the container sized to the chart: with responsive: true Plotly draws at
+ *  100% of its box, and a box left at its CSS min-height lets the chart spill over the card. */
+function plot(el, data, layout, cfg) {
+  el.style.height = `${layout.height}px`;
+  return Plotly.react(el, data, layout, cfg);
+}
+
+function note(el, text) { fresh(el); el.style.height = ""; el.innerHTML = `<p class="font-mono text-xs text-gray-600">${esc(text)}</p>`; }
 
 function playheadShape(t) {
   return { type: "line", xref: "x", yref: "paper", x0: t, x1: t, y0: 0, y1: 1, line: { color: CORAL, width: 2 } };
@@ -104,7 +111,7 @@ function timeline(el, events, duration, onSeek) {
   const present = CLASSES.filter((c) => events.some((e) => e[2] === c));
   if (!present.length) { note(el, "No events in this video."); return; }
   fresh(el);
-  Plotly.react(el, [{
+  plot(el, [{
     type: "bar", orientation: "h", y: events.map((e) => e[2]), x: events.map((e) => e[1] - e[0]), base: events.map((e) => e[0]),
     customdata: events.map((e) => [e[0], e[1]]), width: 0.6,
     marker: { color: BLUE, line: { color: INK, width: 1.5 } },
@@ -121,7 +128,7 @@ function timeline(el, events, duration, onSeek) {
 function riskChart(el, risk, duration, alarms, onSeek) {
   if (!risk.length) { note(el, "No risk curve for this video yet (not in predictions_samples.json)."); return; }
   fresh(el);
-  Plotly.react(el, [
+  plot(el, [
     { x: risk.map((r) => r[0]), y: risk.map((r) => r[1]), mode: "lines", line: { color: BLUE, width: 2, shape: "hv" },
       fill: "tozeroy", fillcolor: "rgba(0,85,255,0.12)", hovertemplate: "%{x:.1f} s · risk %{y:.2f}<extra></extra>" },
     { x: [0, duration], y: [0.5, 0.5], mode: "lines", line: { color: INK, width: 1, dash: "dot" }, hoverinfo: "skip" },
@@ -138,7 +145,7 @@ function riskChart(el, risk, duration, alarms, onSeek) {
 
 function stackedObjects(el, objects, duration, margin = TIME_MARGIN) {
   fresh(el);
-  Plotly.react(el, GROUPS.map(([k, label]) => ({
+  plot(el, GROUPS.map(([k, label]) => ({
     x: objects.t, y: objects[k], name: label, stackgroup: "one", mode: "lines",
     line: { color: cssVar(`--${k}`), width: 1.5 }, fillcolor: cssVar(`--${k}`) + "66",
     hovertemplate: `${label}: %{y:.1f}<extra></extra>`,
@@ -147,7 +154,7 @@ function stackedObjects(el, objects, duration, margin = TIME_MARGIN) {
 
 function lineChart(el, x, y, opts = {}) {
   fresh(el);
-  Plotly.react(el, [{ x, y, mode: "lines", line: { color: BLUE, width: 2.5 }, connectgaps: false,
+  plot(el, [{ x, y, mode: "lines", line: { color: BLUE, width: 2.5 }, connectgaps: false,
     hovertemplate: opts.hover || "%{x}: %{y}<extra></extra>" }],
   baseLayout({ xaxis: { ticksuffix: opts.xsuffix ?? " s" }, yaxis: opts.yaxis || {} }), PLOT_CFG);
 }
@@ -271,7 +278,7 @@ function edaCharts(d) {
   legend($("#eda-speed-legend"), speedGroups);
   const sp = $("#eda-speed");
   fresh(sp);
-  Plotly.react(sp, speedGroups.map(([k, label]) => ({ x: d.speed.bins, y: d.speed[k], name: label, mode: "lines",
+  plot(sp, speedGroups.map(([k, label]) => ({ x: d.speed.bins, y: d.speed[k], name: label, mode: "lines",
     line: { color: cssVar(`--${k}`), width: 2.5 }, hovertemplate: `${label}: %{y:.1f}%<extra></extra>` })),
   baseLayout({ xaxis: { title: { text: "box sizes per second", font: { family: MONO, size: 10 } } }, yaxis: { ticksuffix: "%" },
     hovermode: "x unified", margin: { l: 46, r: 14, t: 8, b: 46 } }), PLOT_CFG);
@@ -294,11 +301,11 @@ function dashboard() {
 function dashboardCharts(cls, counts, hours, mins, perMin) {
   const a = $("#dash-classes"), b = $("#dash-minutes");
   fresh(a); fresh(b);
-  Plotly.react(a, [{ type: "bar", orientation: "h", y: cls, x: cls.map((c) => counts[c] / hours), text: cls.map((c) => String(counts[c])),
+  plot(a, [{ type: "bar", orientation: "h", y: cls, x: cls.map((c) => counts[c] / hours), text: cls.map((c) => String(counts[c])),
     textposition: "outside", cliponaxis: false, marker: { color: BLUE, line: { color: INK, width: 1.5 } }, width: 0.6,
     hovertemplate: "%{y}: %{x:.0f} per hour<extra></extra>" }],
   baseLayout({ height: 60 + cls.length * 30, margin: { l: 136, r: 40, t: 8, b: 34 }, yaxis: { gridcolor: "rgba(0,0,0,0)" } }), PLOT_CFG);
-  Plotly.react(b, [{ type: "bar", x: mins.map((m) => m + 1), y: mins.map((m) => perMin[m]), marker: { color: BLUE, line: { color: INK, width: 1.5 } }, width: 0.6,
+  plot(b, [{ type: "bar", x: mins.map((m) => m + 1), y: mins.map((m) => perMin[m]), marker: { color: BLUE, line: { color: INK, width: 1.5 } }, width: 0.6,
     hovertemplate: "minute %{x}: %{y} events<extra></extra>" }],
   baseLayout({ xaxis: { dtick: 1, title: { text: "minute", font: { family: MONO, size: 10 } } }, margin: { l: 46, r: 14, t: 8, b: 46 } }), PLOT_CFG);
 }
