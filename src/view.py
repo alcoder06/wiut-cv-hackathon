@@ -3,9 +3,10 @@
 The camera is fixed, but not between recordings: C3902 and C3905 sit up to ~130 px (4K)
 and ~1 degree off the C3897 framing that configs/scene.yaml was drawn on, which put the
 crossings, stop line and traffic-lamp window in the wrong place. Before tracking, a few
-frames are median-stacked into a background (moving traffic drops out), matched to
-configs/reference_view.png (a C3897 background) with ORB features on contrast-equalised
-images (dusk vs daylight), and a similarity transform (shift, rotation, scale) is fitted
+frames are median-stacked into a background (moving traffic drops out), matched to the
+ORB features of a C3897 background (configs/reference_view.npz, scripts/make_reference.py;
+features only, no image) on contrast-equalised images (dusk vs daylight), and a similarity
+transform (shift, rotation, scale) is fitted
 with RANSAC. The hand-drawn zones are moved with it. A view within a few pixels of the
 reference is left exactly as drawn, so aligned videos give the same output as before.
 """
@@ -37,6 +38,12 @@ def _background(path: str, n: int) -> np.ndarray | None:
     return np.median(np.stack(frames), 0).astype(np.uint8) if frames else None
 
 
+def _features(gray: np.ndarray) -> tuple[np.ndarray, np.ndarray | None]:
+    keypoints, descriptors = cv2.ORB_create(6000, fastThreshold=10).detectAndCompute(
+        cv2.createCLAHE(3.0, (8, 8)).apply(gray), None)
+    return np.float32([k.pt for k in keypoints]).reshape(-1, 2), descriptors
+
+
 def view_transform(path: str, width: int, height: int, cfg) -> np.ndarray | None:
     """3x3 map from reference-normalised to this video's normalised coordinates, or None
     when the view matches the reference or can't be matched reliably (zones stay as drawn)."""
@@ -44,22 +51,20 @@ def view_transform(path: str, width: int, height: int, cfg) -> np.ndarray | None
     ref_path = resolve(c.reference)
     if not c.enabled or not ref_path.exists() or abs(width / height - REF_W / REF_H) > 0.01:
         return None
-    ref = cv2.imread(str(ref_path), cv2.IMREAD_GRAYSCALE)
+    ref = np.load(ref_path)
+    pr, dr = ref["points"], ref["descriptors"]
     img = _background(path, c.frames)
     if img is None:
         return None
-    clahe = cv2.createCLAHE(3.0, (8, 8))
-    orb = cv2.ORB_create(6000, fastThreshold=10)
-    kr, dr = orb.detectAndCompute(clahe.apply(ref), None)
-    k, d = orb.detectAndCompute(clahe.apply(img), None)
-    if dr is None or d is None:
+    pts, d = _features(img)
+    if d is None:
         return None
     pairs = cv2.BFMatcher(cv2.NORM_HAMMING).knnMatch(dr, d, k=2)
     good = [p[0] for p in pairs if len(p) == 2 and p[0].distance < 0.8 * p[1].distance]
     if len(good) < c.min_inliers:
         return None
-    src = np.float32([kr[m.queryIdx].pt for m in good])
-    dst = np.float32([k[m.trainIdx].pt for m in good])
+    src = pr[[m.queryIdx for m in good]]
+    dst = pts[[m.trainIdx for m in good]]
     cv2.setRNGSeed(cfg.seed)                         # RANSAC samples: same answer every run
     A, inliers = cv2.estimateAffinePartial2D(src, dst, method=cv2.RANSAC, ransacReprojThreshold=2.0,
                                              maxIters=5000, confidence=0.999)

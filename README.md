@@ -85,7 +85,7 @@ The stop line, solid lane lines and crossings were drawn by the team on a frame 
 (-126, +77) px at 4K and 0.9 deg off C3897, the view the zones were drawn on, and C3905 is off by
 (-35, +43) px and 1.1 deg. That misplaced the crossings, the stop line and the 38x75 px lamp
 window (on C3902 it missed the lamp). `src/view.py` registers each video to
-`configs/reference_view.png` before tracking (median background of 7 frames, ORB on
+the features of a C3897 background (`configs/reference_view.npz`, from `scripts/make_reference.py`; no image ships) before tracking (median background of 7 frames, ORB on
 contrast-equalised images so dusk works, similarity transform by seeded RANSAC) and moves the
 zones, lamp window and prebuilt lane field with it. A view that matches the reference leaves
 the zones exactly as drawn (C3896 and C3897 give identical output with and without it).
